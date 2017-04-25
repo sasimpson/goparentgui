@@ -1,14 +1,47 @@
 import React from 'react';
 import DateTimeField from 'react-bootstrap-datetimepicker';
-// import ReactBootstrapSlider from 'react-bootstrap-slider';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 
 class Feeding extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            currentValue: 0
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+        feedingAmount: 0,
+        feedingType: "breast",
+        showBreastButtons: false,
+    };
+  }
+
+  handleDateChange = (newDate) => {
+    console.log(newDate);
+    return this.setState({date: newDate});
+  }
+
+  handleAmountChange = (newAmount) => {
+      console.log(newAmount);
+      return this.setState({feedingAmount: newAmount});
+  }
+
+  handleTypeChange = (event) => {
+    this.setState({feedingType: event.target.id});
+    if (this.state.feedingType === "breast") {
+        this.setState({showBreastButtons: true});
+    } else {
+        this.setState({showBreastButtons: false});
     }
+  }
+
+  isActive = (event) => {
+      if (this.state.feedingType === event.target.id){
+          return "active";
+      }
+  }
+
+  handleSideChange = (event) => {
+      this.setState({feedingSide: event.target.id});
+  }
+  
   render() {
     return (
         <div className="container">
@@ -20,32 +53,42 @@ class Feeding extends React.Component {
             <div className="row">
                 <div className="col-md-6">
                     <form>
-                      <div className="form-group">
-                            <div className="btn-group btn-group-justified" data-toggle="buttons">
-                                <label className="btn btn-primary active">
-                                    <input type="radio" name="options" id="option1" autoComplete="off"/>Breast
-                                </label>
-                                <label className="btn btn-primary">
-                                    <input type="radio" name="options" id="option2" autoComplete="off"/>Bottle
-                                </label>
+                        <div className="form-group">
+                            <div className="btn-group btn-group-justified" role="group">
+                                <div className="btn-group" role="group"><button type="button" className="btn btn-primary {this.isActive}" id="breast" onClick={this.handleTypeChange}>Breast</button></div>
+                                <div className="btn-group" role="group"><button type="button" className="btn btn-primary {this.isActive}" id="bottle" onClick={this.handleTypeChange}>Bottle</button></div>
                             </div>
                         </div>
-                        
+                        {this.state.showBreastButtons ? <BreastButton /> : null}
                         <div className="form-group">
                             <label htmlFor="">Date/Time</label>                            
-                            <DateTimeField onChange={this.handleChange}  defaultText="Please select a date" />
+                            <DateTimeField onChange={this.handleDateChange}  defaultText="Please select a date" />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="answer">Amount <br/>
-                            {/*<input type="range" value="20" min="0" max="100" step="10"/>*/}
-                            {/*<ReactBootstrapSlider min={this.state.min} max={this.state.max} step={this.state.step} value={myValue}/>*/}
-                            {/*<ReactBootstrapSlider max={7} min={1} step={1} ticks={[1, 2, 3, 4, 5, 6, 7]} tooltip="hide" name="answer" value={this.state.currentValue} />*/}
-                                <input type="text" name="amount" id="amount" maxLength={5}/> fl oz.
-                            </label>
+                            <label htmlFor="amount"/>Amount <br/>
+                            <InputRange
+                                maxValue={10}
+                                minValue={0}
+                                step={0.5}
+                                value={this.state.feedingAmount}
+                                onChange={this.handleAmountChange} />
                         </div>
                         <button type="submit" className="btn btn-default">Submit</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    );
+  }
+}
+
+class BreastButton extends React.Component {
+  render() {
+    return (
+        <div className="form-group">
+            <div className="btn-group btn-group-justified" role="group">
+                <div className="btn-group" role="group"><button type="button" className="btn btn-primary" id="left" onClick={this.handleSideChange}>Left</button></div>
+                <div className="btn-group" role="group"><button type="button" className="btn btn-primary" id="right" onClick={this.handleSideChange}>Right</button></div>
             </div>
         </div>
     );
