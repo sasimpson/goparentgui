@@ -11,11 +11,6 @@ import Feeding from './feeding/feeding';
 
 
 class Content extends React.Component {
-  constructor() {
-    super();
-    this.state = { someKey: 'someValue' };
-  }
-
   render() {
     return (
         <Router>
@@ -28,10 +23,7 @@ class Content extends React.Component {
         </Router>
     );
   }
-
-  componentDidMount() {
-    this.setState({ someKey: 'otherValue' });
-  }
 }
 
 export default Content;
+
