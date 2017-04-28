@@ -22,13 +22,12 @@ class DiaperData extends React.Component {
                 }
             )
         }
-        console.log(this.state)
         return (
                 <div className="col-md-6">
                     <table className="table table-condensed table-striped">
                         <thead>
                         <tr>
-                            <th>Time</th>
+                            <th>Date, Time</th>
                             <th>Type</th>
                         </tr>
                         </thead>
@@ -44,8 +43,8 @@ class DiaperData extends React.Component {
 class DiaperDataRow extends React.Component {
     render() {
         return (
-            <tr key={this.props.data.id}>
-                <td>{this.props.data.timestamp}</td>
+            <tr>
+                <td>{new Date(this.props.data.timestamp).toLocaleString()}</td>
                 <td>{this.props.data.wasteType}</td>
             </tr>
         );

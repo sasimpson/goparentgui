@@ -11,6 +11,7 @@ class SleepForm extends React.Component {
   render() {
     return (
                     <div className="col-md-6">
+                      <h4>Enter a time:</h4>
                       <form>
                         <div className="form-group">
                             <DateTimeField onChange={this.handleChange} defaultText="Please select a date" />
