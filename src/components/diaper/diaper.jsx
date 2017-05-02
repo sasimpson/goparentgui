@@ -9,6 +9,11 @@ class Diaper extends React.Component {
             status: 0
         }
     }
+
+    updateStatus = () => {
+        this.setState({status: this.state.status + 1});
+    }
+    
     render() {
         return (
             <div className="container">
@@ -27,12 +32,7 @@ class Diaper extends React.Component {
         );
     }
 
-    updateStatus = () => {
-        var b = this.state.status;
-        b++;
-        this.setState({status: b});
-        console.log("siblingForm func");
-    }
+
 }
 
 export default Diaper;

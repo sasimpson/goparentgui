@@ -18,18 +18,7 @@ class FeedingData extends React.Component {
             this.getDataFromService();
         }
     }
-    componentDidUpdate = () => {
-        console.log("componentDidUpdate");
-    }
-    
-    shouldComponentUpdate = (nextProps, nextState) => {
-        console.log(nextProps, nextState);
-        if (this.state.data === nextState.data) {
-            return false;
-        }
-        return true;
-    }
-    
+  
     getDataFromService = () => {
         console.log("getDataFromService");
         fetch("http://localhost:8000/api/feeding", {method: "GET"}) 
@@ -75,7 +64,10 @@ class FeedingDataRow extends React.Component {
         return (
             <tr key={this.props.data.id}>
                 <td>{new Date(this.props.data.timestamp).toLocaleString()}</td>
-                <td>{this.props.data.feedingType}</td>
+                <td>
+                    {this.props.data.feedingType}
+                    {this.props.data.feedingType === "breast" ? " - " + this.props.data.feedingSide : null}
+                </td>
                 <td>
                     {this.props.data.feedingAmount}
                     {this.props.data.feedingType === "bottle" ? "fl oz" : "mins"}
