@@ -2,12 +2,22 @@ import React from 'react';
 
 class DiaperData extends React.Component {
     constructor(props) {
-         super(props);
+        super(props);
         this.state = {
             data: []
         }
     }
     componentDidMount() {
+        this.getDataFromService();
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.myProp !== this.props.myProp) {
+            console.log("triggering get new data");
+            this.getDataFromService();
+        }
+    }
+    getDataFromService() {
+        console.log("getDataFromService");
         fetch("http://localhost:8000/api/waste", {method: "GET"}) 
             .then(r => r.json())
             .then(data => this.setState({data: data}))
@@ -18,7 +28,7 @@ class DiaperData extends React.Component {
         if (this.state.data != null) {
             this.state.data.forEach(
                 d => {
-                    rows.push(<DiaperDataRow data={d}/> )
+                    rows.push(<DiaperDataRow key={d.id} data={d}/> )
                 }
             )
         }
@@ -43,7 +53,7 @@ class DiaperData extends React.Component {
 class DiaperDataRow extends React.Component {
     render() {
         return (
-            <tr>
+            <tr key={this.props.data.id}>
                 <td>{new Date(this.props.data.timestamp).toLocaleString()}</td>
                 <td>{this.props.data.wasteType}</td>
             </tr>

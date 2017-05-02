@@ -25,8 +25,9 @@ class DiaperForm extends React.Component {
     }
     
     handleSubmit = (event) => {
-        console.log("submit clicked");
-        console.log(this.state);
+        console.log("handleSubmit");
+        // console.log(this.state);
+        this.props.myFunc();
         event.preventDefault();
         fetch("http://localhost:8000/api/waste", {
             method: "POST",
@@ -47,13 +48,13 @@ class DiaperForm extends React.Component {
                         <div className="form-group">
                             <ButtonGroup justified>
                                 <ButtonGroup>
-                                    <Button bsStyle="primary" bsSize="large" value="1" onClick={this.handleOptionChange}>&#8470; 1</Button>
+                                    <Button bsStyle="primary" bsSize="large" value="1" active={this.state.wasteType === 1} onClick={this.handleOptionChange}>&#8470; 1</Button>
                                 </ButtonGroup>
                                 <ButtonGroup>
-                                    <Button bsStyle="primary" bsSize="large" value="2" onClick={this.handleOptionChange}>&#8470; 2</Button>
+                                    <Button bsStyle="primary" bsSize="large" value="2" active={this.state.wasteType === 2} onClick={this.handleOptionChange}>&#8470; 2</Button>
                                 </ButtonGroup>
                                 <ButtonGroup>
-                                    <Button bsStyle="primary" bsSize="large" value="3" onClick={this.handleOptionChange}>Both</Button>
+                                    <Button bsStyle="primary" bsSize="large" value="3" active={this.state.wasteType === 3} onClick={this.handleOptionChange}>Both</Button>
                                 </ButtonGroup>
                             </ButtonGroup>
                         </div>
