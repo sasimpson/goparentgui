@@ -25,7 +25,6 @@ class DiaperForm extends React.Component {
     }
     
     handleSubmit = (event) => {
-        console.log("handleSubmit");
         event.preventDefault();
         fetch("http://localhost:8000/api/waste", {
             method: "POST",
@@ -34,7 +33,10 @@ class DiaperForm extends React.Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                wasteData: {wasteType: this.state.wasteType, timestamp: this.state.timestamp.toISOString()}
+                wasteData: {
+                    wasteType: this.state.wasteType, 
+                    timestamp: this.state.timestamp.toISOString()
+                }
             })
         }).then(r => this.props.updateFunc());
     }
