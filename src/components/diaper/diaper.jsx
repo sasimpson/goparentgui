@@ -6,8 +6,7 @@ class Diaper extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            propA: "hiA",
-            propB: 0
+            status: 0
         }
     }
     render() {
@@ -19,27 +18,21 @@ class Diaper extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <DiaperForm myProp={this.state.propA} myFunc={this.siblingFormFunc.bind(this)}/>
+                    <DiaperForm updateFunc={this.updateStatus.bind(this)}/>
                 </div>
                 <div className="row">
-                    <DiaperData myProp={this.state.propB} myFunc={this.siblingDataFunc.bind(this)}/>
+                    <DiaperData status={this.state.status}/>
                 </div>
             </div>
         );
     }
 
-    siblingFormFunc = () => {
-        var b = this.state.propB;
+    updateStatus = () => {
+        var b = this.state.status;
         b++;
-        this.setState({propB: b});
+        this.setState({status: b});
         console.log("siblingForm func");
     }
-
-    siblingDataFunc = (x) => {
-        console.log("siblingData func");
-        return this.state.propB;
-    }
-
 }
 
 export default Diaper;

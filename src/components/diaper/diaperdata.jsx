@@ -11,7 +11,7 @@ class DiaperData extends React.Component {
         this.getDataFromService();
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.myProp !== this.props.myProp) {
+        if (prevProps.status !== this.props.status) {
             console.log("triggering get new data");
             this.getDataFromService();
         }
@@ -37,7 +37,7 @@ class DiaperData extends React.Component {
                     <table className="table table-condensed table-striped">
                         <thead>
                         <tr>
-                            <th>Date, Time</th>
+                            <th>Date/Time</th>
                             <th>Type</th>
                         </tr>
                         </thead>
