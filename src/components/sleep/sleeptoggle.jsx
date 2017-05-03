@@ -8,10 +8,49 @@ class SleepToggle extends React.Component {
         this.handleToggleStatus = this.handleToggleStatus.bind(this)
     }
 
+    componentDidMount = () => {
+        this.setState({ sleepStatus: 'end' });
+        fetch("http://localhost:8000/api/sleep/status")
+            .then( r => r.status )
+            .then( statusCode => {
+                if (statusCode === 200) {
+                    this.setState({ sleepStatus: true })
+                } else {
+                    this.setState({ sleepStatus: false})
+                }
+            })
+            // .catch( (error) => console.log(error));
+    }
+
     handleToggleStatus = (event) => {
-        this.setState(prevState => ({
-            isToggleOn: !prevState.isToggleOn
-        }));
+        if (this.state.sleepStatus === false) {
+            fetch("http://localhost:8000/api/sleep/start")
+            .then( r => r.status )
+            .then( statusCode => {
+                if (statusCode === 200) {
+                    this.setState(prevState =>({
+                        sleepStatus: !prevState.sleepStatus
+                    }));
+                }
+            })
+            .catch( (e) => console.log(e));
+        }
+        else if (this.state.sleepStatus === true) {
+            fetch("http://localhost:8000/api/sleep/end")
+            .then( r => r.status )
+            .then( statusCode => {
+                if (statusCode === 200) {
+                    this.setState(prevState =>({
+                        sleepStatus: !prevState.sleepStatus
+                    }));
+                }
+            })
+            .catch( (e) => console.log(e));
+        }
+        this.props.updateFunc();
+        // this.setState(prevState => ({
+        //     sleepStatus: !prevState.sleepStatus
+        // }));
     }
 
     render() {
@@ -25,7 +64,7 @@ class SleepToggle extends React.Component {
                             bsStyle="primary" 
                             value="start" 
                             onClick={this.handleToggleStatus}
-                            disabled={this.state.isToggleOn}>
+                            disabled={this.state.sleepStatus}>
                             Start
                         </Button>
                     </ButtonGroup>
@@ -35,17 +74,13 @@ class SleepToggle extends React.Component {
                             bsStyle="danger" 
                             value="end" 
                             onClick={this.handleToggleStatus}
-                            disabled={!this.state.isToggleOn}>
+                            disabled={!this.state.sleepStatus}>
                             End
                         </Button>
                     </ButtonGroup>
                 </ButtonGroup>
             </div>
         );
-    }
-
-    componentDidMount() {
-        this.setState({ sleepStatus: 'end' });
     }
 }
 
