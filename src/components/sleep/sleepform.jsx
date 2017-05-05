@@ -1,29 +1,63 @@
 import React from 'react';
 import DateTimeField from 'react-bootstrap-datetimepicker';
+import {Button} from 'react-bootstrap';
 
 class SleepForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: new Date(),
+            endDate: new Date()
+        }
+        this.handleStartChange = this.handleStartChange.bind(this)
+        this.handleEndChange = this.handleEndChange.bind(this)
+    }
   
-  handleChange = (newDate) => {
-    console.log("newDate", newDate);
-    return this.setState({date: newDate});
-  }
+    handleStartChange = (newDate) => {
+        console.log(newDate);
+        newDate = new Date(parseInt(newDate, 10));
+        return this.setState({startDate: newDate});
+    }
 
-  render() {
-    return (
-        <div className="col-md-6">
-            <h4>Enter a time:</h4>
-            <form>
-                <div className="form-group">
-                    <DateTimeField onChange={this.handleChange} defaultText="Please select a date" />
-                </div>
-                <div className="form-group">
-                    <DateTimeField onChange={this.handleChange} defaultText="Please select a date" />
-                </div>
-                <button type="submit" className="btn btn-default">Submit</button>
-            </form>
-        </div>
-    );
-  }
+    handleEndChange = (newDate) => {
+        newDate = new Date(parseInt(newDate, 10));
+        console.log(newDate);
+        return this.setState({endDate: newDate});
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        fetch("http://localhost:8000/api/sleep", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sleepData: {
+                    start: this.state.startDate, 
+                    end: this.state.endDate
+                }
+            })
+        }).then(r => this.props.updateFunc());
+    }
+
+    render() {
+        return (
+            <div className="col-md-6">
+                <h4>Enter a time:</h4>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="form-group">
+                        <DateTimeField onChange={this.handleStartChange} id="start" name="start"/>
+                    </div>
+                    <div className="form-group">
+                        <DateTimeField onChange={this.handleEndChange} id="end" name="end" />
+                    </div>
+                    <Button type="submit" bsStyle="primary">Submit</Button>
+                </form>
+            </div>
+        );
+    }
 
 }
 

@@ -9,14 +9,13 @@ class SleepToggle extends React.Component {
     }
 
     componentDidMount = () => {
-        this.setState({ sleepStatus: 'end' });
         fetch("http://localhost:8000/api/sleep/status")
             .then( r => r.status )
             .then( statusCode => {
                 if (statusCode === 200) {
                     this.setState({ sleepStatus: true })
                 } else {
-                    this.setState({ sleepStatus: false})
+                    this.setState({ sleepStatus: false })
                 }
             })
             // .catch( (error) => console.log(error));

@@ -18,10 +18,8 @@ class DiaperForm extends React.Component {
     }
 
     handleDateChange = (newDate) => {
-        newDate = parseInt(newDate, 10);
-        console.log("newDate", newDate);
-        console.log("formatted", new Date(newDate));
-        return this.setState({timestamp: new Date(newDate)});
+        newDate = new Date(parseInt(newDate, 10));
+        return this.setState({timestamp: newDate});
     }
     
     handleSubmit = (event) => {

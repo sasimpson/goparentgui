@@ -52,13 +52,22 @@ class SleepData extends React.Component {
 }
 
 class SleepDataRow extends React.Component {
-  render() {
-      return (
+    msToTime = (duration) => {
+        var minutes = parseInt((duration/(1000*60))%60,10)
+            , hours = parseInt((duration/(1000*60*60))%24,10);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+
+        return hours + ":" + minutes;
+    }
+    render() {
+        return (
             <tr key={this.props.data.id}>
                 <td><DateTimeFormat date={new Date(this.props.data.start)}/></td>
                 <td><DateTimeFormat date={new Date(this.props.data.end)}/></td>
                 <td>
-                    xx:xx
+                    {this.msToTime(new Date(this.props.data.end) - new Date(this.props.data.start))}
                 </td>
             </tr>
         );  
@@ -68,7 +77,8 @@ class SleepDataRow extends React.Component {
 function DateTimeFormat(props) {
     return (
         <span>
-            {props.date.getMonth()+1}/{props.date.getDate()}/{props.date.getFullYear()} {props.date.getHours()}:{props.date.getMinutes() < 10 ? "0"+props.date.getMinutes() : props.date.getMinutes()}</span>
+            {props.date.getMonth()+1}/{props.date.getDate()}/{props.date.getFullYear()} {props.date.getHours()}:{props.date.getMinutes() < 10 ? "0"+props.date.getMinutes() : props.date.getMinutes()}
+        </span>
     )
 }
 
