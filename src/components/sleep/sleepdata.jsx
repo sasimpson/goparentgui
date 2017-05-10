@@ -1,4 +1,7 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({...state})
 
 class SleepData extends React.Component {
     constructor(props) {
@@ -13,8 +16,12 @@ class SleepData extends React.Component {
     }
 
     getDataFromService = () => {
-        console.log("getDataFromService");
-        fetch("http://localhost:8000/api/sleep", {method: "GET"}) 
+        fetch("http://localhost:8000/api/sleep", {
+            method: "GET",
+            headers: {
+                'x-auth-token': this.props.auth.token
+            }
+        }) 
             .then(r => r.json())
             .then(data => {
                 console.log(data);
@@ -82,4 +89,4 @@ function DateTimeFormat(props) {
     )
 }
 
-export default SleepData;
+export default connect(mapStateToProps)(SleepData)
