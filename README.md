@@ -16,3 +16,6 @@ then it should be running.  the install should grab all the dependencies.  if i 
 - [ ] add registration form
 - [ ] full convert to redux for state management instead of local state in most cases
 
+## Thanks:
+
+@github/parkedwards for helping me with the dodgy react and redux bits.  
