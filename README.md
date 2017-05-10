@@ -12,6 +12,6 @@ then it should be running.  the install should grab all the dependencies.  if i 
 
 ## ToDo:
 
-[ ] add multiple children to a user to track
-[ ] add registration form
-[ ] full convert to redux for state management instead of local state in most cases
+- [ ] add multiple children to a user to track
+- [ ] add registration form
+- [ ] full convert to redux for state management instead of local state in most cases
