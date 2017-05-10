@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({...state})
 
 class FeedingData extends React.Component {
     constructor(props) {
@@ -12,23 +15,23 @@ class FeedingData extends React.Component {
         this.getDataFromService();
     }
     componentWillReceiveProps = (nextProps) => {
-        console.log("componentWillReceiveProps:", nextProps)
         if (this.props.status !== nextProps.status) {
-            console.log("triggering get new data");
             this.getDataFromService();
         }
     }
   
     getDataFromService = () => {
-        console.log("getDataFromService");
-        fetch("http://localhost:8000/api/feeding", {method: "GET"}) 
+        fetch("http://localhost:8000/api/feeding", {
+            method: "GET",
+            headers: {
+                "x-auth-token": this.props.auth.token
+            }
+        }) 
             .then(r => r.json())
             .then(data => {
-                console.log(data);
                 this.setState({data: data})
             })
             .catch((e) => console.log(e));
-        console.log("shouldComponentUpdate", this.shouldComponentUpdate);
     }
 
     render() {
@@ -77,4 +80,4 @@ class FeedingDataRow extends React.Component {
     }
 }
 
-export default FeedingData;
+export default connect(mapStateToProps)(FeedingData)

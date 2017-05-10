@@ -1,9 +1,13 @@
-import React from 'react';
-import DateTimeField from 'react-bootstrap-datetimepicker';
-import InputRange from 'react-input-range';
-import {Button, ButtonGroup} from 'react-bootstrap';
+import React from 'react'
+import { connect } from 'react-redux'
+import DateTimeField from 'react-bootstrap-datetimepicker'
+import InputRange from 'react-input-range'
+import {Button, ButtonGroup} from 'react-bootstrap'
 
-import 'react-input-range/lib/css/index.css';
+import 'react-input-range/lib/css/index.css'
+
+
+const mapStateToProps = (state) => ({...state})
 
 class FeedingForm extends React.Component {
     constructor(props) {
@@ -19,13 +23,10 @@ class FeedingForm extends React.Component {
 
     handleDateChange = (newDate) => {
         newDate = parseInt(newDate, 10);
-        console.log("newDate", newDate);
-        console.log("formatted", new Date(newDate));
         return this.setState({timestamp: new Date(newDate)});
     }
 
     handleAmountChange = (newAmount) => {
-        console.log(newAmount);
         return this.setState({feedingAmount: newAmount});
     }
 
@@ -44,7 +45,6 @@ class FeedingForm extends React.Component {
     }
 
     handleSideChange = (event) => {
-        console.log("changed to", event.target.id);
         this.setState({feedingSide: event.target.id});
     }
 
@@ -55,6 +55,7 @@ class FeedingForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'x-auth-token': this.props.auth.token
             },
             body: JSON.stringify({
                 feedingData: {
@@ -156,4 +157,4 @@ class BreastForm extends React.Component {
   }
 }
 
-export default FeedingForm;
+export default connect(mapStateToProps)(FeedingForm)
