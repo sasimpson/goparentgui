@@ -1,5 +1,5 @@
 // import {combineReducers} from 'redux'
-import {UPDATE_FIELD_AUTH, LOGIN_USER} from '../actions/index'
+import {UPDATE_FIELD_AUTH, LOGIN_USER, LOGIN_IN_PROGRESS} from '../actions/index'
 
 const initialState = {
     app: {
@@ -8,6 +8,7 @@ const initialState = {
     auth: {},
     user: {},
     isAuthenticated: false,
+    isAuthenticating: false,
     data: {
         sleep: {},
         feeding: {},
@@ -23,9 +24,18 @@ var reducer = function(state = initialState, action) {
             let obj = Object.assign({}, state, {})
             obj.auth[action.key] = action.value
             return obj
+        case LOGIN_IN_PROGRESS:
+            return Object.assign({}, state, {
+                isAuthenticating: true
+            })
         case LOGIN_USER:
             return Object.assign({}, state, {
-                user: action.payload
+                isAuthenticated: true,
+                isAuthenticating: false,
+                user: action.payload.userData,
+                auth: {
+                    token: action.payload.token
+                }
             })
         default:
             return state

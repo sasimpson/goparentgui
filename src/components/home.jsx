@@ -8,7 +8,8 @@ const mapStateToProps = (state) => ({ ...state.app });
 class Home extends React.Component {
     render() {
         var loggedIn;
-        if (this.props.isAuthenticated) {
+        if (this.props.isAuthenticating || this.props.isAuthenticated) {
+            //TODO: processing widget?
             loggedIn = null;
         } else {
             loggedIn = <LoginForm/>;
