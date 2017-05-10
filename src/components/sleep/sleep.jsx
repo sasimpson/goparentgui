@@ -14,6 +14,7 @@ class Sleep extends React.Component {
 
     updateStatus = () => {
         this.setState({status: this.state.status + 1});
+        console.log(this.state.status)
     }
 
     render() {

@@ -17,15 +17,15 @@ class SleepForm extends React.Component {
     }
   
     handleStartChange = (newDate) => {
-        console.log(newDate);
-        newDate = new Date(parseInt(newDate, 10));
-        return this.setState({startDate: newDate});
+        newDate = new Date(parseInt(newDate, 10))
+        console.log(newDate)
+        return this.setState({startDate: newDate})
     }
 
     handleEndChange = (newDate) => {
-        newDate = new Date(parseInt(newDate, 10));
-        console.log(newDate);
-        return this.setState({endDate: newDate});
+        newDate = new Date(parseInt(newDate, 10))
+        console.log(newDate)
+        return this.setState({endDate: newDate})
     }
 
     handleSubmit = (event) => {
@@ -35,7 +35,7 @@ class SleepForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'x-auth-token': this.state.auth.token
+                'x-auth-token': this.props.auth.token
             },
             body: JSON.stringify({
                 sleepData: {

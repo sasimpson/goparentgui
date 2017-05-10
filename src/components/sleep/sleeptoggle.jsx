@@ -26,7 +26,7 @@ class SleepToggle extends React.Component {
                     this.setState({ sleepStatus: false })
                 }
             })
-            // .catch( (error) => console.log(error));
+            .catch( (error) => console.log(error))
     }
 
     handleToggleStatus = (event) => {
