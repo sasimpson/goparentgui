@@ -1,5 +1,8 @@
-import React from 'react';
-import {Button, ButtonGroup} from 'react-bootstrap';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Button, ButtonGroup } from 'react-bootstrap'
+
+const mapStateToProps = (state) => ({...state})
 
 class SleepToggle extends React.Component {
     constructor(props) {
@@ -9,7 +12,12 @@ class SleepToggle extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://localhost:8000/api/sleep/status")
+        fetch("http://localhost:8000/api/sleep/status", {
+            method: "GET", 
+            headers: {
+                'x-auth-token': this.props.auth.token
+            }
+        })
             .then( r => r.status )
             .then( statusCode => {
                 if (statusCode === 200) {
@@ -23,7 +31,12 @@ class SleepToggle extends React.Component {
 
     handleToggleStatus = (event) => {
         if (this.state.sleepStatus === false) {
-            fetch("http://localhost:8000/api/sleep/start")
+            fetch("http://localhost:8000/api/sleep/start", {
+            method: "POST", 
+            headers: {
+                'x-auth-token': this.props.auth.token
+            }
+        })
             .then( r => r.status )
             .then( statusCode => {
                 if (statusCode === 200) {
@@ -35,7 +48,12 @@ class SleepToggle extends React.Component {
             .catch( (e) => console.log(e));
         }
         else if (this.state.sleepStatus === true) {
-            fetch("http://localhost:8000/api/sleep/end")
+            fetch("http://localhost:8000/api/sleep/end", {
+            method: "POST", 
+            headers: {
+                'x-auth-token': this.props.auth.token
+            }
+        })
             .then( r => r.status )
             .then( statusCode => {
                 if (statusCode === 200) {
@@ -83,4 +101,4 @@ class SleepToggle extends React.Component {
     }
 }
 
-export default SleepToggle;
+export default connect(mapStateToProps)(SleepToggle)
