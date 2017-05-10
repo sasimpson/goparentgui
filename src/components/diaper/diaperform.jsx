@@ -1,7 +1,9 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import {Button, ButtonGroup} from 'react-bootstrap';
 
+const mapStateToProps = (state) => ({...state})
 
 class DiaperForm extends React.Component {
     constructor(props) {
@@ -29,6 +31,7 @@ class DiaperForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'x-auth-token': this.props.auth.token
             },
             body: JSON.stringify({
                 wasteData: {
@@ -67,4 +70,4 @@ class DiaperForm extends React.Component {
 
 }
 
-export default DiaperForm;
+export default connect(mapStateToProps)(DiaperForm)

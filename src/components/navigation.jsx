@@ -20,6 +20,8 @@ class Navigation extends React.Component {
                         <li><a href="/diaper">Diaper</a></li>
                         <li><a href="/feeding">Feeding</a></li>
                         <li><a href="/sleep">Sleep</a></li>
+                        <li></li>
+                        <li><a href="/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

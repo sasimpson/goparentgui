@@ -1,4 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux'
+
+const mapStateToProps = (state) => ({...state})
 
 class DiaperData extends React.Component {
     constructor(props) {
@@ -18,7 +21,12 @@ class DiaperData extends React.Component {
     }
     getDataFromService() {
         console.log("getDataFromService");
-        fetch("http://localhost:8000/api/waste", {method: "GET"}) 
+        fetch("http://localhost:8000/api/waste", {
+            method: "GET",
+            headers: {
+                'x-auth-token': this.props.auth.token
+            }
+        }) 
             .then(r => r.json())
             .then(data => this.setState({data: data}))
             .catch((e) => console.log(e));
@@ -61,4 +69,4 @@ class DiaperDataRow extends React.Component {
     }
 }
 
-export default DiaperData;
+export default connect(mapStateToProps)(DiaperData)

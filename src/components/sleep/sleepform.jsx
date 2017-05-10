@@ -1,6 +1,9 @@
-import React from 'react';
-import DateTimeField from 'react-bootstrap-datetimepicker';
-import {Button} from 'react-bootstrap';
+import React from 'react'
+import {connect} from 'react-redux'
+import DateTimeField from 'react-bootstrap-datetimepicker'
+import {Button} from 'react-bootstrap'
+
+const mapStateToProps = (state) => ({...state})
 
 class SleepForm extends React.Component {
     constructor(props) {
@@ -32,6 +35,7 @@ class SleepForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'x-auth-token': this.state.auth.token
             },
             body: JSON.stringify({
                 sleepData: {
@@ -61,4 +65,4 @@ class SleepForm extends React.Component {
 
 }
 
-export default SleepForm;
+export default connect(mapStateToProps)(SleepForm);
