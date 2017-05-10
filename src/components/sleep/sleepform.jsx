@@ -18,13 +18,11 @@ class SleepForm extends React.Component {
   
     handleStartChange = (newDate) => {
         newDate = new Date(parseInt(newDate, 10))
-        console.log(newDate)
         return this.setState({startDate: newDate})
     }
 
     handleEndChange = (newDate) => {
         newDate = new Date(parseInt(newDate, 10))
-        console.log(newDate)
         return this.setState({endDate: newDate})
     }
 

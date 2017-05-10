@@ -45,6 +45,7 @@ class SleepToggle extends React.Component {
                     }));
                 }
             })
+            .then(() => this.props.updateFunc())
             .catch( (e) => console.log(e));
         }
         else if (this.state.sleepStatus === true) {
@@ -62,6 +63,7 @@ class SleepToggle extends React.Component {
                     }));
                 }
             })
+            .then(() => this.props.updateFunc())
             .catch( (e) => console.log(e));
         }
         this.props.updateFunc();

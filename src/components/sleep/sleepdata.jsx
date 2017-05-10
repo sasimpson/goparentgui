@@ -12,7 +12,13 @@ class SleepData extends React.Component {
     }
 
     componentDidMount = () => {
-      this.getDataFromService();
+        this.getDataFromService();
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (this.props.status !== nextProps.status) {
+            this.getDataFromService()
+        }
     }
 
     getDataFromService = () => {
@@ -24,57 +30,58 @@ class SleepData extends React.Component {
         }) 
             .then(r => r.json())
             .then(data => {
-                console.log(data);
                 this.setState({data: data})
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
     }
 
     render() {
-      var rows = [];
+    var rows = [];
         if (this.state.data != null) {
             this.state.data.forEach(
                 d => {
                     rows.push(<SleepDataRow key={d.id} data={d}/> )
                 }
             )
-      }
-      return (
-                  <div className="col-md-6">
-                      <table className="table table-condensed table-striped">
-                        <thead>
-                          <tr>
-                              <th>Start</th>
-                              <th>End</th>
-                              <th>Total</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {rows}
-                        </tbody>
-                      </table>
-                  </div>
-      );
+    }
+    return (
+        <div className="col-md-6">
+            <table className="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {rows}
+            </tbody>
+            </table>
+        </div>
+      )
     }
 }
 
 class SleepDataRow extends React.Component {
     msToTime = (duration) => {
         var minutes = parseInt((duration/(1000*60))%60,10)
-            , hours = parseInt((duration/(1000*60*60))%24,10);
+            , hours = parseInt((duration/(1000*60*60))%24,10)
 
         hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        minutes = (minutes < 10) ? "0" + minutes : minutes
 
-        return hours + ":" + minutes;
+        return hours + ":" + minutes
     }
     render() {
+        const startTime = new Date(this.props.data.start)
+        const endTime = new Date(this.props.data.end)
         return (
             <tr key={this.props.data.id}>
-                <td><DateTimeFormat date={new Date(this.props.data.start)}/></td>
-                <td><DateTimeFormat date={new Date(this.props.data.end)}/></td>
+                <td><DateTimeFormat date={startTime}/></td>
+                <td><DateTimeFormat date={endTime}/></td>
                 <td>
-                    {this.msToTime(new Date(this.props.data.end) - new Date(this.props.data.start))}
+                    {endTime.getTime() >= startTime.getTime() ? this.msToTime(endTime - startTime) : null}
                 </td>
             </tr>
         );  
@@ -82,6 +89,11 @@ class SleepDataRow extends React.Component {
 }
 
 function DateTimeFormat(props) {
+    if (props.date.getTime() < 0) {
+        return (
+            <span>still sleeping...</span>
+        )
+    }
     return (
         <span>
             {props.date.getMonth()+1}/{props.date.getDate()}/{props.date.getFullYear()} {props.date.getHours()}:{props.date.getMinutes() < 10 ? "0"+props.date.getMinutes() : props.date.getMinutes()}
