@@ -24,7 +24,7 @@ class DiaperData extends React.Component {
         fetch("http://localhost:8000/api/waste", {
             method: "GET",
             headers: {
-                'x-auth-token': this.props.auth.token
+                'Authorization': "Bearer " + this.props.auth.token
             }
         }) 
             .then(r => r.json())

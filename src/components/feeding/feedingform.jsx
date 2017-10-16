@@ -55,7 +55,7 @@ class FeedingForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'x-auth-token': this.props.auth.token
+                'Authorization': "Bearer " + this.props.auth.token
             },
             body: JSON.stringify({
                 feedingData: {

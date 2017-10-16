@@ -15,7 +15,7 @@ class SleepToggle extends React.Component {
         fetch("http://localhost:8000/api/sleep/status", {
             method: "GET", 
             headers: {
-                'x-auth-token': this.props.auth.token
+                'Authorization': "Bearer " + this.props.auth.token
             }
         })
             .then( r => r.status )
@@ -34,7 +34,7 @@ class SleepToggle extends React.Component {
             fetch("http://localhost:8000/api/sleep/start", {
             method: "POST", 
             headers: {
-                'x-auth-token': this.props.auth.token
+                'Authorization': "Bearer " + this.props.auth.token
             }
         })
             .then( r => r.status )
@@ -52,7 +52,7 @@ class SleepToggle extends React.Component {
             fetch("http://localhost:8000/api/sleep/end", {
             method: "POST", 
             headers: {
-                'x-auth-token': this.props.auth.token
+                'Authorization': "Bearer " + this.props.auth.token
             }
         })
             .then( r => r.status )
