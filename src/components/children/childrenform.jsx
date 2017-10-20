@@ -1,11 +1,11 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import { connect }from 'react-redux'
 import { bindActionCreators } from "redux";
 
-import DateTimeField from 'react-bootstrap-datetimepicker';
-import {FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
+import Datetime from 'react-datetime';
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 
-import {postChild} from '../../actions/index'
+import { postChild } from '../../actions/children'
 
 const mapStateToProps = (state) => ({
     authentication: state.authentication
@@ -51,15 +51,15 @@ class ChildrenForm extends React.Component {
                     </FormGroup>
                     <div className="form-group">
                         <label htmlFor="birthday">Date/Time</label>  
-                        <DateTimeField onChange={this.handleDateChange}/>
+                        <Datetime onChange={this.handleDateChange}/>
                     </div>
                     <div className="form-group">
                         <Button type="submit" bsStyle="primary">Submit</Button>
                     </div>
                 </form>
             </div>
-        );
+        )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChildrenForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ChildrenForm)

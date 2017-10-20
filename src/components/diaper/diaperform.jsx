@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import DateTimeField from 'react-bootstrap-datetimepicker';
-import {Button, ButtonGroup} from 'react-bootstrap';
+import { connect } from 'react-redux'
+import Datetime from 'react-datetime';
+import { Button, ButtonGroup, FormGroup } from 'react-bootstrap';
 
 const mapStateToProps = (state) => ({...state})
 
@@ -31,7 +31,7 @@ class DiaperForm extends React.Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.props.auth.token
+                'Authorization': "Bearer " + this.props.authentication.auth.token
             },
             body: JSON.stringify({
                 wasteData: {
@@ -46,28 +46,25 @@ class DiaperForm extends React.Component {
         return (
                 <div className="col-md-6">
                     <form onSubmit={this.handleSubmit}>
-                        <div className="form-group">
-                            <div className="form-group">
-                                <DateTimeField onChange={this.handleDateChange}/>
-                            </div>
-                            <ButtonGroup justified>
-                                <ButtonGroup>
-                                    <Button bsStyle="primary" value="1" active={this.state.wasteType === 1} onClick={this.handleOptionChange}>&#8470; 1</Button>
-                                </ButtonGroup>
-                                <ButtonGroup>
-                                    <Button bsStyle="primary" value="2" active={this.state.wasteType === 2} onClick={this.handleOptionChange}>&#8470; 2</Button>
-                                </ButtonGroup>
-                                <ButtonGroup>
-                                    <Button bsStyle="primary" value="3" active={this.state.wasteType === 3} onClick={this.handleOptionChange}>Both</Button>
-                                </ButtonGroup>
+                        <FormGroup>
+                            <Datetime onChange={this.handleDateChange}/>
+                        </FormGroup>
+                        <ButtonGroup justified>
+                            <ButtonGroup>
+                                <Button bsStyle="primary" value="1" active={this.state.wasteType === 1} onClick={this.handleOptionChange}>&#8470; 1</Button>
                             </ButtonGroup>
-                        </div>
+                            <ButtonGroup>
+                                <Button bsStyle="primary" value="2" active={this.state.wasteType === 2} onClick={this.handleOptionChange}>&#8470; 2</Button>
+                            </ButtonGroup>
+                            <ButtonGroup>
+                                <Button bsStyle="primary" value="3" active={this.state.wasteType === 3} onClick={this.handleOptionChange}>Both</Button>
+                            </ButtonGroup>
+                        </ButtonGroup>
                         <Button type="submit" bsStyle="primary">Submit</Button>
                     </form>
                 </div>
-        );
+        )
     }
-
 }
 
 export default connect(mapStateToProps)(DiaperForm)

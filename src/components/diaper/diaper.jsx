@@ -23,10 +23,10 @@ class Diaper extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <DiaperForm updateFunc={this.updateStatus.bind(this)}/>
+                    <DiaperForm updateFunc={this.updateStatus.bind(this)} />
                 </div>
                 <div className="row">
-                    <DiaperData status={this.state.status}/>
+                    <DiaperData status={this.state.status} />
                 </div>
             </div>
         );

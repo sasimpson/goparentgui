@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({...state})
 
@@ -24,7 +24,7 @@ class DiaperData extends React.Component {
         fetch("http://localhost:8000/api/waste", {
             method: "GET",
             headers: {
-                'Authorization': "Bearer " + this.props.auth.token
+                'Authorization': "Bearer " + this.props.authentication.auth.token
             }
         }) 
             .then(r => r.json())

@@ -1,4 +1,4 @@
-import {CHILDREN_LOAD_DATA} from './index'
+import { CHILDREN_LOAD_DATA } from './index'
 
 export const getChildren = (token) => {
     console.log("getChildren")

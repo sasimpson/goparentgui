@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import DateTimeField from 'react-bootstrap-datetimepicker'
-import InputRange from 'react-input-range'
-import {Button, ButtonGroup} from 'react-bootstrap'
+import Datetime from 'react-datetime'
+import { InputRange } from 'react-input-range'
+import { Button, ButtonGroup } from 'react-bootstrap'
 
 import 'react-input-range/lib/css/index.css'
 
@@ -74,7 +74,7 @@ class FeedingForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="timestamp">Date/Time</label>                            
-                        <DateTimeField onChange={this.handleDateChange} />
+                        <Datetime onChange={this.handleDateChange} />
                     </div>
                     <div className="form-group">
                         <ButtonGroup justified>

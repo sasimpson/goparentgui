@@ -1,7 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import DateTimeField from 'react-bootstrap-datetimepicker'
-import {Button} from 'react-bootstrap'
+import { connect } from 'react-redux'
+import Datetime from 'react-datetime'
+import { Button } from 'react-bootstrap'
 
 const mapStateToProps = (state) => ({...state})
 
@@ -50,10 +50,10 @@ class SleepForm extends React.Component {
                 <h4>Enter a time:</h4>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <DateTimeField onChange={this.handleStartChange} id="start" name="start"/>
+                        <Datetime onChange={this.handleStartChange} id="start" name="start"/>
                     </div>
                     <div className="form-group">
-                        <DateTimeField onChange={this.handleEndChange} id="end" name="end" />
+                        <Datetime onChange={this.handleEndChange} id="end" name="end" />
                     </div>
                     <Button type="submit" bsStyle="primary">Submit</Button>
                 </form>
