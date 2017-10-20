@@ -1,17 +1,22 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import {LOGOUT_USER} from '../actions/index' 
+import {LOGOUT_USER, CLEAR_DATA} from '../actions/index' 
 import {connect} from 'react-redux'
 
-const mapStateToProps = (state) => ({...state})
-
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.isAuthenticated,
+    }
+}
 class Logout extends React.Component {
     logoutEvent = (event) => {
         this.props.dispatch({type: LOGOUT_USER})
+        this.props.dispatch({type: CLEAR_DATA})
     }
     componentDidMount = () => {
         this.props.dispatch({type: LOGOUT_USER})
+        this.props.dispatch({type: CLEAR_DATA})        
     }
 
     render() {

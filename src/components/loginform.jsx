@@ -1,27 +1,41 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { loginNow, UPDATE_FIELD_AUTH } from '../actions/index'
+import { loginNow } from '../actions/authentication'
 
-const mapStateToProps = (state) => ({ ...state });
+const mapStateToProps = (state) => {
+    return {
+        // auth: state.auth,
+        isAuthenticated: state.isAuthenticated,
+    }
+}
 
 class LoginForm extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: ""
+        }
+    }
+
     onChangeInput = (event) => {
-        console.log(event.target.id, ":", event.target.value)
-        this.props.dispatch({type: UPDATE_FIELD_AUTH, key: event.target.id, value: event.target.value})
+        var stateObject = function() {
+            var returnObj = {};
+            returnObj[this.target.id] = this.target.value;
+               return returnObj;
+          }.bind(event)();
+        this.setState(stateObject)
     }
 
     onSubmit = (event) => {
         event.preventDefault()
-        const { dispatch, auth } = this.props
-        dispatch(loginNow(auth.email, auth.password))
+        this.props.dispatch(loginNow(this.state.email, this.state.password))
     }
 
     render() {
-        const email = this.props.auth.email
-        const password = this.props.auth.password
         if (!this.props.isAuthenticated) {
             return (
                 <div className="container">
@@ -30,11 +44,11 @@ class LoginForm extends React.Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email:</label>
-                                    <input type="text" className="form-control" id="email" onChange={this.onChangeInput} value={email}/>
+                                    <input type="text" className="form-control" id="email" onChange={this.onChangeInput} value={this.state.email}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password:</label>
-                                    <input type="password" className="form-control" id="password" onChange={this.onChangeInput} value={password}/>
+                                    <input type="password" className="form-control" id="password" onChange={this.onChangeInput} value={this.state.password}/>
                                 </div>
                                 <Button type="submit">Submit</Button>
                             </form>

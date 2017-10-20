@@ -8,6 +8,7 @@ import Home from './home'
 import Sleep from './sleep/sleep'
 import Diaper from './diaper/diaper'
 import Feeding from './feeding/feeding'
+import Children from './children/children'
 import Logout from './logout'
 import LoginForm from './loginform'
 
@@ -21,6 +22,7 @@ class Content extends React.Component {
                 <Route path="/sleep" component={Sleep}/>
                 <Route path="/diaper" component={Diaper}/>
                 <Route path="/feeding" component={Feeding}/>
+                <Route path="/children" component={Children}/>
                 <Route path="/logout" component={Logout}/>
                 <Route path="/login" component={LoginForm}/>
             </div>

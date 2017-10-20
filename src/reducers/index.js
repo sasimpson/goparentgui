@@ -1,52 +1,27 @@
-// import {combineReducers} from 'redux'
-import {UPDATE_FIELD_AUTH, LOGIN_USER, LOGIN_IN_PROGRESS, LOGOUT_USER} from '../actions/index'
+import {combineReducers} from 'redux'
+import authReducer from './authentication'
+import dataReducer from './data'
 
-const initialState = {
-    app: {
-        version: "0.00"
-    },
-    auth: {},
-    user: {},
-    isAuthenticated: false,
-    isAuthenticating: false,
-    data: {
-        sleep: {},
-        feeding: {},
-        diaper: {}
-    }
-}
+// const initialState = {
+//     app: {
+//         version: "0.00"
+//     },
+//     authenitcation: {
+//         auth: {},
+//         user: {},
+//         isAuthenticated: false,
+//         isAuthenticating: false,
+//     },
+//     data: {
+//         children: []
+//     }
+// }
+ 
 
-var reducer = function(state = initialState, action) {
-    console.log(action)
-    switch (action.type){
-        case UPDATE_FIELD_AUTH:
-            //TODO: make this not suck:
-            let obj = Object.assign({}, state, {})
-            obj.auth[action.key] = action.value
-            return obj
-        case LOGIN_IN_PROGRESS:
-            return Object.assign({}, state, {
-                isAuthenticating: true
-            })
-        case LOGIN_USER:
-            return Object.assign({}, state, {
-                isAuthenticated: true,
-                isAuthenticating: false,
-                user: action.payload.userData,
-                auth: {
-                    token: action.payload.token
-                }
-            })
-        case LOGOUT_USER:
-            return Object.assign({}, state, {
-                isAuthenticated: false,
-                isAuthenticating: false,
-                user: {},
-                auth: {}
-            })
-        default:
-            return state
-    }
-}
+var reducer = combineReducers({
+    authentication: authReducer,
+    data: dataReducer
+})
+
 
 export default reducer
