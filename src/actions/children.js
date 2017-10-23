@@ -36,6 +36,23 @@ export const postChild = (token, data) => {
         })
             .then(r => r.json())
             .then(data => dispatch(getChildren(token)))
-            .catch(e => console.log(e));
+            .catch(e => console.log(e))
+    }
+}
+
+export const deleteChild = (token, childID) => {
+    console.log("deleteChild")
+    return (dispatch) => {
+        return fetch("http://localhost:8000/api/children/" + childID, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(r => r.json())
+            .then(data => dispatch(getChildren(token)))
+            .catch(e => console.log(e))
     }
 }

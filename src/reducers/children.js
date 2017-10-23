@@ -5,8 +5,7 @@ var childrenReducer = function(state = [], action) {
         case CHILDREN_LOAD_DATA:
             console.log(CHILDREN_LOAD_DATA)
             if (action.payload.children == null) {
-                return state
-                
+                return []
             }
             var newState = [
                     ...action.payload.children

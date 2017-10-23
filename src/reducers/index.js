@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux'
 import authReducer from './authentication'
 import dataReducer from './data'
+import settingsReducer from './settings'
 
-// const initialState = {
+// stateTree = {
 //     app: {
 //         version: "0.00"
 //     },
@@ -14,13 +15,17 @@ import dataReducer from './data'
 //     },
 //     data: {
 //         children: []
+//     },
+//     settings: {
+//         currentChild: null
 //     }
 // }
  
 
 var reducer = combineReducers({
     authentication: authReducer,
-    data: dataReducer
+    data: dataReducer,
+    settings: settingsReducer
 })
 
 

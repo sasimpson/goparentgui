@@ -7,7 +7,7 @@ import { loginNow } from '../actions/authentication'
 const mapStateToProps = (state) => {
     return {
         // auth: state.auth,
-        isAuthenticated: state.isAuthenticated,
+        isAuthenticated: state.authentication.isAuthenticated,
     }
 }
 
@@ -36,7 +36,9 @@ class LoginForm extends React.Component {
     }
 
     render() {
-        if (!this.props.isAuthenticated) {
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/" />
+        } else {
             return (
                 <div className="container">
                     <div className="row">
@@ -56,8 +58,6 @@ class LoginForm extends React.Component {
                     </div>
                 </div>
             )
-        } else {
-            return <Redirect to="/" />
         }
     }
 }

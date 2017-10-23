@@ -1,9 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import Datetime from 'react-datetime';
-import { Button, ButtonGroup, FormGroup } from 'react-bootstrap';
+import { bindActionCreators } from 'redux'
 
-const mapStateToProps = (state) => ({...state})
+import Datetime from 'react-datetime'
+import { Button, ButtonGroup, FormGroup } from 'react-bootstrap'
+
+import { postDiaper } from '../../actions/diaper'
+
+const mapStateToProps = (state) => ({
+    authentication: state.authentication
+})
+
+const mapDispatchToProps = (dispatch) =>{
+    return bindActionCreators({
+        postDiaper: postDiaper
+    }, dispatch)
+}
 
 class DiaperForm extends React.Component {
     constructor(props) {
@@ -12,10 +24,11 @@ class DiaperForm extends React.Component {
             wasteType: 1,
             timestamp: new Date()
         }
+        this.handleOptionChange = this.handleOptionChange.bind(this)
+        this.handleDateChange = this.handleOptionChange.bind(this)
     }
 
     handleOptionChange = (event) => {
-        console.log("event", event.target.value)
         return this.setState({wasteType: parseInt(event.target.value, 10)});
     }
 
@@ -25,21 +38,8 @@ class DiaperForm extends React.Component {
     }
     
     handleSubmit = (event) => {
-        event.preventDefault();
-        fetch("http://localhost:8000/api/waste", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.props.authentication.auth.token
-            },
-            body: JSON.stringify({
-                wasteData: {
-                    wasteType: this.state.wasteType, 
-                    timestamp: this.state.timestamp.toISOString()
-                }
-            })
-        }).then(r => this.props.updateFunc());
+        event.preventDefault()
+        this.props.postDiaper(this.props.authentication.auth.token, this.state)
     }
 
     render() {
@@ -67,4 +67,4 @@ class DiaperForm extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(DiaperForm)
+export default connect(mapStateToProps, mapDispatchToProps)(DiaperForm)

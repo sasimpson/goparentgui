@@ -1,7 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from "redux";
+import { getDiaper } from '../../actions/diaper'
 
-const mapStateToProps = (state) => ({...state})
+const mapStateToProps = (state) => {
+    return {
+        authentication: state.authentication,
+        diaper: state.data.diaper
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getDiaper: getDiaper
+    }, dispatch)
+}
+
+const DiaperList = (props) => {
+    return (
+        <div className="col-md-6">
+            <table className="table table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {props.rows}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+const DiaperDataRow = (props) => {
+    return (
+        <tr key={props.data.id}>
+            <td>{new Date(props.data.timestamp).toLocaleString()}</td>
+            <td>{props.data.wasteType}</td>
+        </tr>
+    )
+}
 
 class DiaperData extends React.Component {
     constructor(props) {
@@ -10,63 +50,27 @@ class DiaperData extends React.Component {
             data: []
         }
     }
-    componentDidMount() {
+    componentDidMount = () => {
         this.getDataFromService();
     }
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.status !== this.props.status) {
-            console.log("triggering get new data");
-            this.getDataFromService();
-        }
+    
+    getDataFromService = () => {
+       this.props.getDiaper(this.props.authentication.auth.token)
     }
-    getDataFromService() {
-        console.log("getDataFromService");
-        fetch("http://localhost:8000/api/waste", {
-            method: "GET",
-            headers: {
-                'Authorization': "Bearer " + this.props.authentication.auth.token
-            }
-        }) 
-            .then(r => r.json())
-            .then(data => this.setState({data: data}))
-            .catch((e) => console.log(e));
-    }
+
     render() {
         var rows = [];
-        if (this.state.data != null) {
-            this.state.data.forEach(
+        if (this.props.diaper != null) {
+            this.props.diaper.forEach(
                 d => {
                     rows.push(<DiaperDataRow key={d.id} data={d}/> )
                 }
             )
         }
         return (
-                <div className="col-md-6">
-                    <table className="table table-condensed table-striped">
-                        <thead>
-                        <tr>
-                            <th>Date/Time</th>
-                            <th>Type</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {rows}
-                        </tbody>
-                    </table>
-                </div>
-        );
+            <DiaperList rows={rows} />
+        )
     }
 }
 
-class DiaperDataRow extends React.Component {
-    render() {
-        return (
-            <tr key={this.props.data.id}>
-                <td>{new Date(this.props.data.timestamp).toLocaleString()}</td>
-                <td>{this.props.data.wasteType}</td>
-            </tr>
-        );
-    }
-}
-
-export default connect(mapStateToProps)(DiaperData)
+export default connect(mapStateToProps, mapDispatchToProps)(DiaperData)

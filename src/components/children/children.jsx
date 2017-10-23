@@ -23,4 +23,4 @@ class Children extends React.Component {
     }
 }
 
-export default Children;
+export default Children

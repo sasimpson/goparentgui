@@ -1,38 +1,103 @@
-import React from 'react';
+import React from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {Nav, Navbar, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 
-class Navigation extends React.Component {
-  render() {
-    return (
-        <nav className="navbar navbar-default">
-            <div className="container-fluid">
-                <div className="navbar-header">
-                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span className="sr-only">Toggle navigation</span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                        <span className="icon-bar"></span>
-                    </button>
-                    <a className="navbar-brand" href="/">Go Parent</a>
-                </div>
-                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul className="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/diaper">Diaper</a></li>
-                        <li><a href="/feeding">Feeding</a></li>
-                        <li><a href="/sleep">Sleep</a></li>
-                        <li><a href="/children">Children</a></li>
-                        <li></li>
-                        <li><a href="/logout">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
-  }
+import {getChildren} from '../actions/children'
 
-  componentDidMount() {
-    this.setState({ someKey: 'otherValue' });
-  }
+const mapStateToProps = (state) => {
+    return {
+        authorized: state.authentication.isAuthenticated, 
+        token: state.authentication.auth.token,
+        children: state.data.children, 
+        currentChild: state.settings.currentChild}
 }
 
-export default Navigation;
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getChildren: getChildren
+    }, dispatch)
+}
+
+const NavigationHeader = () => {
+    return (
+        <Navbar.Header>
+            <Navbar.Brand>
+                <a href="/">Go Parent</a>
+            </Navbar.Brand>
+            <Navbar.Toggle/>
+        </Navbar.Header>
+    )
+}
+
+const ChildrenDropDown = (props) => {
+    var rows = []
+    if (Array.isArray(props.children) && props.children.length > 0) {
+        props.children.forEach( 
+            d => { rows.push(
+                    <MenuItem key={d.id} eventKey={d.id}>{d.name}</MenuItem>
+            )}
+        )
+    }
+    return (
+        <NavDropdown eventKey={5} title="Children" id="children-drop">
+            <MenuItem eventKey={5.1} href="/children">All</MenuItem>
+            {rows}
+        </NavDropdown>
+    )
+    
+}
+
+const NavigationCollapse = (props) => {
+    if (props.isAuthenticated) {        
+        return (
+            <Navbar.Collapse>
+                <Nav>
+                    <NavItem eventKey={1} href="/">Home</NavItem>
+                    <NavItem eventKey={2} href="/diaper">Diaper</NavItem>
+                    <NavItem eventKey={3} href="/feeding">Feeding</NavItem>
+                    <NavItem eventKey={4} href="/sleep">Sleep</NavItem>
+                    <ChildrenDropDown children={props.children}/>
+                </Nav>
+                <Nav pullRight>
+                    <NavItem eventKey={1} href="/logout">Logout</NavItem>
+                </Nav>
+            </Navbar.Collapse>
+        )
+    } else {
+        return (
+            <Navbar.Collapse>
+                <Nav pullRight>
+                    <NavItem eventKey={1} href="/register">Register</NavItem>
+                    <NavItem eventKey={2} href="/login">Login</NavItem>
+                </Nav>
+            </Navbar.Collapse>
+        )
+    }
+}
+
+const NavigationBar = (props) => {
+    return (
+        <Navbar inverse>
+            <NavigationHeader/>
+            <NavigationCollapse isAuthenticated={props.isAuthenticated} children={props.children}/>
+        </Navbar>
+    )
+}
+
+class Navigation extends React.Component {
+    constructor(props) {
+        super(props)
+        this.props.getChildren(this.props.token)
+    }
+
+    // componentDidMount = () => {
+        
+    // }
+
+    render() {
+        return (<NavigationBar isAuthenticated={this.props.authorized} children={this.props.children}/>)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

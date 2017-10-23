@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect }from 'react-redux'
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "redux"
 
-import Datetime from 'react-datetime';
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
+import Datetime from 'react-datetime'
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
 import { postChild } from '../../actions/children'
 
@@ -27,9 +27,11 @@ class ChildrenForm extends React.Component {
         this.handleNameChange = this.handleNameChange.bind(this)
         this.handleDateChange = this.handleDateChange.bind(this)
     }
+
     handleNameChange = (event) => {
         return this.setState({name: event.target.value})
     }
+    
     handleDateChange = (newDate) => {
         newDate = new Date(parseInt(newDate, 10))
         return this.setState({birthday: newDate})

@@ -35,4 +35,4 @@ class Diaper extends React.Component {
 
 }
 
-export default Diaper;
+export default Diaper

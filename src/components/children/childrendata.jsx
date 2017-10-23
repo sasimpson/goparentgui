@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { bindActionCreators } from "redux";
-import { getChildren } from '../../actions/children'
+import { bindActionCreators } from "redux"
+import MdDelete from 'react-icons/lib/md/delete'
+import MdEdit from 'react-icons/lib/md/edit'
+import {Button, ButtonGroup} from 'react-bootstrap'
+
+import { getChildren, deleteChild } from '../../actions/children'
 
 
 const mapStateToProps = (state) => {
@@ -10,12 +14,13 @@ const mapStateToProps = (state) => {
         children: state.data.children
     }
 }
+
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getChildren: getChildren
+        getChildren: getChildren,
+        deleteChild: deleteChild
     }, dispatch)
 }
-
 
 const ChildrenList = (props) => {
     return (
@@ -32,16 +37,46 @@ const ChildrenList = (props) => {
                 </tbody>
             </table>
         </div>
-    );
+    )
 }
 
-const ChildDataRow = (props) =>  {
+const EditButton = () => {
     return (
-        <tr key={props.data.id}>
-            <td>{props.data.name}</td>
-            <td>{new Date(props.data.birthday).toLocaleString()}</td>
-        </tr>
+        <Button bsStyle="info" bsSize="xsmall" href="#"><MdEdit /></Button>
     )
+}
+
+class ChildDataRow extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            id: this.props.data.id,
+            name: this.props.data.name,
+            birthday: this.props.data.birthday
+        }
+        this.deleteMe = this.deleteMe.bind(this)
+    }
+
+    deleteMe = () => {
+        console.log("delete " + this.state.id)
+        this.props.deleteChild(this.props.token, this.state.id)
+    }
+
+    render () {
+        return (
+            <tr key={this.state.id}>
+                <td>{this.state.name}</td>
+                <td>{new Date(this.state.birthday).toLocaleString()}</td>
+                <td> <ButtonGroup> <EditButton /> <DeleteButton deleteMe={this.deleteMe} /> </ButtonGroup></td>
+            </tr>
+        )
+    }
+}
+
+var DeleteButton = (props) => {
+        return (
+            <Button bsStyle="danger" bsSize="xsmall" onClick={props.deleteMe} ><MdDelete /></Button>
+        )
 }
 
 class ChildrenData extends React.Component {
@@ -64,15 +99,14 @@ class ChildrenData extends React.Component {
         if (this.props.children != null) {
             this.props.children.forEach(
                 d => {
-                    rows.push(<ChildDataRow key={d.id} data={d}/>)
+                    rows.push(<ChildDataRow key={d.id} data={d} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
                 }
             )
         }
         return (
-            <ChildrenList rows={rows}/>
-        );
+            <ChildrenList rows={rows} />
+        )
     }
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChildrenData);
+export default connect(mapStateToProps, mapDispatchToProps)(ChildrenData)

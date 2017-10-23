@@ -5,9 +5,8 @@ import { Link, Redirect } from 'react-router-dom'
 const mapStateToProps = (state) => ({ ...state });
 
 class Home extends React.Component {
-    
+
     render() {
-        console.log("isauthenticated?: ",this.props.authentication.isAuthenticated)
         if (this.props.authentication.isAuthenticated) {
             return (
                 <div className="container">
