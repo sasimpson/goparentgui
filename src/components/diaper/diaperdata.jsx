@@ -6,7 +6,8 @@ import { getDiaper } from '../../actions/diaper'
 const mapStateToProps = (state) => {
     return {
         authentication: state.authentication,
-        diaper: state.data.diaper
+        diaper: state.data.diaper,
+        currentChild: state.settings.currentChild
     }
 }
 

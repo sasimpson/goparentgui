@@ -8,7 +8,8 @@ import { Button, ButtonGroup, FormGroup } from 'react-bootstrap'
 import { postDiaper } from '../../actions/diaper'
 
 const mapStateToProps = (state) => ({
-    authentication: state.authentication
+    authentication: state.authentication,
+    currentChild: state.settings.currentChild
 })
 
 const mapDispatchToProps = (dispatch) =>{
@@ -43,6 +44,13 @@ class DiaperForm extends React.Component {
     }
 
     render() {
+        if (this.props.currentChild === null) {
+            return (
+                <div className="col-md-6">
+                    Please select a child
+                </div>
+            )
+        }
         return (
                 <div className="col-md-6">
                     <form onSubmit={this.handleSubmit}>

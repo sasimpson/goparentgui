@@ -19,7 +19,7 @@ export const loginNow = (username, password) => {
             .then(r => r.json())
             .then(data => {
                 dispatch({type: LOGIN_USER, payload: data})
-                getChildren(data.token)
+                dispatch(getChildren(data.token))
             })
             .catch(e => console.log(e))
     }
