@@ -1,5 +1,7 @@
 import {UPDATE_FIELD_AUTH, LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER} from '../actions/index'
-var authReducer = function(state = {}, action) {
+import {stateTree} from './index'
+
+var authReducer = function(state = stateTree.authenitcation, action) {
     switch (action.type){
         case UPDATE_FIELD_AUTH:
             console.log(UPDATE_FIELD_AUTH)

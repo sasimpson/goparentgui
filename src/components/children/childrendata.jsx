@@ -3,25 +3,32 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
 import MdDelete from 'react-icons/lib/md/delete'
 import MdEdit from 'react-icons/lib/md/edit'
-import {Button, ButtonGroup} from 'react-bootstrap'
+import MdSave from 'react-icons/lib/md/save'
+import MdCancel from 'react-icons/lib/md/cancel'
+import {Button, ButtonGroup, FormControl} from 'react-bootstrap'
+import Datetime from 'react-datetime'
 
-import { getChildren, deleteChild } from '../../actions/children'
+
+import { getChildren, deleteChild, editChild } from '../../actions/children'
 
 
 const mapStateToProps = (state) => {
     return {
         authentication: state.authentication,
-        children: state.data.children
+        children: state.data.children,
+        form: state.forms.childForm
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         getChildren: getChildren,
-        deleteChild: deleteChild
+        deleteChild: deleteChild,
+        editChild: editChild
     }, dispatch)
 }
 
+//Presentation Components
 const ChildrenList = (props) => {
     return (
         <div className="col-md-6">
@@ -40,21 +47,87 @@ const ChildrenList = (props) => {
     )
 }
 
-const EditButton = () => {
+const EditButton = (props) => {
     return (
-        <Button bsStyle="info" bsSize="xsmall" href="#"><MdEdit /></Button>
+        <Button bsStyle="info" bsSize="xsmall" onClick={props.onClick}><MdEdit /></Button>
     )
 }
 
+var DeleteButton = (props) => {
+    return (
+        <Button bsStyle="danger" bsSize="xsmall" onClick={props.onClick} ><MdDelete /></Button>
+    )
+}
+
+var SaveButton = (props) => {
+    return (
+        <Button type="submit" bsStyle="primary" bsSize="small" onClick={props.onClick}><MdSave /></Button>
+    )
+}
+
+var CancelButton = (props) => {
+    return (
+        <Button bsStyle="danger" bsSize="small" onClick={props.onClick}><MdCancel /></Button>
+    )
+}
+
+const ChildEditRow = (props) => {
+    return (
+        <tr key={props.data.id}>
+            <td><FormControl defaultValue={props.data.name} onChange={props.updateName} /></td>
+            <td><Datetime defaultValue={props.data.birthday} onChange={props.updateBirthday} /></td>
+            <td>
+                <ButtonGroup>
+                    <SaveButton onClick={props.onSave}/>
+                    <CancelButton onClick={props.onCancel}/>
+                </ButtonGroup>
+            </td>
+        </tr>
+    )
+}
+
+const ChildDisplayRow = (props) => {
+    return (
+        <tr key={props.data.id}>
+            <td>{props.data.name}</td>
+            <td>{new Date(props.data.birthday).toLocaleString()}</td>
+            <td> 
+                <ButtonGroup> 
+                    <EditButton onClick={props.onEdit}/> 
+                    <DeleteButton onClick={props.onDelete} /> 
+                </ButtonGroup>
+            </td>
+        </tr>
+    )
+}
+
+//Container Components
 class ChildDataRow extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             id: this.props.data.id,
             name: this.props.data.name,
-            birthday: this.props.data.birthday
+            birthday: this.props.data.birthday,
+            parentID: this.props.data.parentID,
+            editStatus: false,
+            editValues: {
+                birthday: this.props.data.birthday,
+                name: this.props.data.name
+            }
         }
         this.deleteMe = this.deleteMe.bind(this)
+        this.editMe = this.editMe.bind(this)
+        this.cancelMe = this.cancelMe.bind(this)
+        this.saveMe = this.saveMe.bind(this)
+        this.updateName = this.updateName.bind(this)
+        this.updateBirthday = this.updateBirthday.bind(this)
+    }
+
+    editMe = (event) => {
+        console.log("edit child " + this.state.id)
+        console.log(event.target.key)
+        this.setState({editStatus: true})
     }
 
     deleteMe = () => {
@@ -62,28 +135,50 @@ class ChildDataRow extends React.Component {
         this.props.deleteChild(this.props.token, this.state.id)
     }
 
-    render () {
-        return (
-            <tr key={this.state.id}>
-                <td>{this.state.name}</td>
-                <td>{new Date(this.state.birthday).toLocaleString()}</td>
-                <td> <ButtonGroup> <EditButton /> <DeleteButton deleteMe={this.deleteMe} /> </ButtonGroup></td>
-            </tr>
-        )
+    cancelMe = () => {
+        console.log("cancel edit " + this.state.id)
+        this.setState({editStatus: false})
     }
-}
 
-var DeleteButton = (props) => {
-        return (
-            <Button bsStyle="danger" bsSize="xsmall" onClick={props.deleteMe} ><MdDelete /></Button>
-        )
+    saveMe = (event) => {
+        this.setState({editStatus: false})
+        this.setState({
+            name: this.state.editValues.name, 
+            birthday: this.state.editValues.birthday
+        })
+        this.props.editChild(this.props.token, this.state)
+    }
+
+    updateName = (event) => {
+        this.setState({editValues: { name: event.target.value}})
+    }
+
+    updateBirthday = (dateInt) => {
+        var newEditVals = this.state.editValues
+        newEditVals.birthday = new Date(dateInt)
+        this.setState({editValues: newEditVals})
+    }
+
+    render () {
+        console.log("birthday start value: " + this.state.birthday)
+        if (this.state.editStatus) {
+            return (
+                <ChildEditRow data={this.state} onSave={this.saveMe} onCancel={this.cancelMe} updateName={this.updateName} updateBirthday={this.updateBirthday} />
+            )
+        } else {
+            return (
+                <ChildDisplayRow data={this.state} onEdit={this.editMe} onDelete={this.deleteMe} />
+            )
+        }
+    }
 }
 
 class ChildrenData extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-        }
+
+        this.editRow = this.editRow.bind(this)
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
 
     componentDidMount = () => {
@@ -94,17 +189,22 @@ class ChildrenData extends React.Component {
         this.props.getChildren(this.props.authentication.auth.token)
     }
 
+    editRow = (event) => {
+        console.log(event.target)
+    }
+
     render() {
-        var rows = [];
-        if (this.props.children != null) {
-            this.props.children.forEach(
-                d => {
-                    rows.push(<ChildDataRow key={d.id} data={d} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
-                }
-            )
-        }
+        // var rows = [];
+        // if (this.props.children != null) {
+            
+        // }
         return (
-            <ChildrenList rows={rows} />
+            <ChildrenList rows={
+                    this.props.children.map( (d) => {
+                        return (<ChildDataRow key={d.id} data={d} onClick={this.editRow} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
+                    }
+                )
+            } />
         )
     }
 }

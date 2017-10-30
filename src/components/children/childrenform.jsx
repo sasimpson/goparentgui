@@ -5,15 +5,17 @@ import { bindActionCreators } from "redux"
 import Datetime from 'react-datetime'
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
-import { postChild } from '../../actions/children'
+import { postChild, clearChildForm } from '../../actions/children'
 
 const mapStateToProps = (state) => ({
-    authentication: state.authentication
+    authentication: state.authentication,
+    childForm: state.forms.childForm
 })
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        postChild: postChild
+        postChild: postChild,
+        clearForm: clearChildForm
     }, dispatch)
 }
 
@@ -26,6 +28,8 @@ class ChildrenForm extends React.Component {
         }
         this.handleNameChange = this.handleNameChange.bind(this)
         this.handleDateChange = this.handleDateChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleClear = this.handleClear.bind(this)
     }
 
     handleNameChange = (event) => {
@@ -33,7 +37,7 @@ class ChildrenForm extends React.Component {
     }
     
     handleDateChange = (newDate) => {
-        newDate = new Date(parseInt(newDate, 10))
+        newDate = new Date(newDate)
         return this.setState({birthday: newDate})
     }
 
@@ -43,20 +47,25 @@ class ChildrenForm extends React.Component {
         this.props.postChild(this.props.authentication.auth.token, this.state)
     }
 
+    handleClear = (event) => {
+        console.log("clearing children form")
+        this.props.clearForm()
+    }
+
     render() {
         return (
             <div className="col-md-6">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <ControlLabel htmlFor="name">Name</ControlLabel>
-                        <FormControl type="text" id="name" onChange={this.handleNameChange}/>
+                        <FormControl type="text" id="name" onChange={this.handleNameChange} value={this.state.name}/>
                     </FormGroup>
                     <div className="form-group">
                         <label htmlFor="birthday">Date/Time</label>  
                         <Datetime onChange={this.handleDateChange}/>
                     </div>
                     <div className="form-group">
-                        <Button type="submit" bsStyle="primary">Submit</Button>
+                        <Button type="submit" bsStyle="primary">Submit</Button> <Button type="button" bsStyle="danger" onClick={this.handleClear}>Clear</Button>
                     </div>
                 </form>
             </div>

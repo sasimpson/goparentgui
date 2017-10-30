@@ -1,4 +1,4 @@
-import { CHILDREN_LOAD_DATA } from './index'
+import { CHILDREN_LOAD_DATA, CHILD_FORM_CLEAR } from './index'
 
 export const getChildren = (token) => {
     console.log("getChildren")
@@ -54,5 +54,38 @@ export const deleteChild = (token, childID) => {
             .then(r => r.json())
             .then(data => dispatch(getChildren(token)))
             .catch(e => console.log(e))
+    }
+}
+
+export const editChild = (token, data) => {
+    console.log("editChild")
+    return (dispatch) => {
+        return fetch("http://localhost:8000/api/children/" + data.id, {
+            method: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+                childData: {
+                    id: data.id,
+                    name: data.name,
+                    birthday: data.birthday,
+                    parentID: data.parentID
+                }
+            })
+        })
+            .then(r => r.json())
+            // .then(data => { dispatch({type: CHILD_FORM_EDIT, payload: data}) })
+            .then(data => dispatch(getChildren(token)))
+            .catch(e => console.log(e))
+    }
+}
+
+export const clearChildForm = () => {
+    console.log("clearChildForm")
+    return (dispatch) => {
+        dispatch({type: CHILD_FORM_CLEAR, payload: null})
     }
 }
