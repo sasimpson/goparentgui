@@ -29,7 +29,7 @@ export const postDiaper = (token, data) => {
             },
             body: JSON.stringify({
                 wasteData: {
-                    type: data.wasteType,
+                    wasteType: data.wasteType,
                     timestamp: data.timestamp,
                     childID: data.childID
                 }

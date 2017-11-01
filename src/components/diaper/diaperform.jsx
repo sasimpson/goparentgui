@@ -26,20 +26,23 @@ class DiaperForm extends React.Component {
             timestamp: new Date()
         }
         this.handleOptionChange = this.handleOptionChange.bind(this)
-        this.handleDateChange = this.handleOptionChange.bind(this)
+        this.handleDateChange = this.handleDateChange.bind(this)
     }
 
     handleOptionChange = (event) => {
+        console.log(event)
+        console.log(event.target.value)
         return this.setState({wasteType: parseInt(event.target.value, 10)});
     }
 
     handleDateChange = (newDate) => {
-        newDate = new Date(parseInt(newDate, 10));
+        newDate = new Date(newDate);
         return this.setState({timestamp: newDate});
     }
     
     handleSubmit = (event) => {
         event.preventDefault()
+        console.log(this.state)
         this.props.postDiaper(this.props.authentication.auth.token, this.state)
     }
 
@@ -52,10 +55,10 @@ class DiaperForm extends React.Component {
             )
         }
         return (
-                <div className="col-md-6">
+                <div className="col-md-6">    
                     <form onSubmit={this.handleSubmit}>
                         <FormGroup>
-                            <Datetime onChange={this.handleDateChange}/>
+                            <Datetime defaultValue={new Date()} onChange={this.handleDateChange}/>
                         </FormGroup>
                         <ButtonGroup justified>
                             <ButtonGroup>

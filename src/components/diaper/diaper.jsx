@@ -15,18 +15,7 @@ const mapStateToProps = (state) => {
 }
 
 class Diaper extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            status: 0
-        }
-    }
 
-
-    updateStatus = () => {
-        this.setState({status: this.state.status + 1});
-    }
-    
     render() {
         if (!this.props.authentication.isAuthenticated) {
             return <Redirect to="/login"/>                
@@ -39,10 +28,10 @@ class Diaper extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <DiaperForm updateFunc={this.updateStatus.bind(this)} />
+                        <DiaperForm />
                     </div>
                     <div className="row">
-                        <DiaperData status={this.state.status} />
+                        <DiaperData />
                     </div>
                 </div>
             )
