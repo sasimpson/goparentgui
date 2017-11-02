@@ -56,7 +56,7 @@ class DiaperData extends React.Component {
     }
     
     getDataFromService = () => {
-       this.props.getDiaper(this.props.authentication.auth.token)
+       this.props.getDiaper(this.props.authentication.auth.token, this.props.currentChild)
     }
 
     render() {

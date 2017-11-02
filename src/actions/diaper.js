@@ -1,9 +1,10 @@
 import {DIAPER_LOAD_DATA} from './index'
 
-export const getDiaper = (token) => {
-    console.log("getDiaper", token)
+export const getDiaper = (token, currentChild) => {
+    console.log("getDiaper")
+    console.log(currentChild)
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/waste", {
+        return fetch("http://localhost:8081/api/waste?child_id=" + currentChild, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -19,8 +20,9 @@ export const getDiaper = (token) => {
 
 export const postDiaper = (token, data) => {
     console.log("postDiaper")
+    console.log(data)
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/waste", {
+        return fetch("http://localhost:8081/api/waste", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -36,7 +38,7 @@ export const postDiaper = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getDiaper(token)))
+            .then(data => dispatch(getDiaper(token, data.childID)))
             .catch(e => console.log(e));
     }
 }

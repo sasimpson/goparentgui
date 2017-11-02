@@ -23,15 +23,14 @@ class DiaperForm extends React.Component {
         super(props);
         this.state = {
             wasteType: 1,
-            timestamp: new Date()
+            timestamp: new Date(),
+            childID: ""
         }
         this.handleOptionChange = this.handleOptionChange.bind(this)
         this.handleDateChange = this.handleDateChange.bind(this)
     }
 
     handleOptionChange = (event) => {
-        console.log(event)
-        console.log(event.target.value)
         return this.setState({wasteType: parseInt(event.target.value, 10)});
     }
 
@@ -42,8 +41,8 @@ class DiaperForm extends React.Component {
     
     handleSubmit = (event) => {
         event.preventDefault()
-        console.log(this.state)
-        this.props.postDiaper(this.props.authentication.auth.token, this.state)
+        console.log("current child: " + this.props.currentChild)
+        this.setState({childID: this.props.currentChild}, function () {this.props.postDiaper(this.props.authentication.auth.token, this.state)})
     }
 
     render() {
