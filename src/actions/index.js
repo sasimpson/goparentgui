@@ -10,6 +10,14 @@ export const CHILDREN_LOAD_DATA = 'CHILDREN_LOAD_DATA'
 export const CHILD_FORM_EDIT = 'CHILD_FORM_EDIT'
 export const CHILD_FORM_CLEAR = 'CHILD_FORM_CLEAR'
 
+//feeding 
+export const FEEDING_LOAD_DATA = 'FEEDING_LOAD_DATA'
+
+//sleep
 export const SLEEP_LOAD_DATA = 'SLEEP_LOAD_DATA'
+
+//diaper
 export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
+
+//misc
 export const CLEAR_DATA = 'CLEAR_DATA'

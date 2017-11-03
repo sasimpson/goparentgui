@@ -9,7 +9,6 @@ var sleepReducer = function(state = [], action) {
                 
             }
             var newState = [
-                    ...state,
                     ...action.payload.sleep
                 ]
             return newState

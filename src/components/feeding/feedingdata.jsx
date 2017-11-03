@@ -1,7 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-const mapStateToProps = (state) => ({...state})
+import {getFeedings} from '../../actions/feeding'
+
+const mapStateToProps = (state) => ({
+    authentication: state.authentication,
+    currentChild: state.settings.currentChild
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getFeedings: getFeedings
+    }, dispatch)
+}
 
 class FeedingData extends React.Component {
     constructor(props) {
@@ -14,24 +26,9 @@ class FeedingData extends React.Component {
     componentDidMount = () => {
         this.getDataFromService();
     }
-    componentWillReceiveProps = (nextProps) => {
-        if (this.props.status !== nextProps.status) {
-            this.getDataFromService();
-        }
-    }
-  
+
     getDataFromService = () => {
-        fetch("http://localhost:8000/api/feeding", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + this.props.auth.token
-            }
-        }) 
-            .then(r => r.json())
-            .then(data => {
-                this.setState({data: data})
-            })
-            .catch((e) => console.log(e));
+        this.props.getFeedings(this.props.authentication.auth.token, this.props.currentChild)
     }
 
     render() {
@@ -80,4 +77,4 @@ class FeedingDataRow extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(FeedingData)
+export default connect(mapStateToProps, mapDispatchToProps)(FeedingData)

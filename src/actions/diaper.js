@@ -1,8 +1,7 @@
 import {DIAPER_LOAD_DATA} from './index'
 
 export const getDiaper = (token, currentChild) => {
-    console.log("getDiaper")
-    console.log(currentChild)
+    console.log("getDiaper: " + currentChild)
     return (dispatch) => {
         return fetch("http://localhost:8081/api/waste?child_id=" + currentChild, {
             method: "GET",
@@ -20,7 +19,6 @@ export const getDiaper = (token, currentChild) => {
 
 export const postDiaper = (token, data) => {
     console.log("postDiaper")
-    console.log(data)
     return (dispatch) => {
         return fetch("http://localhost:8081/api/waste", {
             method: "POST",

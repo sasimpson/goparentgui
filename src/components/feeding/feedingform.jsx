@@ -1,13 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import Datetime from 'react-datetime'
-import { InputRange } from 'react-input-range'
+import InputRange from 'react-input-range'
 import { Button, ButtonGroup } from 'react-bootstrap'
+
+import {postFeeding} from '../../actions/feeding'
 
 import 'react-input-range/lib/css/index.css'
 
 
-const mapStateToProps = (state) => ({...state})
+const mapStateToProps = (state) => ({
+    authentication: state.authentication,
+    currentChild: state.settings.currentChild
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        postFeeding: postFeeding
+    }, dispatch)
+}
 
 class FeedingForm extends React.Component {
     constructor(props) {
@@ -50,23 +63,11 @@ class FeedingForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:8000/api/feeding", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.props.auth.token
-            },
-            body: JSON.stringify({
-                feedingData: {
-                    feedingType: this.state.feedingType, 
-                    timestamp: this.state.timestamp.toISOString(), 
-                    feedingSide: this.state.feedingSide, 
-                    feedingAmount: parseFloat(this.state.feedingAmount, 10)
-                }
-            })
-        }).then(r => this.props.updateFunc());
-        
+        console.log(this.props.currentChild)
+        this.setState(
+            {childID: this.props.currentChild}, 
+            () => {this.props.postFeeding(this.props.authentication.auth.token, this.state)}
+        )
     }
     render() {
         return (
@@ -74,7 +75,7 @@ class FeedingForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="timestamp">Date/Time</label>                            
-                        <Datetime onChange={this.handleDateChange} />
+                        <Datetime onChange={this.handleDateChange} defaultValue={new Date()} />
                     </div>
                     <div className="form-group">
                         <ButtonGroup justified>
@@ -157,4 +158,4 @@ class BreastForm extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(FeedingForm)
+export default connect(mapStateToProps, mapDispatchToProps)(FeedingForm)

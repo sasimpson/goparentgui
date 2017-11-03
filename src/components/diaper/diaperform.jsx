@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
     currentChild: state.settings.currentChild
 })
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         postDiaper: postDiaper
     }, dispatch)
@@ -42,7 +42,10 @@ class DiaperForm extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault()
         console.log("current child: " + this.props.currentChild)
-        this.setState({childID: this.props.currentChild}, function () {this.props.postDiaper(this.props.authentication.auth.token, this.state)})
+        this.setState(
+            {childID: this.props.currentChild}, 
+            () => {this.props.postDiaper(this.props.authentication.auth.token, this.state)}
+        )
     }
 
     render() {
