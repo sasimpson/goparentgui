@@ -7,8 +7,6 @@ export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH'
 //children
 export const SET_CURRENT_CHILD = 'SET_CURRENT_CHILD'
 export const CHILDREN_LOAD_DATA = 'CHILDREN_LOAD_DATA'
-export const CHILD_FORM_EDIT = 'CHILD_FORM_EDIT'
-export const CHILD_FORM_CLEAR = 'CHILD_FORM_CLEAR'
 
 //feeding 
 export const FEEDING_LOAD_DATA = 'FEEDING_LOAD_DATA'

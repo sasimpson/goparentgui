@@ -1,6 +1,8 @@
-import {FEEDING_LOAD_DATA,CLEAR_DATA} from '../actions/index'
+import {FEEDING_LOAD_DATA,CLEAR_DATA} from '../../actions/index'
 
-var feedingReducer = function(state = [], action) {
+var initialState = {byID:{}, allIDs: []}
+
+var feedingReducer = function(state = initialState, action) {
     switch (action.type) {
         case FEEDING_LOAD_DATA:
             console.log(FEEDING_LOAD_DATA)

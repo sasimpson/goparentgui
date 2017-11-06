@@ -5,17 +5,15 @@ import { bindActionCreators } from "redux"
 import Datetime from 'react-datetime'
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
-import { postChild, clearChildForm } from '../../actions/children'
+import { postChild } from '../../actions/children'
 
 const mapStateToProps = (state) => ({
     authentication: state.authentication,
-    childForm: state.forms.childForm
 })
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         postChild: postChild,
-        clearForm: clearChildForm
     }, dispatch)
 }
 

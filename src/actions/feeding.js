@@ -1,9 +1,9 @@
 import {FEEDING_LOAD_DATA} from './index'
 
 export const getFeedings = (token, currentChild) => {
-    console.log("getFeedings: " + currentChild)
+    console.log("getFeedings: ", currentChild)
     return (dispatch) => {
-        fetch("http://localhost:8081/api/feeding", {
+        fetch("/api/feeding", {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -21,7 +21,7 @@ export const postFeeding = (token, data) => {
     console.log("postFeeding")
     console.log(data)
     return (dispatch) => {
-        fetch("http://localhost:8081/api/feeding?child_id=" + data.childID, {
+        fetch("/api/feeding?child_id=" + data.childID, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',

@@ -1,9 +1,9 @@
-import { CHILDREN_LOAD_DATA, CHILD_FORM_CLEAR } from './index'
+import { CHILDREN_LOAD_DATA } from './index'
 
 export const getChildren = (token) => {
     console.log("getChildren")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children", {
+        return fetch("/api/children", {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -20,7 +20,7 @@ export const getChildren = (token) => {
 export const postChild = (token, data) => {
     console.log("postChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children", {
+        return fetch("/api/children", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -43,7 +43,7 @@ export const postChild = (token, data) => {
 export const deleteChild = (token, childID) => {
     console.log("deleteChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children/" + childID, {
+        return fetch("/api/children/" + childID, {
             method: "DELETE",
             headers: {
                 "Accept": "application/json",
@@ -60,7 +60,7 @@ export const deleteChild = (token, childID) => {
 export const editChild = (token, data) => {
     console.log("editChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children/" + data.id, {
+        return fetch("/api/children/" + data.id, {
             method: "PUT",
             headers: {
                 "Accept": "application/json",
@@ -77,15 +77,7 @@ export const editChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            // .then(data => { dispatch({type: CHILD_FORM_EDIT, payload: data}) })
             .then(data => dispatch(getChildren(token)))
             .catch(e => console.log(e))
-    }
-}
-
-export const clearChildForm = () => {
-    console.log("clearChildForm")
-    return (dispatch) => {
-        dispatch({type: CHILD_FORM_CLEAR, payload: null})
     }
 }

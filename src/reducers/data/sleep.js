@@ -1,6 +1,8 @@
-import {SLEEP_LOAD_DATA, CLEAR_DATA} from '../actions/index'
+import {SLEEP_LOAD_DATA, CLEAR_DATA} from '../../actions/index'
 
-var sleepReducer = function(state = [], action) {
+var initialState = {byID:{}, allIDs: []}
+
+var sleepReducer = function(state = initialState, action) {
     switch (action.type) {
         case SLEEP_LOAD_DATA:
             console.log(SLEEP_LOAD_DATA)

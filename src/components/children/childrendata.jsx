@@ -15,8 +15,7 @@ import { getChildren, deleteChild, editChild } from '../../actions/children'
 const mapStateToProps = (state) => {
     return {
         authentication: state.authentication,
-        children: state.data.children,
-        form: state.forms.childForm
+        children: state.entities.children,
     }
 }
 
@@ -125,18 +124,14 @@ class ChildDataRow extends React.Component {
     }
 
     editMe = (event) => {
-        console.log("edit child " + this.state.id)
-        console.log(event.target.key)
         this.setState({editStatus: true})
     }
 
     deleteMe = () => {
-        console.log("delete " + this.state.id)
         this.props.deleteChild(this.props.token, this.state.id)
     }
 
     cancelMe = () => {
-        console.log("cancel edit " + this.state.id)
         this.setState({editStatus: false})
     }
 
@@ -160,7 +155,6 @@ class ChildDataRow extends React.Component {
     }
 
     render () {
-        console.log("birthday start value: " + this.state.birthday)
         if (this.state.editStatus) {
             return (
                 <ChildEditRow data={this.state} onSave={this.saveMe} onCancel={this.cancelMe} updateName={this.updateName} updateBirthday={this.updateBirthday} />
@@ -177,7 +171,6 @@ class ChildrenData extends React.Component {
     constructor(props) {
         super(props)
 
-        this.editRow = this.editRow.bind(this)
         this.getDataFromService = this.getDataFromService.bind(this)
     }
 
@@ -189,19 +182,13 @@ class ChildrenData extends React.Component {
         this.props.getChildren(this.props.authentication.auth.token)
     }
 
-    editRow = (event) => {
-        console.log(event.target)
-    }
-
     render() {
-        // var rows = [];
-        // if (this.props.children != null) {
-            
-        // }
         return (
             <ChildrenList rows={
-                    this.props.children.map( (d) => {
-                        return (<ChildDataRow key={d.id} data={d} onClick={this.editRow} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
+                this.props.children.allIDs.map(
+                    (id) => {
+                        var d = this.props.children.byID[id]
+                        return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
                     }
                 )
             } />

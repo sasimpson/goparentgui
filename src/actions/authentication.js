@@ -15,7 +15,7 @@ export const loginNow = (username, password) => {
     data.append("password", password)
     return (dispatch) => {
         dispatch({ type: LOGIN_IN_PROGRESS })
-        return fetch("http://localhost:8000/api/user/login", {method: "POST", body: data})
+        return fetch("/api/user/login", {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
                 dispatch({type: LOGIN_USER, payload: data})

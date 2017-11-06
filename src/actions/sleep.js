@@ -3,7 +3,7 @@ import {SLEEP_LOAD_DATA} from './index'
 export const getSleep = (token) => {
     console.log("getSleep", token)
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/sleep", {
+        return fetch("/api/sleep", {
             method: "GET",
             headers: {
                 "Accept": "application/json",

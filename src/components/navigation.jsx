@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
     return {
         authorized: state.authentication.isAuthenticated, 
         token: state.authentication.auth.token,
-        children: state.data.children, 
+        children: state.entities.children, 
         currentChild: state.settings.currentChild}
 }
 
@@ -50,25 +50,30 @@ class ChildrenDropDown extends React.Component {
     }
 
     render () {
-        var rows = []
-        if (Array.isArray(this.state.children) && this.state.children.length > 0) {
-            this.state.children.forEach( 
-                d => { 
-                    var selected = false
-                    if (d.id === this.state.currentChild) {
-                        selected = true
-                    }
-                    rows.push(
-                        <ChildRow key={d.id} data={d} selected={selected} setCurrentChild={this.props.setCurrentChild} />
-                    )
-                }
-            )
-        }
+        console.log(this.state.children)
+        // var rows = []
+        // if (this.state.children && this.state.children.allIDs.length > 0) {
+            
+        // }
 
         return (
             <NavDropdown eventKey={5} title="Children" id="children-drop" onSelect={this.reloadNav}>
                 <MenuItem eventKey={5.1} href="/children">All</MenuItem>
-                {rows}
+                {
+                    this.state.children.allIDs.map( 
+                        (id) => { 
+                            console.log(id)
+                            var d = this.state.children.byID[id]
+                            var selected = false
+                            if (id === this.state.currentChild) {
+                                selected = true
+                            }
+                            return (
+                                <ChildRow key={id} data={d} selected={selected} setCurrentChild={this.props.setCurrentChild} />
+                            )
+                        }
+                    )
+                }
             </NavDropdown>
         )
     }

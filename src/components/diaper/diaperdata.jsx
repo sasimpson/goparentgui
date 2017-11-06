@@ -6,7 +6,7 @@ import { getDiaper } from '../../actions/diaper'
 const mapStateToProps = (state) => {
     return {
         authentication: state.authentication,
-        diaper: state.data.diaper,
+        diaper: state.entities.diaper,
         currentChild: state.settings.currentChild
     }
 }
@@ -50,6 +50,7 @@ class DiaperData extends React.Component {
         this.state = {
             data: []
         }
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
     componentDidMount = () => {
         this.getDataFromService();
@@ -60,16 +61,15 @@ class DiaperData extends React.Component {
     }
 
     render() {
-        var rows = [];
-        if (this.props.diaper != null) {
-            this.props.diaper.forEach(
-                d => {
-                    rows.push(<DiaperDataRow key={d.id} data={d}/> )
-                }
-            )
-        }
         return (
-            <DiaperList rows={rows} />
+            <DiaperList rows={
+                this.props.diaper.allIDs.map(
+                    (id) => {
+                        var d = this.props.diaper.byID[id]
+                        return (<DiaperDataRow key={id} data={d}/> )
+                    }
+                )
+            } />
         )
     }
 }
