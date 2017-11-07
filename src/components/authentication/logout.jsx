@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import {LOGOUT_USER, CLEAR_DATA} from '../actions/index' 
+import {LOGOUT_USER, CLEAR_DATA} from '../../actions/index' 
 import {connect} from 'react-redux'
 
 const mapStateToProps = (state) => {
