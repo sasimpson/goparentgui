@@ -6,6 +6,7 @@ import {
 const childrenFetchingData = () => {
     return {type: CHILDREN_FETCH_DATA}
 }
+
 const childrenLoadData = (data) => {
     return {type: CHILDREN_LOAD_DATA, payload: data}
 }

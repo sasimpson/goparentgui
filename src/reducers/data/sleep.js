@@ -1,22 +1,30 @@
-import {SLEEP_LOAD_DATA, CLEAR_DATA} from '../../actions/index'
+import {
+    SLEEP_LOAD_DATA,
+    SLEEP_FETCH_DATA,
+    CLEAR_DATA
+} from '../../actions/index'
 
 var initialState = {byID:{}, allIDs: []}
 
 var sleepReducer = function(state = initialState, action) {
     switch (action.type) {
+        case SLEEP_FETCH_DATA:
+            console.log(action.type)
+            return initialState
         case SLEEP_LOAD_DATA:
-            console.log(SLEEP_LOAD_DATA)
-            if (action.payload.sleep == null) {
-                return state
-                
+            console.log(action.type)
+            var newState = initialState
+            if (action.payload.sleep) {
+                action.payload.sleep.forEach(
+                    (e) => {
+                        newState.byID[e.id] = e
+                        newState.allIDs.push(e.id)
+                    }
+                )
             }
-            var newState = [
-                    ...action.payload.sleep
-                ]
-            return newState
+            return Object.assign(initialState, state, newState)
         case CLEAR_DATA:
-            console.log(CLEAR_DATA)
-            return []
+            return initialState
         default: 
             return state
     }

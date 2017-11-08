@@ -25,7 +25,7 @@ class Sleep extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <SleepToggle updateFunc={this.updateStatus.bind(this)} />
+                    {/* <SleepToggle updateFunc={this.updateStatus.bind(this)} /> */}
                 </div>
                 <div className="row">
                     <div className="col-md-6"><h4>or</h4></div>
@@ -34,7 +34,7 @@ class Sleep extends React.Component {
                     <SleepForm updateFunc={this.updateStatus.bind(this)} />
                 </div>
                 <div className="row">
-                    <SleepData status={this.state.status} />
+                    <SleepData />
                 </div>
             </div>
         );

@@ -14,7 +14,7 @@ import { getChildren, deleteChild, editChild } from '../../actions/children'
 
 const mapStateToProps = (state) => {
     return {
-        authentication: state.authentication,
+        token: state.authentication.auth.token,
         children: state.entities.children,
     }
 }
@@ -175,11 +175,11 @@ class ChildrenData extends React.Component {
     }
 
     componentDidMount = () => {
-        this.getDataFromService();
+        this.getDataFromService()
     }
 
     getDataFromService = () => {
-        this.props.getChildren(this.props.authentication.auth.token)
+        this.props.getChildren(this.props.token)
     }
 
     render() {
@@ -188,7 +188,7 @@ class ChildrenData extends React.Component {
                 this.props.children.allIDs.map(
                     (id) => {
                         var d = this.props.children.byID[id]
-                        return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.authentication.auth.token}/>)
+                        return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.token}/>)
                     }
                 )
             } />

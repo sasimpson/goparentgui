@@ -17,9 +17,10 @@ var childrenReducer = function(state = initialState, action) {
             if (action.payload.children) {
                 action.payload.children.forEach(
                     (e) => {
-                    newState.byID[e.id] = e
-                    newState.allIDs.push(e.id)
-                })
+                        newState.byID[e.id] = e
+                        newState.allIDs.push(e.id)
+                    }
+                )
             }     
             return Object.assign(initialState, state, newState)
         case CLEAR_DATA:

@@ -1,49 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from "redux"
 
-const mapStateToProps = (state) => ({...state})
+import {getSleep} from '../../actions/sleep'
 
-class SleepData extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [] 
-        };
+const mapStateToProps = (state) => {
+    return {
+        token: state.authentication.auth.token,
+        sleep: state.entities.sleep
     }
+}
 
-    componentDidMount = () => {
-        this.getDataFromService();
-    }
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getSleep: getSleep
+    }, dispatch)
+}
 
-    componentWillReceiveProps = (nextProps) => {
-        if (this.props.status !== nextProps.status) {
-            this.getDataFromService()
-        }
-    }
-
-    getDataFromService = () => {
-        fetch("http://localhost:8000/api/sleep", {
-            method: "GET",
-            headers: {
-                'Authorization': "Bearer " + this.props.auth.token
-            }
-        }) 
-            .then(r => r.json())
-            .then(data => {
-                this.setState({data: data})
-            })
-            .catch((e) => console.log(e))
-    }
-
-    render() {
-    var rows = [];
-        if (this.state.data != null) {
-            this.state.data.forEach(
-                d => {
-                    rows.push(<SleepDataRow key={d.id} data={d}/> )
-                }
-            )
-    }
+//presentational components
+const SleepList = (props) => {
     return (
         <div className="col-md-6">
             <table className="table table-condensed table-striped">
@@ -55,11 +30,40 @@ class SleepData extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                {rows}
+                {props.rows}
             </tbody>
             </table>
         </div>
       )
+}
+
+//container components
+class SleepData extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.getDataFromService = this.getDataFromService.bind(this)
+    }
+
+    componentDidMount = () => {
+        this.getDataFromService()
+    }
+
+    getDataFromService = () => {
+        this.props.getSleep(this.props.token)
+    }
+
+    render() {
+        return (
+            <SleepList rows={
+                this.props.sleep.allIDs.map(
+                    (id) => {
+                        var d = this.props.sleep.byID[id]
+                        return (<SleepDataRow key={id} data={d} />)
+                    }
+                )
+            } />
+        )
     }
 }
 
@@ -101,4 +105,4 @@ function DateTimeFormat(props) {
     )
 }
 
-export default connect(mapStateToProps)(SleepData)
+export default connect(mapStateToProps, mapDispatchToProps)(SleepData)
