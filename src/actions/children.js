@@ -1,8 +1,19 @@
-import { CHILDREN_LOAD_DATA } from './index'
+import { 
+    CHILDREN_LOAD_DATA, 
+    CHILDREN_FETCH_DATA 
+} from './index'
+
+const childrenFetchingData = () => {
+    return {type: CHILDREN_FETCH_DATA}
+}
+const childrenLoadData = (data) => {
+    return {type: CHILDREN_LOAD_DATA, payload: data}
+}
 
 export const getChildren = (token) => {
     console.log("getChildren")
     return (dispatch) => {
+        dispatch(childrenFetchingData())
         return fetch("/api/children", {
             method: "GET",
             headers: {
@@ -12,7 +23,9 @@ export const getChildren = (token) => {
             }
         })
             .then(r => r.json())
-            .then(data => { dispatch({type: CHILDREN_LOAD_DATA, payload: data}) })
+            .then(data => { 
+                dispatch(childrenLoadData(data))
+            })
             .catch(e => console.log(e))
     }
 }
@@ -35,7 +48,7 @@ export const postChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getChildren(token)))
+            .then(data => getChildren(token))  //should probably just send api command and update redux instead
             .catch(e => console.log(e))
     }
 }
@@ -52,7 +65,7 @@ export const deleteChild = (token, childID) => {
             }
         })
             .then(r => r.json())
-            .then(data => dispatch(getChildren(token)))
+            .then(data => getChildren(token))  //should probably just send api command and update redux instead
             .catch(e => console.log(e))
     }
 }
@@ -77,7 +90,7 @@ export const editChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getChildren(token)))
+            .then(data => getChildren(token))  //should probably just send api command and update redux instead
             .catch(e => console.log(e))
     }
 }

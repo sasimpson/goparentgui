@@ -7,15 +7,13 @@ import FeedingData from './feedingdata'
 
 const mapStateToProps = (state) => {
     return {
-        settings: state.settings,
-        authentication: state.authentication
+        isAuthenticated: state.authentication.isAuthenticated
     }
-
 }
 
 class Feeding extends React.Component {
     render() {
-        if (!this.props.authentication.isAuthenticated) {
+        if (!this.props.isAuthenticated) {
             return <Redirect to="/login"/>                
         } else {
             return (

@@ -1,22 +1,29 @@
-import {FEEDING_LOAD_DATA,CLEAR_DATA} from '../../actions/index'
+import {
+    FEEDING_LOAD_DATA,
+    FEEDING_FETCH_DATA,
+    CLEAR_DATA
+} from '../../actions/index'
 
 var initialState = {byID:{}, allIDs: []}
 
 var feedingReducer = function(state = initialState, action) {
     switch (action.type) {
+        case FEEDING_FETCH_DATA:
+            console.log(action.type)
+            return initialState
         case FEEDING_LOAD_DATA:
-            console.log(FEEDING_LOAD_DATA)
-            console.log(action)
-            if (action.payload.feedingData == null){
-                return state
+            console.log(action.type)
+            var newState = initialState
+            if (action.payload.feedingData){
+                action.payload.feedingData.forEach(
+                    (e) => {
+                        newState.byID[e.id] = e
+                        newState.allIDs.push(e.id)
+                })
             }
-            var newState = [
-                ...action.payload.feedingData
-            ]
-            return newState
+            return Object.assign(initialState, state, newState)
         case CLEAR_DATA:
-            console.log(CLEAR_DATA)
-            return []
+            return initialState
         default:
             return state
     }
