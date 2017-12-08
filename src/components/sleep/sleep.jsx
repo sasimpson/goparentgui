@@ -2,7 +2,7 @@ import React from 'react';
 
 import SleepForm from './sleepform';
 import SleepData from './sleepdata';
-import SleepToggle from './sleeptoggle';
+// import SleepToggle from './sleeptoggle';
 
 class Sleep extends React.Component {
     constructor(props) {

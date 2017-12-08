@@ -4,6 +4,8 @@ import {
     FEEDING_POST_DATA 
 } from './index'
 
+import {getUrl} from '../utils/index'
+
 const feedingFetchingData = () => {
     return {type: FEEDING_FETCH_DATA}
 }
@@ -17,10 +19,9 @@ const feedingLoadData = (data) => {
 }
 
 export const getFeedings = (token) => {
-    console.log("getFeedings")
     return (dispatch) => {
         dispatch(feedingFetchingData())
-        fetch("/api/feeding", {
+        fetch(getUrl("/api/feeding"), {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -37,11 +38,9 @@ export const getFeedings = (token) => {
 }
 
 export const postFeeding = (token, data) => {
-    console.log("postFeeding")
-    console.log(data)
     return (dispatch) => {
         dispatch(feedingPostData())
-        fetch("/api/feeding", {
+        fetch(getUrl("/api/feeding"), {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -60,7 +59,7 @@ export const postFeeding = (token, data) => {
         })
             .then(r => r.json())
             .then(data =>{ 
-                dispatch(getFeedings(token, data.childID))
+                dispatch(getFeedings(token))
             })
             .catch((e) => console.log(e))
     }

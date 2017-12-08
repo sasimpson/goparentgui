@@ -3,6 +3,8 @@ import {
     CHILDREN_FETCH_DATA 
 } from './index'
 
+import {getUrl} from '../utils/index'
+
 const childrenFetchingData = () => {
     return {type: CHILDREN_FETCH_DATA}
 }
@@ -12,10 +14,9 @@ const childrenLoadData = (data) => {
 }
 
 export const getChildren = (token) => {
-    console.log("getChildren")
     return (dispatch) => {
         dispatch(childrenFetchingData())
-        return fetch("/api/children", {
+        return fetch(getUrl("/api/children"), {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -32,9 +33,8 @@ export const getChildren = (token) => {
 }
 
 export const postChild = (token, data) => {
-    console.log("postChild")
     return (dispatch) => {
-        return fetch("/api/children", {
+        return fetch(getUrl("/api/children"), {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -55,9 +55,8 @@ export const postChild = (token, data) => {
 }
 
 export const deleteChild = (token, childID) => {
-    console.log("deleteChild")
     return (dispatch) => {
-        return fetch("/api/children/" + childID, {
+        return fetch(getUrl("/api/children/" + childID), {
             method: "DELETE",
             headers: {
                 "Accept": "application/json",
@@ -72,9 +71,8 @@ export const deleteChild = (token, childID) => {
 }
 
 export const editChild = (token, data) => {
-    console.log("editChild")
     return (dispatch) => {
-        return fetch("/api/children/" + data.id, {
+        return fetch(getUrl("/api/children/" + data.id), {
             method: "PUT",
             headers: {
                 "Accept": "application/json",

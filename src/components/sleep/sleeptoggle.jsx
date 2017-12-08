@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 
+import getUrl from '../utils/index'
+
 const mapStateToProps = (state) => ({...state})
 
 class SleepToggle extends React.Component {
@@ -12,7 +14,7 @@ class SleepToggle extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch("http://localhost:8000/api/sleep/status", {
+        fetch(getUrl("/api/sleep/status"), {
             method: "GET", 
             headers: {
                 'Authorization': "Bearer " + this.props.auth.token
@@ -31,7 +33,7 @@ class SleepToggle extends React.Component {
 
     handleToggleStatus = (event) => {
         if (this.state.sleepStatus === false) {
-            fetch("http://localhost:8000/api/sleep/start", {
+            fetch(getUrl("/api/sleep/start"), {
             method: "POST", 
             headers: {
                 'Authorization': "Bearer " + this.props.auth.token
@@ -49,7 +51,7 @@ class SleepToggle extends React.Component {
             .catch( (e) => console.log(e));
         }
         else if (this.state.sleepStatus === true) {
-            fetch("http://localhost:8000/api/sleep/end", {
+            fetch(getUrl("/api/sleep/end"), {
             method: "POST", 
             headers: {
                 'Authorization': "Bearer " + this.props.auth.token

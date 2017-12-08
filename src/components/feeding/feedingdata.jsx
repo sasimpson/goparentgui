@@ -69,12 +69,10 @@ class FeedingData extends React.Component {
     }
 
     render() {
-        console.log(this.props.feedings)
         return (
             <FeedingsList rows={
                 this.props.feedings.allIDs.map(
                     (id) => {
-                        console.log(id)
                         var d = this.props.feedings.byID[id]
                         return <FeedingDataRow key={id} data={d}/>
                     }

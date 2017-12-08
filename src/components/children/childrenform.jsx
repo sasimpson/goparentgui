@@ -8,7 +8,7 @@ import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 import { postChild } from '../../actions/children'
 
 const mapStateToProps = (state) => ({
-    authentication: state.authentication,
+    token: state.authentication.auth.token,
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,12 +41,10 @@ class ChildrenForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log("submitting children data")
-        this.props.postChild(this.props.authentication.auth.token, this.state)
+        this.props.postChild(this.props.token, this.state)
     }
 
     handleClear = (event) => {
-        console.log("clearing children form")
         this.props.clearForm()
     }
 

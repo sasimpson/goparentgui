@@ -1,5 +1,16 @@
-import {LOGIN_USER, LOGOUT_USER, LOGIN_IN_PROGRESS, LOGIN_FAILED} from './index'
+import {
+    LOGIN_USER, 
+    LOGOUT_USER, 
+    LOGIN_IN_PROGRESS, 
+    LOGIN_FAILED
+} from './index'
+
+import {getUrl} from '../utils/index'
+
 import {getChildren} from './children'
+import {getFeedings} from './feeding'
+import {getDiaper} from './diaper'
+import {getSleep} from './sleep'
 
 //pure functions
 export const loginInProgress = () => {
@@ -23,13 +34,16 @@ export const loginNow = (username, password) => {
     data.append("password", password)
     return (dispatch) => {
         dispatch(loginInProgress())
-        return fetch("/api/user/login", {method: "POST", body: data})
+        var urlToRequest = getUrl("/api/user/login")
+        console.log("request URL: ", urlToRequest)
+        return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
-                console.log("loginNow", data)
                 dispatch(loginUser(data))
-                console.log("calling getchildren from loginNow")
                 getChildren(data.token)
+                getFeedings(data.token)
+                getDiaper(data.token)
+                getSleep(data.token)
             })
             .catch(e => {
                 dispatch(loginFailed())

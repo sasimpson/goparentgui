@@ -7,8 +7,7 @@ var initalSettingState = {
 var settingsReducer = function(state = initalSettingState, action) {
     switch (action.type) {
         case SET_CURRENT_CHILD:
-            console.log(SET_CURRENT_CHILD)
-            console.log(action)
+            console.log(action.type)
             return Object.assign({}, state, {
                 currentChild: action.payload.childID
             })

@@ -24,7 +24,6 @@ const mapDispatchToProps = (dispatch) => {
 class ChildrenDropDown extends React.Component {
 
     componentWillMount = () => {
-        console.log("childrendropdown componentwillmount")
         this.props.getChildren(this.props.token)
     }
 

@@ -9,7 +9,11 @@ import {Button, ButtonGroup, FormControl} from 'react-bootstrap'
 import Datetime from 'react-datetime'
 
 
-import { getChildren, deleteChild, editChild } from '../../actions/children'
+import { 
+    getChildren, 
+    deleteChild, 
+    editChild 
+} from '../../actions/children'
 
 
 const mapStateToProps = (state) => {
@@ -115,8 +119,9 @@ class ChildDataRow extends React.Component {
                 name: this.props.data.name
             }
         }
-        this.deleteMe = this.deleteMe.bind(this)
+
         this.editMe = this.editMe.bind(this)
+        this.deleteMe = this.deleteMe.bind(this)
         this.cancelMe = this.cancelMe.bind(this)
         this.saveMe = this.saveMe.bind(this)
         this.updateName = this.updateName.bind(this)
@@ -171,27 +176,31 @@ class ChildrenData extends React.Component {
     constructor(props) {
         super(props)
 
+        this.getRows = this.getRows.bind(this)
         this.getDataFromService = this.getDataFromService.bind(this)
     }
 
-    componentDidMount = () => {
-        this.getDataFromService()
-    }
+    // componentDidMount = () => {
+    //     this.getDataFromService()
+    // }
 
     getDataFromService = () => {
         this.props.getChildren(this.props.token)
     }
 
+    getRows = () => {
+        var rows = this.props.children.allIDs.map(
+            (id) => {
+                var d = this.props.children.byID[id]
+                return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.token}/>)
+            }
+        )
+        return rows
+    }
+
     render() {
         return (
-            <ChildrenList rows={
-                this.props.children.allIDs.map(
-                    (id) => {
-                        var d = this.props.children.byID[id]
-                        return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.token}/>)
-                    }
-                )
-            } />
+            <ChildrenList rows={this.getRows()} />
         )
     }
 }

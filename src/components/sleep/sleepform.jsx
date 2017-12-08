@@ -1,9 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from "redux"
+
 import Datetime from 'react-datetime'
 import { Button } from 'react-bootstrap'
 
-const mapStateToProps = (state) => ({...state})
+import {postSleep} from '../../actions/sleep'
+
+const mapStateToProps = (state) => ({
+    token: state.authentication.auth.token
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        postSleep: postSleep,
+    }, dispatch)
+}
 
 class SleepForm extends React.Component {
     constructor(props) {
@@ -14,6 +26,7 @@ class SleepForm extends React.Component {
         }
         this.handleStartChange = this.handleStartChange.bind(this)
         this.handleEndChange = this.handleEndChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
   
     handleStartChange = (newDate) => {
@@ -28,20 +41,7 @@ class SleepForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        fetch("http://localhost:8000/api/sleep", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + this.props.auth.token
-            },
-            body: JSON.stringify({
-                sleepData: {
-                    start: this.state.startDate, 
-                    end: this.state.endDate
-                }
-            })
-        }).then(r => this.props.updateFunc());
+        this.props.postSleep(this.props.token, this.state)
     }
 
     render() {
@@ -63,4 +63,4 @@ class SleepForm extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(SleepForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SleepForm);

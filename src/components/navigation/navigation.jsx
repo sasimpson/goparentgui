@@ -12,10 +12,6 @@ const mapStateToProps = (state) => {
 }
 
 class Navigation extends React.Component {
-    constructor(props) {
-        super(props)
-        console.log("load navigation")
-    }
     render() {
         return (
             <Navbar inverse >
