@@ -10,11 +10,23 @@ Clone/fork-clone the repo then:
 
 then it should be running.  the install should grab all the dependencies.  if i left any out let me know.
 
+## Using with minikube/k8s:
+
+this has been designed to be deployed on a kubernetes environment.  Using minikube is great for development.  The first step is to build out the docker image for the containers (X.X is your version):
+
+  docker build -t goparentgui:vX.X
+
+then you just need to deploy that to your kubernetes instance with the deployment file:
+
+  kubectl create -f k8s/deployment.yaml
+
+this will setup the service and the deployment.  set the number of pods on the service or in the deployment file.
+
 ## ToDo:
 
-- [ ] add multiple children to a user to track
+- [x] add multiple children to a user to track
 - [ ] add registration form
-- [ ] full convert to redux for state management instead of local state in most cases
+- [x] full convert to redux for state management instead of local state in most cases
 
 ## Thanks:
 

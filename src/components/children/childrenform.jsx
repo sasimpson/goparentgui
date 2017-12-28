@@ -40,12 +40,13 @@ class ChildrenForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         this.props.postChild(this.props.token, this.state)
+        this.setState({name: "", birthday: new Date()})
     }
 
     handleClear = (event) => {
-        this.props.clearForm()
+        this.setState({name: "", birthday: new Date()})
     }
 
     render() {

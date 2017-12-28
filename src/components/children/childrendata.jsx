@@ -176,31 +176,32 @@ class ChildrenData extends React.Component {
     constructor(props) {
         super(props)
 
-        this.getRows = this.getRows.bind(this)
+        // this.getRows = this.getRows.bind(this)
         this.getDataFromService = this.getDataFromService.bind(this)
     }
-
-    // componentDidMount = () => {
-    //     this.getDataFromService()
-    // }
+    componentDidMount = () => {
+        this.getDataFromService()
+    }
 
     getDataFromService = () => {
         this.props.getChildren(this.props.token)
     }
 
-    getRows = () => {
-        var rows = this.props.children.allIDs.map(
-            (id) => {
-                var d = this.props.children.byID[id]
-                return (<ChildDataRow key={id} data={d} editChild={this.props.editChild} deleteChild={this.props.deleteChild} token={this.props.token}/>)
-            }
-        )
-        return rows
-    }
-
     render() {
         return (
-            <ChildrenList rows={this.getRows()} />
+            <ChildrenList rows={
+                this.props.children.allIDs.map(
+                    (id) => {
+                        var d = this.props.children.byID[id]
+                        console.log("row data: ", d)
+                        return (
+                            <ChildDataRow key={id} data={d} 
+                                          editChild={this.props.editChild} 
+                                          deleteChild={this.props.deleteChild} 
+                                          token={this.props.token}/>)
+                    }
+                )
+            } />
         )
     }
 }

@@ -24,9 +24,6 @@ export const saveState = (state) => {
 }
 
 export const getUrl = (path) => {
-    console.log("environment:", process.env.NODE_ENV)
-    console.log("path:", path)
-    console.log(config)
     if (process.env.NODE_ENV === "production") {
         return config['production']['protocol'] + "://" + config['production']['host'] + ":" + config['production']['port'] + path
     } else if (process.env.NODE_ENV === "development") {
