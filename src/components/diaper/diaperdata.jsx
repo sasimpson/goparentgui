@@ -55,6 +55,10 @@ class DiaperData extends React.Component {
     // componentDidMount = () => {
     //     this.getDataFromService();
     // }
+
+    // componentDidUpdate = () => {
+        
+    // }
     
     getDataFromService = () => {
        this.props.getDiaper(this.props.authentication.auth.token, this.props.currentChild)
@@ -66,7 +70,11 @@ class DiaperData extends React.Component {
                 this.props.diaper.allIDs.map(
                     (id) => {
                         var d = this.props.diaper.byID[id]
-                        return (<DiaperDataRow key={id} data={d}/> )
+                        if (d.childid === this.props.currentChild) {
+                            return (<DiaperDataRow key={id} data={d}/>)
+                        } else {
+                            return ""
+                        }
                     }
                 )
             } />

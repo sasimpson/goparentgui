@@ -175,8 +175,6 @@ class ChildDataRow extends React.Component {
 class ChildrenData extends React.Component {
     constructor(props) {
         super(props)
-
-        // this.getRows = this.getRows.bind(this)
         this.getDataFromService = this.getDataFromService.bind(this)
     }
     componentDidMount = () => {
