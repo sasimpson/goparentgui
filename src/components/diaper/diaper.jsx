@@ -23,7 +23,7 @@ class Diaper extends React.Component {
     }
 
     getCurrentChild = () => {
-        if (this.props.settings.currentChild !== "") {
+        if (this.props.settings.currentChild !== null) {
             return this.props.children.byID[this.props.settings.currentChild]
         }
         return null

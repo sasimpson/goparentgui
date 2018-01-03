@@ -9,10 +9,8 @@ var initialState = {byID:{}, allIDs: []}
 var sleepReducer = function(state = initialState, action) {
     switch (action.type) {
         case SLEEP_FETCH_DATA:
-            console.log(action.type)
-            return initialState
+            return state
         case SLEEP_LOAD_DATA:
-            console.log(action.type)
             var newState = initialState
             if (action.payload.sleep) {
                 action.payload.sleep.forEach(

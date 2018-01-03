@@ -5,7 +5,6 @@ var initialState = {byID:{}, allIDs: []}
 var diaperReducer = function(state = initialState, action) {
     switch (action.type) {
         case DIAPER_LOAD_DATA:
-            console.log(action.type)
             var newState = initialState
             if (action.payload.wasteData) {
                 action.payload.wasteData.forEach( (e) => {

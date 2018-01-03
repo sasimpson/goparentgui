@@ -9,12 +9,10 @@ import {
 var initialState = {byID:{}, allIDs: []}
 
 var childrenReducer = function(state = initialState, action) {
-    console.log(action.type)
     switch (action.type) {
         case CHILDREN_WILL_POST:
             return state
         case CHILDREN_LOAD_DATA:
-            console.log(action.payload)
             var newState = initialState
             if (action.payload.children) {
                 action.payload.children.forEach(
@@ -28,7 +26,6 @@ var childrenReducer = function(state = initialState, action) {
             } 
             return newState
         case CHILDREN_ADD_DATA:
-            console.log(action.payload)
             newState = state
             if (!newState.allIDs.includes(action.payload.id)) {
                 newState.allIDs.push(action.payload.id)
@@ -36,7 +33,6 @@ var childrenReducer = function(state = initialState, action) {
             }
             return newState
         case CHILDREN_DELETE_DATA:
-            console.log(action.payload)
             newState = state
             if (newState.allIDs.includes(action.payload.id)) {
                 var index = newState.allIDs.indexOf(action.payload.id)

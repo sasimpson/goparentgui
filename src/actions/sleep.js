@@ -51,7 +51,7 @@ export const postSleep = (token, data) => {
             .then(data =>{ 
                 dispatch(getSleep(token))
             })
-            .catch((e) => console.log(e))
+            .catch(e => console.log(e))
     }
 }
 
@@ -70,5 +70,5 @@ export const getSleepStatus = (token) => {
                 this.setState({ sleepStatus: false })
             }
         })
-        .catch( (error) => console.log(error))
+        .catch(e => console.log(e))
 }

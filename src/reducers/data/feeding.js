@@ -9,10 +9,8 @@ var initialState = {byID:{}, allIDs: []}
 var feedingReducer = function(state = initialState, action) {
     switch (action.type) {
         case FEEDING_FETCH_DATA:
-            console.log(action.type)
-            return initialState
+            return state
         case FEEDING_LOAD_DATA:
-            console.log(action.type)
             var newState = initialState
             if (action.payload.feedingData){
                 action.payload.feedingData.forEach(

@@ -191,7 +191,6 @@ class ChildrenData extends React.Component {
                 this.props.children.allIDs.map(
                     (id) => {
                         var d = this.props.children.byID[id]
-                        console.log("row data: ", d)
                         return (
                             <ChildDataRow key={id} data={d} 
                                           editChild={this.props.editChild} 

@@ -4,12 +4,10 @@ import {stateTree} from './index'
 var authReducer = function(state = stateTree.authentication, action) {
     switch (action.type){
         case LOGIN_IN_PROGRESS:
-            console.log(action.type)
             return Object.assign({}, state, {
                 isAuthenticating: true
             })
         case LOGIN_USER:
-            console.log(action.type)
             return Object.assign({}, state, {
                 isAuthenticated: true,
                 isAuthenticating: false,
@@ -21,7 +19,6 @@ var authReducer = function(state = stateTree.authentication, action) {
         case LOGIN_FAILED:
         case CLEAR_DATA:
         case LOGOUT_USER:
-            console.log(action.type)
             return Object.assign({}, state, {
                 isAuthenticated: false,
                 isAuthenticating: false,

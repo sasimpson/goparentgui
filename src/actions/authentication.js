@@ -35,7 +35,6 @@ export const loginNow = (username, password) => {
     return (dispatch) => {
         dispatch(loginInProgress())
         var urlToRequest = getUrl("/api/user/login")
-        console.log("request URL: ", urlToRequest)
         return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {

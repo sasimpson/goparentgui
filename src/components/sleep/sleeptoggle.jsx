@@ -28,7 +28,7 @@ class SleepToggle extends React.Component {
                     this.setState({ sleepStatus: false })
                 }
             })
-            .catch( (error) => console.log(error))
+            .catch( e => console.log(e))
     }
 
     handleToggleStatus = (event) => {
@@ -48,7 +48,7 @@ class SleepToggle extends React.Component {
                 }
             })
             .then(() => this.props.updateFunc())
-            .catch( (e) => console.log(e));
+            .catch( e => console.log(e));
         }
         else if (this.state.sleepStatus === true) {
             fetch(getUrl("/api/sleep/end"), {
@@ -66,7 +66,7 @@ class SleepToggle extends React.Component {
                 }
             })
             .then(() => this.props.updateFunc())
-            .catch( (e) => console.log(e));
+            .catch( e => console.log(e));
         }
         this.props.updateFunc();
         // this.setState(prevState => ({

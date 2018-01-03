@@ -36,6 +36,6 @@ export const postDiaper = (token, data) => {
         })
             .then(r => r.json())
             .then(data => dispatch(getDiaper(token, data.childID)))
-            .catch(e => console.log(e));
+            .catch(e => console.log(e))
     }
 }
