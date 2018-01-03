@@ -52,33 +52,21 @@ class DiaperData extends React.Component {
         }
         this.getDataFromService = this.getDataFromService.bind(this)
     }
-    // componentDidMount = () => {
-    //     this.getDataFromService();
-    // }
 
-    // componentDidUpdate = () => {
-        
-    // }
-    
     getDataFromService = () => {
        this.props.getDiaper(this.props.authentication.auth.token, this.props.currentChild)
     }
 
     render() {
-        return (
-            <DiaperList rows={
-                this.props.diaper.allIDs.map(
-                    (id) => {
-                        var d = this.props.diaper.byID[id]
-                        if (d.childid === this.props.currentChild) {
-                            return (<DiaperDataRow key={id} data={d}/>)
-                        } else {
-                            return ""
-                        }
-                    }
-                )
-            } />
-        )
+        var rowComponents = this.props.diaper.allIDs.filter(id => this.props.diaper.byID[id].childid === this.props.currentChild).map((id) => <DiaperDataRow key={id} data={this.props.diaper.byID[id]}/>)
+        
+        if (rowComponents.length > 0) {
+            return ( <DiaperList rows={rowComponents}/> )
+        }
+        else {
+            return ( <div></div> )
+        }
+        
     }
 }
 
