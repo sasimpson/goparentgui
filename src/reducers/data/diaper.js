@@ -1,4 +1,7 @@
-import {DIAPER_LOAD_DATA, CLEAR_DATA} from '../../actions/index'
+import {
+    DIAPER_LOAD_DATA,
+    CLEAR_DATA
+} from '../../actions/index'
 
 var initialState = {byID:{}, allIDs: []}
 

@@ -1,26 +1,36 @@
 import {
-    FEEDING_LOAD_DATA, 
-    FEEDING_FETCH_DATA, 
-    FEEDING_POST_DATA 
+    FEEDING_LOAD_DATA,
+    FEEDING_LOADING_DATA,
+    FEEDING_LOAD_FAILED,
+    FEEDING_WILL_POST,
+    FEEDING_ADD_DATA
 } from './index'
 
 import {getUrl} from '../utils/index'
 
-const feedingFetchingData = () => {
-    return {type: FEEDING_FETCH_DATA}
+const feedingWillPostData = () => {
+    return {type: FEEDING_WILL_POST}
 }
 
-const feedingPostData = () => {
-    return {type: FEEDING_POST_DATA}
+const feedingAddPostData = (data) => {
+    return {type: FEEDING_ADD_DATA, payload: data}
 }
 
 const feedingLoadData = (data) => {
     return {type: FEEDING_LOAD_DATA, payload: data}
 }
 
+const feedingLoadingInProgress = () => {
+    return {type: FEEDING_LOADING_DATA}
+}
+
+const feedingLoadDataFailed = () => {
+    return {type: FEEDING_LOAD_FAILED}
+}
+
 export const getFeedings = (token) => {
     return (dispatch) => {
-        dispatch(feedingFetchingData())
+        dispatch(feedingLoadingInProgress())
         fetch(getUrl("/api/feeding"), {
             method: "GET",
             headers: {
@@ -33,13 +43,16 @@ export const getFeedings = (token) => {
             .then(data => {
                 dispatch(feedingLoadData(data))
             })
-            .catch((e) => console.log(e))
+            .catch(e => {
+                dispatch(feedingLoadDataFailed())
+                console.log(e)
+            })
     }
 }
 
 export const postFeeding = (token, data) => {
     return (dispatch) => {
-        dispatch(feedingPostData())
+        dispatch(feedingWillPostData())
         fetch(getUrl("/api/feeding"), {
             method: "POST",
             headers: {
@@ -58,9 +71,7 @@ export const postFeeding = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data =>{ 
-                dispatch(getFeedings(token))
-            })
-            .catch((e) => console.log(e))
+            .then(data => dispatch(feedingAddPostData(data.feedingData)))
+            .catch(e => console.log(e))
     }
 }

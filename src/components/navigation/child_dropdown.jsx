@@ -30,7 +30,7 @@ class ChildrenDropDown extends React.Component {
     render () {
         return (
             <NavDropdown eventKey={5} title="Children" id="children-drop">
-                <MenuItem eventKey={5.1} href="/children">All</MenuItem>
+                <MenuItem eventKey={5.1} href="/children">Add/Edit</MenuItem>
                 {
                     this.props.children.allIDs.map( 
                         (id) => { 

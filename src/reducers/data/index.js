@@ -17,6 +17,7 @@ var dataStateTree = {
         allIDs: []
     },
     feeding : {
+        inProgress: false,
         byID: {},
         allIDs: []
     }

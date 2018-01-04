@@ -32,3 +32,18 @@ export const getUrl = (path) => {
         return config['default']['protocol'] + "://" + config['default']['host'] + ":" + config['default']['port'] + path
     }
 }
+
+export const addItemToStateEntity = (state, payload) => {
+    var newState = state
+    if (!newState.allIDs.includes(payload.id)) {
+        newState.allIDs.push(payload.id)
+        newState.byID[payload.id] = payload
+    }
+    return newState
+}
+
+export const setInProgressState = (state, status) => {
+    var newState = state
+    newState.inProgress = status
+    return newState
+}

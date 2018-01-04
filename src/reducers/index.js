@@ -33,6 +33,7 @@ export var stateTree = {
             allIDs: []
         },
         feeding : {
+            inProgress: false,
             byID: {},
             allIDs: []
         }

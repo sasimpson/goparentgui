@@ -6,6 +6,8 @@ import {
     CLEAR_DATA
 } from '../../actions/index'
 
+import {addItemToStateEntity} from '../../utils/'
+
 var initialState = {byID:{}, allIDs: []}
 
 var childrenReducer = function(state = initialState, action) {
@@ -26,12 +28,13 @@ var childrenReducer = function(state = initialState, action) {
             } 
             return newState
         case CHILDREN_ADD_DATA:
-            newState = state
-            if (!newState.allIDs.includes(action.payload.id)) {
-                newState.allIDs.push(action.payload.id)
-                newState.byID[action.payload.id] = action.payload
-            }
-            return newState
+            return addItemToStateEntity(state, action.payload)
+            // newState = state
+            // if (!newState.allIDs.includes(action.payload.id)) {
+            //     newState.allIDs.push(action.payload.id)
+            //     newState.byID[action.payload.id] = action.payload
+            // }
+            // return newState
         case CHILDREN_DELETE_DATA:
             newState = state
             if (newState.allIDs.includes(action.payload.id)) {

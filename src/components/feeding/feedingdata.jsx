@@ -60,25 +60,24 @@ class FeedingData extends React.Component {
         this.getDataFromService = this.getDataFromService.bind(this)
     }
 
-    componentDidMount = () => {
-        this.getDataFromService();
-    }
-
     getDataFromService = () => {
         this.props.getFeedings(this.props.token)
     }
 
     render() {
-        return (
-            <FeedingsList rows={
-                this.props.feedings.allIDs.map(
-                    (id) => {
-                        var d = this.props.feedings.byID[id]
-                        return <FeedingDataRow key={id} data={d}/>
-                    }
-                )
-            } />
-        )
+        console.log(this.props.feedings)
+        var rowComponents = this.props.feedings.allIDs.filter(id => {
+            return this.props.feedings.byID[id].childID === this.props.currentChild
+        }).map((id) =>{
+            return <FeedingDataRow key={id} data={this.props.feedings.byID[id]}/>
+        })
+
+        console.log(rowComponents)
+        if (rowComponents.length > 0) {
+            return (<FeedingsList rows={rowComponents} />)
+        } else {
+            return( <div/>)
+        }
     }
 }
 

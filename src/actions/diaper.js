@@ -1,7 +1,7 @@
 import {DIAPER_LOAD_DATA} from './index'
 import {getUrl} from '../utils/index'
 
-export const getDiaper = (token, currentChild) => {
+export const getDiaper = (token) => {
     return (dispatch) => {
         return fetch(getUrl("/api/waste"), {
             method: "GET",
