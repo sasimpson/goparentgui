@@ -27,3 +27,4 @@ export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
 
 //misc
 export const CLEAR_DATA = 'CLEAR_DATA'
+export const RESET_STATE = 'RESET_STATE'
