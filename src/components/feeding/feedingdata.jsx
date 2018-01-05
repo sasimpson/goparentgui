@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux'
 
 import {getFeedings} from '../../actions/feeding'
 
-const mapStateToProps = (state) => ({
-    token: state.authentication.auth.token,
-    currentChild: state.settings.currentChild,
-    feedings: state.entities.feeding
-})
+const mapStateToProps = (state) => {
+    return {
+        token: state.authentication.auth.token,
+        currentChild: state.settings.currentChild,
+        feedings: state.entities.feeding
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
@@ -58,6 +60,10 @@ class FeedingData extends React.Component {
         super(props);
 
         this.getDataFromService = this.getDataFromService.bind(this)
+    }
+
+    componentDidMount = () => {
+        this.getDataFromService()
     }
 
     getDataFromService = () => {

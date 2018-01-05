@@ -2,7 +2,7 @@ const config = {
     production: {
         protocol: "http",
         host: "192.168.99.100",
-        port: 32610
+        port: 30869
     },
     default: {
         protocol: "http",

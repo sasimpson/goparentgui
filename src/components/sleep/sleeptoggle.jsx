@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 
-import getUrl from '../utils/index'
+import {getUrl} from '../../utils/index'
 
 const mapStateToProps = (state) => ({...state})
 

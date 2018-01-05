@@ -32,6 +32,11 @@ class FeedingForm extends React.Component {
             showForm: "",
             timestamp: new Date()
         }
+        this.handleDateChange = this.handleDateChange.bind(this)
+        this.handleAmountChange = this.handleAmountChange.bind(this)
+        this.handleTypeChange = this.handleTypeChange.bind(this)
+        this.handleSideChange = this.handleSideChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleDateChange = (newDate) => {

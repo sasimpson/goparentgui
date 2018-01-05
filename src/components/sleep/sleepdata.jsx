@@ -7,6 +7,7 @@ import {getSleep} from '../../actions/sleep'
 const mapStateToProps = (state) => {
     return {
         token: state.authentication.auth.token,
+        currentChild: state.settings.currentChild,
         sleep: state.entities.sleep
     }
 }
@@ -45,7 +46,8 @@ class SleepData extends React.Component {
         this.getDataFromService = this.getDataFromService.bind(this)
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
+        console.log("componentWillMount")
         this.getDataFromService()
     }
 
@@ -54,16 +56,18 @@ class SleepData extends React.Component {
     }
 
     render() {
-        return (
-            <SleepList rows={
-                this.props.sleep.allIDs.map(
-                    (id) => {
-                        var d = this.props.sleep.byID[id]
-                        return (<SleepDataRow key={id} data={d} />)
-                    }
-                )
-            } />
-        )
+        var rowComponents = this.props.sleep.allIDs.filter(id => {
+            return this.props.sleep.byID[id].childID === this.props.currentChild
+        }).map(id => {
+            return <SleepDataRow key={id} data={this.props.sleep.byID[id]} />
+        })
+        
+        console.log(rowComponents)
+        if (rowComponents.length > 0) {
+            return (<SleepList rows={rowComponents} />)
+        } else {
+            return (<div/>)
+        }
     }
 }
 

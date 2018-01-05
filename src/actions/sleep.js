@@ -43,7 +43,8 @@ export const postSleep = (token, data) => {
             body: JSON.stringify({
                 sleepData: {
                     start: data.startDate, 
-                    end: data.endDate
+                    end: data.endDate,
+                    childID: data.childID
                 }
             })
         })

@@ -5,7 +5,7 @@ import { getDiaper } from '../../actions/diaper'
 
 const mapStateToProps = (state) => {
     return {
-        token: state.authentication.token,
+        token: state.authentication.auth.token,
         diaper: state.entities.diaper,
         currentChild: state.settings.currentChild
     }
@@ -49,6 +49,10 @@ class DiaperData extends React.Component {
         super(props);
 
         this.getDataFromService = this.getDataFromService.bind(this)
+    }
+
+    componentDidMount = () => {
+        this.getDataFromService()
     }
 
     getDataFromService = () => {
