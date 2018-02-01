@@ -1,8 +1,9 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import {LOGOUT_USER, CLEAR_DATA} from '../actions/index' 
+import {CLEAR_DATA} from '../../actions/index' 
 import {connect} from 'react-redux'
+import {logoutUser} from '../../actions/authentication'
 
 const mapStateToProps = (state) => {
     return {
@@ -11,11 +12,11 @@ const mapStateToProps = (state) => {
 }
 class Logout extends React.Component {
     logoutEvent = (event) => {
-        this.props.dispatch({type: LOGOUT_USER})
+        this.props.dispatch(logoutUser())
         this.props.dispatch({type: CLEAR_DATA})
     }
     componentDidMount = () => {
-        this.props.dispatch({type: LOGOUT_USER})
+        this.props.dispatch(logoutUser())
         this.props.dispatch({type: CLEAR_DATA})        
     }
 

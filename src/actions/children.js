@@ -1,9 +1,31 @@
-import { CHILDREN_LOAD_DATA, CHILD_FORM_CLEAR } from './index'
+import { 
+    CHILDREN_LOAD_DATA, 
+    CHILDREN_WILL_POST,
+    CHILDREN_ADD_DATA,
+    CHILDREN_DELETE_DATA,
+} from './index'
+
+import {getUrl} from '../utils/index'
+
+const childrenLoadData = (data) => {
+    return {type: CHILDREN_LOAD_DATA, payload: data}
+}
+
+const childrenWillPostData = () => {
+    return {type: CHILDREN_WILL_POST}
+}
+
+const childrenAddPostData = (data) => {
+    return {type: CHILDREN_ADD_DATA, payload: data}
+}
+
+const childrenDeleteData = (data) => {
+    return {type: CHILDREN_DELETE_DATA, payload: data}
+}
 
 export const getChildren = (token) => {
-    console.log("getChildren")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children", {
+        return fetch(getUrl("/api/children"), {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -12,15 +34,17 @@ export const getChildren = (token) => {
             }
         })
             .then(r => r.json())
-            .then(data => { dispatch({type: CHILDREN_LOAD_DATA, payload: data}) })
+            .then(data => { 
+                dispatch(childrenLoadData(data))
+            })
             .catch(e => console.log(e))
     }
 }
 
 export const postChild = (token, data) => {
-    console.log("postChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children", {
+        dispatch(childrenWillPostData())
+        return fetch(getUrl("/api/children"), {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -35,15 +59,16 @@ export const postChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getChildren(token)))
+            .then(data => {
+                dispatch(childrenAddPostData(data))
+            })
             .catch(e => console.log(e))
     }
 }
 
 export const deleteChild = (token, childID) => {
-    console.log("deleteChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children/" + childID, {
+        return fetch(getUrl("/api/children/" + childID), {
             method: "DELETE",
             headers: {
                 "Accept": "application/json",
@@ -52,15 +77,16 @@ export const deleteChild = (token, childID) => {
             }
         })
             .then(r => r.json())
-            .then(data => dispatch(getChildren(token)))
+            .then(data => {
+                dispatch(childrenDeleteData({id: childID}))
+            })
             .catch(e => console.log(e))
     }
 }
 
 export const editChild = (token, data) => {
-    console.log("editChild")
     return (dispatch) => {
-        return fetch("http://localhost:8000/api/children/" + data.id, {
+        return fetch(getUrl("/api/children/" + data.id), {
             method: "PUT",
             headers: {
                 "Accept": "application/json",
@@ -77,15 +103,7 @@ export const editChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            // .then(data => { dispatch({type: CHILD_FORM_EDIT, payload: data}) })
-            .then(data => dispatch(getChildren(token)))
+            .then(data => getChildren(token))  //should probably just send api command and update redux instead
             .catch(e => console.log(e))
-    }
-}
-
-export const clearChildForm = () => {
-    console.log("clearChildForm")
-    return (dispatch) => {
-        dispatch({type: CHILD_FORM_CLEAR, payload: null})
     }
 }

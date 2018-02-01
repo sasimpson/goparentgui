@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Navigation from './components/navigation';
-import Content from './components/content';
-import './App.css';
+import React, { Component } from 'react'
+import Navigation from './components/navigation/navigation'
+import Content from './components/content'
+import './App.css'
 
 class App extends Component {
   render() {
@@ -10,8 +10,8 @@ class App extends Component {
         <Navigation/>
         <Content/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

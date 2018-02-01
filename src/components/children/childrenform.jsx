@@ -5,17 +5,15 @@ import { bindActionCreators } from "redux"
 import Datetime from 'react-datetime'
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
-import { postChild, clearChildForm } from '../../actions/children'
+import { postChild } from '../../actions/children'
 
 const mapStateToProps = (state) => ({
-    authentication: state.authentication,
-    childForm: state.forms.childForm
+    token: state.authentication.auth.token,
 })
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         postChild: postChild,
-        clearForm: clearChildForm
     }, dispatch)
 }
 
@@ -42,14 +40,13 @@ class ChildrenForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("submitting children data")
-        this.props.postChild(this.props.authentication.auth.token, this.state)
+        event.preventDefault()
+        this.props.postChild(this.props.token, this.state)
+        this.setState({name: "", birthday: new Date()})
     }
 
     handleClear = (event) => {
-        console.log("clearing children form")
-        this.props.clearForm()
+        this.setState({name: "", birthday: new Date()})
     }
 
     render() {

@@ -1,9 +1,37 @@
-import {FEEDING_LOAD_DATA} from './index'
+import {
+    FEEDING_LOAD_DATA,
+    FEEDING_LOADING_DATA,
+    FEEDING_LOAD_FAILED,
+    FEEDING_WILL_POST,
+    FEEDING_ADD_DATA
+} from './index'
 
-export const getFeedings = (token, currentChild) => {
-    console.log("getFeedings: " + currentChild)
+import {getUrl} from '../utils/index'
+
+const feedingWillPostData = () => {
+    return {type: FEEDING_WILL_POST}
+}
+
+const feedingAddPostData = (data) => {
+    return {type: FEEDING_ADD_DATA, payload: data}
+}
+
+const feedingLoadData = (data) => {
+    return {type: FEEDING_LOAD_DATA, payload: data}
+}
+
+const feedingLoadingInProgress = () => {
+    return {type: FEEDING_LOADING_DATA}
+}
+
+const feedingLoadDataFailed = () => {
+    return {type: FEEDING_LOAD_FAILED}
+}
+
+export const getFeedings = (token) => {
     return (dispatch) => {
-        fetch("http://localhost:8081/api/feeding", {
+        dispatch(feedingLoadingInProgress())
+        fetch(getUrl("/api/feeding"), {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -12,16 +40,20 @@ export const getFeedings = (token, currentChild) => {
             }
         }) 
             .then(r => r.json())
-            .then(data => dispatch({type: FEEDING_LOAD_DATA, payload: data}))
-            .catch((e) => console.log(e))
+            .then(data => {
+                dispatch(feedingLoadData(data))
+            })
+            .catch(e => {
+                dispatch(feedingLoadDataFailed())
+                console.log(e)
+            })
     }
 }
 
 export const postFeeding = (token, data) => {
-    console.log("postFeeding")
-    console.log(data)
     return (dispatch) => {
-        fetch("http://localhost:8081/api/feeding?child_id=" + data.childID, {
+        dispatch(feedingWillPostData())
+        fetch(getUrl("/api/feeding"), {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -39,7 +71,7 @@ export const postFeeding = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getFeedings(token, data.childID)))
-            .catch((e) => console.log(e))
+            .then(data => dispatch(feedingAddPostData(data.feedingData)))
+            .catch(e => console.log(e))
     }
 }

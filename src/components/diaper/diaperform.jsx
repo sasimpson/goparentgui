@@ -41,7 +41,6 @@ class DiaperForm extends React.Component {
     
     handleSubmit = (event) => {
         event.preventDefault()
-        console.log("current child: " + this.props.currentChild)
         this.setState(
             {childID: this.props.currentChild}, 
             () => {this.props.postDiaper(this.props.authentication.auth.token, this.state)}

@@ -1,4 +1,4 @@
-import {SET_CURRENT_CHILD, CLEAR_DATA} from '../actions/index'
+import {SET_CURRENT_CHILD, RESET_STATE} from '../actions/index'
 
 var initalSettingState = {
     currentChild: null
@@ -7,12 +7,10 @@ var initalSettingState = {
 var settingsReducer = function(state = initalSettingState, action) {
     switch (action.type) {
         case SET_CURRENT_CHILD:
-            console.log(SET_CURRENT_CHILD)
-            console.log(action)
             return Object.assign({}, state, {
                 currentChild: action.payload.childID
             })
-        case CLEAR_DATA:
+        case RESET_STATE:
             return initalSettingState
         default:
             return state

@@ -1,12 +1,31 @@
-import {LOGIN_USER, LOGOUT_USER, LOGIN_IN_PROGRESS} from './index'
-import {getChildren} from './children'
+import {
+    LOGIN_USER, 
+    LOGOUT_USER, 
+    LOGIN_IN_PROGRESS, 
+    LOGIN_FAILED
+} from './index'
 
-export const loginUser = (text) => {
-    return { type: LOGIN_USER, payload: text}
+import {getUrl} from '../utils/index'
+
+import {getChildren} from './children'
+import {getFeedings} from './feeding'
+import {getDiaper} from './diaper'
+import {getSleep} from './sleep'
+
+//pure functions
+export const loginInProgress = () => {
+    return { type: LOGIN_IN_PROGRESS }
 }
 
 export const logoutUser = () => {
-    return { type: LOGOUT_USER}
+    return { type: LOGOUT_USER }
+}
+
+export const loginFailed = () => {
+    return { type: LOGIN_FAILED}
+}
+export const loginUser = (data) => {
+    return { type: LOGIN_USER, payload: data}
 }
 
 export const loginNow = (username, password) => {
@@ -14,13 +33,20 @@ export const loginNow = (username, password) => {
     data.append("username", username)
     data.append("password", password)
     return (dispatch) => {
-        dispatch({ type: LOGIN_IN_PROGRESS })
-        return fetch("http://localhost:8000/api/user/login", {method: "POST", body: data})
+        dispatch(loginInProgress())
+        var urlToRequest = getUrl("/api/user/login")
+        return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
-                dispatch({type: LOGIN_USER, payload: data})
-                dispatch(getChildren(data.token))
+                dispatch(loginUser(data))
+                getChildren(data.token)
+                getFeedings(data.token)
+                getDiaper(data.token)
+                getSleep(data.token)
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                dispatch(loginFailed())
+                console.log(e)
+            })
     }
 }

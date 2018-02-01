@@ -5,8 +5,8 @@ import { getDiaper } from '../../actions/diaper'
 
 const mapStateToProps = (state) => {
     return {
-        authentication: state.authentication,
-        diaper: state.data.diaper,
+        token: state.authentication.auth.token,
+        diaper: state.entities.diaper,
         currentChild: state.settings.currentChild
     }
 }
@@ -47,30 +47,31 @@ const DiaperDataRow = (props) => {
 class DiaperData extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        }
+
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
+
     componentDidMount = () => {
-        this.getDataFromService();
+        this.getDataFromService()
     }
-    
+
     getDataFromService = () => {
-       this.props.getDiaper(this.props.authentication.auth.token, this.props.currentChild)
+       this.props.getDiaper(this.props.token)
     }
 
     render() {
-        var rows = [];
-        if (this.props.diaper != null) {
-            this.props.diaper.forEach(
-                d => {
-                    rows.push(<DiaperDataRow key={d.id} data={d}/> )
-                }
-            )
+        var rowComponents = this.props.diaper.allIDs.filter(id => {
+            return this.props.diaper.byID[id].childid === this.props.currentChild
+        }).map((id) => {
+            return <DiaperDataRow key={id} data={this.props.diaper.byID[id]}/>
+        })
+        
+        if (rowComponents.length > 0) {
+            return ( <DiaperList rows={rowComponents}/> )
         }
-        return (
-            <DiaperList rows={rows} />
-        )
+        else {
+            return ( <div/> )
+        }
     }
 }
 

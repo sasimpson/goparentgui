@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { loginNow } from '../actions/authentication'
+import { loginNow } from '../../actions/authentication'
 
 const mapStateToProps = (state) => {
     return {

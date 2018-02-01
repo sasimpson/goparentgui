@@ -4,10 +4,13 @@ import { bindActionCreators } from 'redux'
 
 import {getFeedings} from '../../actions/feeding'
 
-const mapStateToProps = (state) => ({
-    authentication: state.authentication,
-    currentChild: state.settings.currentChild
-})
+const mapStateToProps = (state) => {
+    return {
+        token: state.authentication.auth.token,
+        currentChild: state.settings.currentChild,
+        feedings: state.entities.feeding
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
@@ -15,66 +18,73 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch)
 }
 
+//presentational components
+const FeedingsList = (props) => {
+    return (
+        <div className="col-md-6">
+            <table className="table table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {props.rows}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+var FeedingDataRow = (props) => {
+    return (
+        <tr key={props.data.id}>
+            <td>{new Date(props.data.timestamp).toLocaleString()}</td>
+            <td>
+                {props.data.feedingType}
+                {props.data.feedingType === "breast" ? " - " + props.data.feedingSide : null}
+            </td>
+            <td>
+                {props.data.feedingAmount}
+                {props.data.feedingType === "bottle" ? "fl oz" : "mins"}
+            </td>
+        </tr>
+    )
+}
+
+//container components
 class FeedingData extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: [] 
-        };
+
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
 
     componentDidMount = () => {
-        this.getDataFromService();
+        this.getDataFromService()
     }
 
     getDataFromService = () => {
-        this.props.getFeedings(this.props.authentication.auth.token, this.props.currentChild)
+        this.props.getFeedings(this.props.token)
     }
 
     render() {
-        var rows = [];
-        if (this.state.data != null) {
-            this.state.data.forEach(
-                d => {
-                    rows.push(<FeedingDataRow key={d.id} data={d}/> )
-                }
-            )
+        var rowComponents = this.props.feedings.allIDs.filter(id => {
+            return this.props.feedings.byID[id].childID === this.props.currentChild
+        }).map((id) =>{
+            return <FeedingDataRow key={id} data={this.props.feedings.byID[id]}/>
+        })
+
+        if (rowComponents.length > 0) {
+            return (<FeedingsList rows={rowComponents} />)
+        } else {
+            return( <div/>)
         }
-        return (
-            <div className="col-md-6">
-                <table className="table table-condensed table-striped">
-                    <thead>
-                    <tr>
-                        <th>Date/Time</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {rows}
-                    </tbody>
-                </table>
-            </div>
-        );
     }
 }
 
-class FeedingDataRow extends React.Component {
-    render() {
-        return (
-            <tr key={this.props.data.id}>
-                <td>{new Date(this.props.data.timestamp).toLocaleString()}</td>
-                <td>
-                    {this.props.data.feedingType}
-                    {this.props.data.feedingType === "breast" ? " - " + this.props.data.feedingSide : null}
-                </td>
-                <td>
-                    {this.props.data.feedingAmount}
-                    {this.props.data.feedingType === "bottle" ? "fl oz" : "mins"}
-                </td>
-            </tr>
-        );
-    }
-}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedingData)
