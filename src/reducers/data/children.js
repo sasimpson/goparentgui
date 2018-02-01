@@ -8,14 +8,14 @@ import {
 
 import {addItemToStateEntity} from '../../utils/'
 
-var initialState = {byID:{}, allIDs: []}
+var initialState = {byID:{}, allIDs:[]}
 
 var childrenReducer = function(state = initialState, action) {
     switch (action.type) {
         case CHILDREN_WILL_POST:
             return state
         case CHILDREN_LOAD_DATA:
-            var newState = initialState
+            var newState = state
             if (action.payload.children) {
                 action.payload.children.forEach(
                     (e) => {
@@ -45,6 +45,7 @@ var childrenReducer = function(state = initialState, action) {
                 }
             } 
             return newState
+
         case CLEAR_DATA:
             return initialState
         default: 

@@ -25,6 +25,10 @@ export const SLEEP_LOAD_DATA = 'SLEEP_LOAD_DATA'
 //diaper
 export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
 
+//statistics
+export const STATISTICS_LOAD = 'STATISTICS_LOAD'
+
+
 //misc
 export const CLEAR_DATA = 'CLEAR_DATA'
 export const RESET_STATE = 'RESET_STATE'

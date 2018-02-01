@@ -7,14 +7,17 @@ import {getUrl} from '../utils/index'
 
 //action creators
 const sleepFetchingData = () => {
+    console.log("sleepFetchingData")
     return {type: SLEEP_FETCH_DATA}
 }
 
 const sleepLoadData = (data) => {
+    console.log("sleepLoadData", data)
     return {type: SLEEP_LOAD_DATA, payload: data}
 }
 
 export const getSleep = (token) => {
+    console.log("getSleep token: ", token)
     return (dispatch) => {
         dispatch(sleepFetchingData)
         return fetch(getUrl("/api/sleep"), {

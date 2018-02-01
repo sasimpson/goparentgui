@@ -2,7 +2,7 @@ import {
     CHILDREN_LOAD_DATA, 
     CHILDREN_WILL_POST,
     CHILDREN_ADD_DATA,
-    CHILDREN_DELETE_DATA
+    CHILDREN_DELETE_DATA,
 } from './index'
 
 import {getUrl} from '../utils/index'

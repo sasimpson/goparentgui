@@ -18,7 +18,7 @@ var feedingReducer = function(state = initialState, action) {
         case FEEDING_LOADING_DATA:
             return Object.assign(initialState, state, setInProgressState(state, true))
         case FEEDING_LOAD_DATA:
-            var newState = initialState
+            var newState = state
             if (action.payload.feedingData){
                 action.payload.feedingData.forEach(
                     (e) => {

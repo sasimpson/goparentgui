@@ -36,6 +36,10 @@ export var stateTree = {
             inProgress: false,
             byID: {},
             allIDs: []
+        },
+        statistics : {
+            byID: {},
+            allIDs: []
         }
     }
 }
