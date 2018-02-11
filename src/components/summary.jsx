@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import {bindActionCreators} from 'redux'
+import {Button} from 'react-bootstrap'
 
 import {sprintf} from 'sprintf-js'
 
@@ -41,6 +42,7 @@ const FeedingSummary = (props) => {
             <ul className="list-group">
                 <li className="list-group-item"><span className="badge">{totalFeedings}</span>Total number of feedings</li>
                 {totalFeedingsRows}
+                <li className="list-group-item"><Button bsStyle="primary" bsSize="xsmall" href="/diaper">Add New</Button></li>
             </ul>
         </div>
     )
@@ -54,7 +56,10 @@ const SleepSummary = (props) => {
                 <li className="list-group-item"> <span className="badge">{props.stats.range}</span> Total sleep periods </li>
                 <li className="list-group-item"><span className="badge">{sprintf("%.02f", props.stats.mean)}</span> Average sleep per period</li>
                 <li className="list-group-item"><span className="badge">{props.stats.total}</span> Total amount of sleep</li>
+                <li className="list-group-item"><Button bsStyle="primary" bsSize="xsmall" href="/sleep">Add New</Button></li>
+
             </ul>
+            
         </div>
     )
 }
@@ -90,6 +95,8 @@ const WasteSummary = (props) => {
             <ul className="list-group">
                 <li className="list-group-item"><span className="badge">{totalWaste}</span>Total dirty diapers</li>
                 {wasteListRows}
+                <li className="list-group-item"><Button bsStyle="primary" bsSize="xsmall" href="/waste">Add New</Button></li>
+
             </ul>
             
         </div>
@@ -99,7 +106,7 @@ const WasteSummary = (props) => {
 const ChildSummary = (props) => {
     return (
         <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-6">
 
                 <h4>{props.name}</h4>
                 <FeedingSummary stats={props.stats["feeding"]}/>
@@ -139,12 +146,9 @@ class Summary extends React.Component {
                 )
             })
             return (
-                <div>
-                    <div className="row">
-                        <div className="col-md-3">
-                        <h5>Summary</h5>
-                        </div>
-                    </div>
+
+                <div className="col-md-12">
+                    <h5>Summary</h5>
                     {childSummaryRows}
                 </div>
             )
@@ -155,4 +159,5 @@ class Summary extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Summary);
+
 
