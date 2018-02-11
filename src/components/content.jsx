@@ -9,6 +9,7 @@ import Children from './children/children'
 import Logout from './authentication/logout'
 import LoginForm from './authentication/loginform'
 import ResetStates from './reset'
+import Registration from './registration'
 
 class Content extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class Content extends React.Component {
           <Route path="/logout" component={Logout}/>
           <Route path="/login" component={LoginForm}/>
           <Route path="/reset" component={ResetStates}/>
+          <Route path="/register" component={Registration}/>
         </div>
       </Router>
     );
