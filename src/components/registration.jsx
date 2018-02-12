@@ -22,6 +22,7 @@ class Registration extends React.Component {
             name: ""
         }
 
+        this.handleSubmit = this.handleSubmit.bind(this)
         this.handleFormChange = this.handleFormChange.bind(this)
         this.getPasswordValidation = this.getPasswordValidation.bind(this)
     }
@@ -30,6 +31,11 @@ class Registration extends React.Component {
         var change = {}
         change[e.target.id] = e.target.value
         this.setState(change)
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(this.state)
     }
 
     getPasswordValidation = () => {
@@ -57,7 +63,7 @@ class Registration extends React.Component {
                 <div className="row">
                     <div className="col-md-6">
                     <h3>Register New User</h3>
-                    <form action="">
+                    <form onSubmit={this.handleSubmit}>
                         <FormGroup controlId="name">
                           <ControlLabel>Name:</ControlLabel>
                           <FormControl type="text" placeholder="Jane Doe" onChange={this.handleFormChange} />
