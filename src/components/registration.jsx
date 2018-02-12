@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button} from 'react-bootstrap'
+
+import {submitRegistration} from '../actions/registration'
 
 
 const mapStateToProps = (state) => {
@@ -35,18 +36,16 @@ class Registration extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
+        this.props.dispatch(submitRegistration(this.state))
     }
 
     getPasswordValidation = () => {
-        console.log(this.state)
         if (this.state.password1.length < 10)
             return 'error'
         if (this.state.password2.length < 10)
             return 'error'
         if (this.state.password1 !== this.state.password2)
             return 'error'
-
         return 'success'
     }
 
