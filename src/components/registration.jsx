@@ -18,7 +18,8 @@ class Registration extends React.Component {
         this.state = {
             password1: "",
             password2: "",
-            email: ""
+            email: "",
+            name: ""
         }
 
         this.handleFormChange = this.handleFormChange.bind(this)
@@ -57,10 +58,15 @@ class Registration extends React.Component {
                     <div className="col-md-6">
                     <h3>Register New User</h3>
                     <form action="">
+                        <FormGroup controlId="name">
+                          <ControlLabel>Name:</ControlLabel>
+                          <FormControl type="text" placeholder="Jane Doe" onChange={this.handleFormChange} />
+                          <HelpBlock>Enter your full name</HelpBlock>
                         <FormGroup controlId="email">
                             <ControlLabel>Email Address:</ControlLabel>
                             <FormControl type="text" placeholder="me@example.com" onChange={this.handleFormChange}/>
-                            <HelpBlock>Please enter your email address</HelpBlock>
+                            <HelpBlock>Enter your email address</HelpBlock>
+                        </FormGroup>
                         </FormGroup>
                         <FormGroup validationState={this.getPasswordValidation()}>
                             <ControlLabel>Password:</ControlLabel>
