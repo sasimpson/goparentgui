@@ -10,6 +10,7 @@ import Logout from './authentication/logout'
 import LoginForm from './authentication/loginform'
 import ResetStates from './reset'
 import Registration from './registration'
+import Profile from './profile/home'
 
 class Content extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class Content extends React.Component {
           <Route path="/login" component={LoginForm}/>
           <Route path="/reset" component={ResetStates}/>
           <Route path="/register" component={Registration}/>
+          <Route path="/profile" component={Profile}/>
         </div>
       </Router>
     );
