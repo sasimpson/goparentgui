@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import Summary from './summary'
 
@@ -20,16 +20,12 @@ class Home extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
-                            Welcome {this.props.user.name}, you can do the following actions:
-                            <ul className="nav nav-pills nav-stacked nav-justified">
-                                <li role="presentation"><Link to="/diaper">Diaper</Link></li>
-                                <li role="presentation"><Link to="/feeding">Feeding</Link></li>
-                                <li role="presentation"><Link to="/sleep">Sleep</Link></li>
-                            </ul>
+                            <h3>Welcome {this.props.user.name}</h3>
                         </div>
                     </div>
+                    <div className="row">
                     <Summary/>
-
+                    </div>
                 </div>  
             )
         } else {
