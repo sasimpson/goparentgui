@@ -33,7 +33,9 @@ export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
 //statistics
 export const STATISTICS_LOAD = 'STATISTICS_LOAD'
 
-
+//user
+export const INVITES_UPDATE = 'INVITES_UPDATE'
+export const INVITES_WILL_POST = 'INVITES_WILL_POST'
 //misc
 export const CLEAR_DATA = 'CLEAR_DATA'
 export const RESET_STATE = 'RESET_STATE'
