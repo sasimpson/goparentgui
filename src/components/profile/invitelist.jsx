@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux'
 import {Button} from 'react-bootstrap'
 import MdDelete from 'react-icons/lib/md/delete'
 
-import {getPendingInvites} from '../../actions/profile'
+import {getPendingInvites, deleteInvite} from '../../actions/profile'
 
 var mapStateToProps = (state) => {
     return {
@@ -15,7 +15,8 @@ var mapStateToProps = (state) => {
 
 var mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getPendingInvites: getPendingInvites
+        getPendingInvites: getPendingInvites,
+        deleteInvite: deleteInvite
     }, dispatch)
 }
 
@@ -36,14 +37,30 @@ const InviteList = (props) => {
     )
 }
 
-const InviteRow = (props) => {
-    return (
-        <tr>
-            <td>{props.data.inviteEmail}</td>
-            <td>{new Date(props.data.timestamp).toLocaleString()}</td>
-            <td><Button bsStyle="danger" bsSize="xsmall"><MdDelete /></Button></td>
-        </tr>
-    )
+class InviteRow extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            id: this.props.data.id,
+            email: this.props.data.inviteEmail,
+            timestamp: this.props.data.timestamp
+        }
+    }
+
+    deleteMe = () => {
+        this.props.deleteInvite(this.props.token, this.state.id)
+    }
+
+    render() {
+        return (
+            <tr>
+                <td>{this.state.email}</td>
+                <td>{new Date(this.state.timestamp).toLocaleString()}</td>
+                <td><Button bsStyle="danger" bsSize="xsmall" onClick={this.deleteMe}><MdDelete /></Button></td>
+            </tr>
+        )
+    }
 }
 
 class InviteData extends React.Component {
@@ -63,7 +80,7 @@ class InviteData extends React.Component {
 
     render() {
         var rowComponents = this.props.entities.invites.allIDs.map(id => {
-            return <InviteRow key={id} data={this.props.entities.invites.byID[id]}/>
+            return <InviteRow key={id} data={this.props.entities.invites.byID[id]} token={this.props.token} deleteInvite={this.props.deleteInvite}/>
         })
         return(
             <div className="col-md-6">

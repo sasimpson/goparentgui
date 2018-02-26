@@ -1,5 +1,6 @@
 import {
     INVITES_UPDATE,
+    INVITE_DID_DELETE,
     CLEAR_DATA
 } from '../../actions/index'
 
@@ -17,6 +18,17 @@ var invitesReducer = function(state = initialState, action) {
                     }
                 });
                 
+            }
+            return Object.assign(initialState, state, newState)
+        case INVITE_DID_DELETE:
+            newState = state
+            if (newState.allIDs.includes(action.payload.id)) {
+                var index = newState.allIDs.indexOf(action.payload.id)
+                console.log("index", index)
+                if (index > -1) {
+                    newState.allIDs.splice(index, 1)
+                    delete newState.byID[action.payload.id]
+                }
             }
             return newState
         case CLEAR_DATA:
