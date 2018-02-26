@@ -1,13 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {Button} from 'react-bootstrap'
+import MdDelete from 'react-icons/lib/md/delete'
 
 import {getPendingInvites} from '../../actions/profile'
 
 var mapStateToProps = (state) => {
     return {
         token: state.authentication.auth.token,
-        invites: state.entities.invites,
+        entities: state.entities,
     }
 }
 
@@ -39,7 +41,7 @@ const InviteRow = (props) => {
         <tr>
             <td>{props.data.inviteEmail}</td>
             <td>{new Date(props.data.timestamp).toLocaleString()}</td>
-            <td></td>
+            <td><Button bsStyle="danger" bsSize="xsmall"><MdDelete /></Button></td>
         </tr>
     )
 }
@@ -60,12 +62,12 @@ class InviteData extends React.Component {
     }
 
     render() {
-        var rowComponents = this.props.invites.allIDs.map(id => {
-            return <InviteRow key={id} data={this.props.invites.byID[id]}/>
+        var rowComponents = this.props.entities.invites.allIDs.map(id => {
+            return <InviteRow key={id} data={this.props.entities.invites.byID[id]}/>
         })
         return(
             <div className="col-md-6">
-                <h4>Pending invites:</h4>
+                <h4>Pending sent invites:</h4>
                 <InviteList rows={rowComponents}/>
             </div>
         )

@@ -34,8 +34,6 @@ export const postInvite = (token, email) => {
         return fetch(getUrl("/api/user/invite"),{
             method: "POST",
             headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
                 'Authorization': "Bearer " + token
             },
             body: data
