@@ -84,7 +84,7 @@ class InviteData extends React.Component {
         })
         return(
             <div className="col-md-6">
-                <h4>Pending sent invites:</h4>
+                <h4>Sent Invites:</h4>
                 <InviteList rows={rowComponents}/>
             </div>
         )
