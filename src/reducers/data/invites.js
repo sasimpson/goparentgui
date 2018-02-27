@@ -3,34 +3,26 @@ import {
     INVITE_DID_DELETE,
     CLEAR_DATA
 } from '../../actions/index'
+import {omit} from 'lodash'
 
 var initialState = {byID:{}, allIDs: []}
 
 var invitesReducer = function(state = initialState, action) {
     switch (action.type) {
         case INVITES_UPDATE:
-            var newState = state
-            if (action.payload.inviteData) {
-                action.payload.inviteData.forEach( (e) => {
-                    newState.byID[e.id] = e
-                    if (!newState.allIDs.includes(e.id)) {
-                        newState.allIDs.push(e.id)
-                    }
-                });
-                
-            }
-            return Object.assign(initialState, state, newState)
+            var byID = {}
+            var allIDs = []
+            action.payload.inviteData.forEach( e => {
+                byID[e.id] = e
+                allIDs.push(e.id)
+            })
+            return {...state, allIDs: allIDs, byID: byID}
         case INVITE_DID_DELETE:
-            newState = state
-            if (newState.allIDs.includes(action.payload.id)) {
-                var index = newState.allIDs.indexOf(action.payload.id)
-                console.log("index", index)
-                if (index > -1) {
-                    newState.allIDs.splice(index, 1)
-                    delete newState.byID[action.payload.id]
-                }
+            return {
+                ...state, 
+                allIDs: state.allIDs.filter( id => id !== action.payload.id),
+                byID: omit(state.byID, action.payload.id)
             }
-            return newState
         case CLEAR_DATA:
             return initialState
         default: 

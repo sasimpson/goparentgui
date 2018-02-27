@@ -15,7 +15,7 @@ const inviteWillDelete = () => {
 }
 
 const inviteDidDelete = (id) => {
-    return {type: INVITE_DID_DELETE, payload: id}
+    return {type: INVITE_DID_DELETE, payload: {id: id}}
 }
 
 export const getPendingInvites = (token) => {
@@ -52,7 +52,6 @@ export const postInvite = (token, email) => {
 }
 
 export const deleteInvite = (token, id) => {
-    console.log(token, id)
     return (dispatch) => {
         dispatch(inviteWillDelete())
         return fetch(getUrl("/api/user/invite/" + id), {
@@ -62,9 +61,6 @@ export const deleteInvite = (token, id) => {
             }
         })
             .then(r => dispatch(inviteDidDelete(id)))
-            .catch(e => {
-                dispatch(getPendingInvites(token))
-                console.log(e)
-            })
+            .catch(e => console.log(e))
     }
 }
