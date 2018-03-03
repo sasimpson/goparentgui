@@ -3,8 +3,9 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Button} from 'react-bootstrap'
 import MdDelete from 'react-icons/lib/md/delete'
+import MdAdd from 'react-icons/lib/md/add'
 
-import {getPendingInvites, deleteInvite} from '../../actions/profile'
+import {getInvites, deleteInvite} from '../../actions/profile'
 
 var mapStateToProps = (state) => {
     return {
@@ -15,7 +16,7 @@ var mapStateToProps = (state) => {
 
 var mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getPendingInvites: getPendingInvites,
+        getInvites: getInvites,
         deleteInvite: deleteInvite
     }, dispatch)
 }
@@ -44,7 +45,7 @@ class InviteRow extends React.Component {
         this.state = {
             id: this.props.data.id,
             email: this.props.data.inviteEmail,
-            timestamp: this.props.data.timestamp
+            timestamp: this.props.data.timestamp,
         }
     }
 
@@ -52,12 +53,23 @@ class InviteRow extends React.Component {
         this.props.deleteInvite(this.props.token, this.state.id)
     }
 
+    acceptMe = () => {
+    //     this.props.acceptInvite(this.props.token, this.state.id)
+        console.log("accept invite ", this.state.id)
+    }
+
     render() {
+        var button
+        if (this.props.deleteInvite) {
+            button = <Button bsStyle="danger" bsSize="xsmall" onClick={this.deleteMe}><MdDelete /></Button>
+        } else {
+            button = <Button bsStyle="primary" bsSize="xsmall" onClick={this.acceptMe}><MdAdd /></Button>
+        }
         return (
             <tr>
                 <td>{this.state.email}</td>
                 <td>{new Date(this.state.timestamp).toLocaleString()}</td>
-                <td><Button bsStyle="danger" bsSize="xsmall" onClick={this.deleteMe}><MdDelete /></Button></td>
+                <td>{button}</td>
             </tr>
         )
     }
@@ -75,17 +87,23 @@ class InviteData extends React.Component {
     }
 
     getDataFromService = () => {
-        this.props.getPendingInvites(this.props.token)
+        this.props.getInvites(this.props.token)
     }
 
     render() {
-        var rowComponents = this.props.entities.invites.allIDs.map(id => {
-            return <InviteRow key={id} data={this.props.entities.invites.byID[id]} token={this.props.token} deleteInvite={this.props.deleteInvite}/>
+        var sentRowComponents = this.props.entities.invites.sent.allIDs.map(id => {
+            return <InviteRow key={id} data={this.props.entities.invites.sent.byID[id]} token={this.props.token} deleteInvite={this.props.deleteInvite}/>
+        })
+        var pendingRowComponents = this.props.entities.invites.pending.allIDs.map(id => {
+            return <InviteRow key={id} data={this.props.entities.invites.pending.byID[id]} token={this.props.token} acceptInvite="foo"/>
         })
         return(
             <div className="col-md-6">
                 <h4>Sent Invites:</h4>
-                <InviteList rows={rowComponents}/>
+                <InviteList rows={sentRowComponents}/>
+                <p/>
+                <h4>Pending Invites:</h4>
+                <InviteList rows={pendingRowComponents}/>
             </div>
         )
     }

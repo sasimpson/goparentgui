@@ -42,8 +42,14 @@ export var stateTree = {
             allIDs: []
         },
         invites :{
-            byID: {},
-            allIDs: []
+            sent: {
+                byID: {},
+                allIDs: []
+            },
+            pending: {
+                byID: {},
+                allIDs: []
+            }
         }
     }
 }

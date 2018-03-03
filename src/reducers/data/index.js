@@ -28,8 +28,14 @@ var dataStateTree = {
         allIDs: []
     },
     invites :{
-        byID: {},
-        allIDs: []
+        sent: {
+            byID: {},
+            allIDs: []
+        },
+        pending: {
+            byID: {},
+            allIDs: []
+        }
     }
 }
 

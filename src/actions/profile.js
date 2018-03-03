@@ -1,24 +1,45 @@
-import {INVITES_UPDATE, INVITES_WILL_POST, INVITE_WILL_DELETE, INVITE_DID_DELETE} from './index'
+import {
+    SENT_INVITES_UPDATE,
+    SENT_INVITES_WILL_POST, 
+    SENT_INVITE_WILL_DELETE, 
+    SENT_INVITE_DID_DELETE,
+    PENDING_INVITES_UPDATE,
+    PENDING_INVITE_PENDING_ACCEPT,
+    PENDING_INVITE_ACCEPTED
+} from './index'
 import {getUrl} from '../utils/index'
 
 
-const updateInvites = (data) => {
-    return {type: INVITES_UPDATE, payload: data}
+const updateSentInvites = (data) => {
+    return {type: SENT_INVITES_UPDATE, payload: data}
 }
 
-const inviteWillPostData = () => {
-    return {type: INVITES_WILL_POST}
+const updatePendingInvites = (data) => {
+    return {type: PENDING_INVITES_UPDATE, payload: data}
 }
 
-const inviteWillDelete = () => {
-    return {type: INVITE_WILL_DELETE}
+
+const sentInviteWillPostData = () => {
+    return {type: SENT_INVITES_WILL_POST}
 }
 
-const inviteDidDelete = (id) => {
-    return {type: INVITE_DID_DELETE, payload: {id: id}}
+const sentInviteWillDelete = () => {
+    return {type: SENT_INVITE_WILL_DELETE}
 }
 
-export const getPendingInvites = (token) => {
+const sentInviteDidDelete = (id) => {
+    return {type: SENT_INVITE_DID_DELETE, payload: {id: id}}
+}
+
+const pendingInvitePendingAccept = () => {
+    return {type: PENDING_INVITE_PENDING_ACCEPT}
+}
+
+const pendingInviteAccepted = (id) => {
+    return {type: PENDING_INVITE_ACCEPTED, payload: {id: id}}
+}
+
+export const getInvites = (token) => {
     return (dispatch) => {
         return fetch(getUrl("/api/user/invite"), {
             method: "GET",
@@ -29,7 +50,11 @@ export const getPendingInvites = (token) => {
             }
         })
             .then(r => r.json())
-            .then(data => dispatch(updateInvites(data)))
+            .then(data => {
+                console.log(data)
+                dispatch(updateSentInvites(data.sentInviteData))
+                dispatch(updatePendingInvites(data.pendingInviteData))
+            })
             .catch(e => console.log(e))
     }
 }
@@ -38,7 +63,7 @@ export const postInvite = (token, email) => {
     var data = new FormData();
     data.append("email", email)
     return (dispatch) => {
-        dispatch(inviteWillPostData())
+        dispatch(sentInviteWillPostData())
         return fetch(getUrl("/api/user/invite"),{
             method: "POST",
             headers: {
@@ -46,21 +71,35 @@ export const postInvite = (token, email) => {
             },
             body: data
         })
-            .then(r => dispatch(getPendingInvites(token)))
+            .then(r => dispatch(getInvites(token)))
             .catch(e => console.log(e))
     }
 }
 
 export const deleteInvite = (token, id) => {
     return (dispatch) => {
-        dispatch(inviteWillDelete())
+        dispatch(sentInviteWillDelete())
         return fetch(getUrl("/api/user/invite/" + id), {
             method: "DELETE",
             headers: {
                 'Authorization': "Bearer " + token
             }
         })
-            .then(r => dispatch(inviteDidDelete(id)))
+            .then(r => dispatch(sentInviteDidDelete(id)))
+            .catch(e => console.log(e))
+    }
+}
+
+export const acceptInvite = (token, id) => {
+    return (dispatch) => {
+        dispatch(pendingInvitePendingAccept())
+        return fetch(getUrl("/api/user/invite/accept/" + id), {
+            method: "POST", 
+            headers: {
+                'Authorization': "Bearer" + token
+            }
+        })
+            .then(r => dispatch(pendingInviteAccepted(id)))
             .catch(e => console.log(e))
     }
 }
