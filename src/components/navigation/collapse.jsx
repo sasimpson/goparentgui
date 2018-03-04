@@ -16,7 +16,8 @@ const NavigationCollapse = (props) => {
                     <ChildrenDropDown />
                 </Nav>
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="/logout">Logout</NavItem>
+                    <NavItem eventKey={1} href="/profile">Profile</NavItem>
+                    <NavItem eventKey={2} href="/logout">Logout</NavItem>
                 </Nav>
             </Navbar.Collapse>
         )

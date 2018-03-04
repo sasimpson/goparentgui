@@ -8,15 +8,13 @@ var initialState = {byID:{}, allIDs: []}
 var diaperReducer = function(state = initialState, action) {
     switch (action.type) {
         case DIAPER_LOAD_DATA:
-            var newState = state
-            if (action.payload.wasteData) {
-                action.payload.wasteData.forEach( (e) => {
-                    newState.byID[e.id] = e
-                    newState.allIDs.push(e.id)
-                });
-                
-            }
-            return newState
+            var byID = {}
+            var allIDs = []
+            action.payload.wasteData.forEach( e => {
+                byID[e.id] = e
+                allIDs.push(e.id)
+            })
+            return {...state, byID: byID, allIDs: allIDs}
         case CLEAR_DATA:
             return initialState
         default: 

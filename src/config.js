@@ -19,7 +19,7 @@ const config = {
     development: {
         protocol: "http",
         host: "localhost", 
-        port: 8081
+        port: 8000
     },
 }
 
