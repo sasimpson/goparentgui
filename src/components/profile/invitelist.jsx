@@ -5,19 +5,21 @@ import {Button} from 'react-bootstrap'
 import MdDelete from 'react-icons/lib/md/delete'
 import MdAdd from 'react-icons/lib/md/add'
 
-import {getInvites, deleteInvite} from '../../actions/profile'
+import {getInvites, deleteInvite, acceptInvite} from '../../actions/profile'
 
 var mapStateToProps = (state) => {
     return {
         token: state.authentication.auth.token,
-        entities: state.entities,
+        sent: state.entities.invites.sent,
+        pending: state.entities.invites.pending
     }
 }
 
 var mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         getInvites: getInvites,
-        deleteInvite: deleteInvite
+        deleteInvite: deleteInvite,
+        acceptInvite: acceptInvite
     }, dispatch)
 }
 
@@ -54,8 +56,7 @@ class InviteRow extends React.Component {
     }
 
     acceptMe = () => {
-    //     this.props.acceptInvite(this.props.token, this.state.id)
-        console.log("accept invite ", this.state.id)
+        this.props.acceptInvite(this.props.token, this.state.id)
     }
 
     render() {
@@ -80,6 +81,8 @@ class InviteData extends React.Component {
         super(props)
 
         this.getDataFromService = this.getDataFromService.bind(this)
+
+        this.getDataFromService()
     }
 
     componentDidMount = () => {
@@ -91,11 +94,11 @@ class InviteData extends React.Component {
     }
 
     render() {
-        var sentRowComponents = this.props.entities.invites.sent.allIDs.map(id => {
-            return <InviteRow key={id} data={this.props.entities.invites.sent.byID[id]} token={this.props.token} deleteInvite={this.props.deleteInvite}/>
+        var sentRowComponents = this.props.sent.allIDs.map(id => {
+            return <InviteRow key={id} data={this.props.sent.byID[id]} token={this.props.token} deleteInvite={this.props.deleteInvite}/>
         })
-        var pendingRowComponents = this.props.entities.invites.pending.allIDs.map(id => {
-            return <InviteRow key={id} data={this.props.entities.invites.pending.byID[id]} token={this.props.token} acceptInvite="foo"/>
+        var pendingRowComponents = this.props.pending.allIDs.map(id => {
+            return <InviteRow key={id} data={this.props.pending.byID[id]} token={this.props.token} acceptInvite={this.props.acceptInvite}/>
         })
         return(
             <div className="col-md-6">

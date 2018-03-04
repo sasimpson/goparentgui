@@ -51,23 +51,28 @@ export const getInvites = (token) => {
         })
             .then(r => r.json())
             .then(data => {
-                console.log(data)
-                dispatch(updateSentInvites(data.sentInviteData))
-                dispatch(updatePendingInvites(data.pendingInviteData))
+                if (data.sentInviteData != null) {
+                    dispatch(updateSentInvites(data.sentInviteData))
+                }
+                if (data.pendingInviteData != null) {
+                    dispatch(updatePendingInvites(data.pendingInviteData))
+                }
             })
             .catch(e => console.log(e))
     }
 }
 
 export const postInvite = (token, email) => {
-    var data = new FormData();
-    data.append("email", email)
+    var form = new FormData();
+    form.append("email", email)
+    const data = new URLSearchParams(form)
     return (dispatch) => {
         dispatch(sentInviteWillPostData())
         return fetch(getUrl("/api/user/invite"),{
             method: "POST",
             headers: {
-                'Authorization': "Bearer " + token
+                'Authorization': "Bearer " + token,
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
             },
             body: data
         })
@@ -96,7 +101,7 @@ export const acceptInvite = (token, id) => {
         return fetch(getUrl("/api/user/invite/accept/" + id), {
             method: "POST", 
             headers: {
-                'Authorization': "Bearer" + token
+                'Authorization': "Bearer " + token
             }
         })
             .then(r => dispatch(pendingInviteAccepted(id)))
