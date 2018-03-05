@@ -11,12 +11,20 @@ import LoginForm from './authentication/loginform'
 import ResetStates from './reset'
 import Registration from './registration'
 import Profile from './profile/home'
+import FlashMessage from './flash'
 
 class Content extends React.Component {
   render() {
     return (
       <Router>
         <div>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <FlashMessage/>
+              </div>
+            </div>
+          </div>
           <Route exact path="/" component={Home}/>
           <Route path="/sleep" component={Sleep}/>
           <Route path="/diaper" component={Diaper}/>

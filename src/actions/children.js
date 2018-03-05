@@ -6,6 +6,7 @@ import {
 } from './index'
 
 import {getUrl} from '../utils/index'
+import { flashMessage } from 'redux-flash/lib/actions';
 
 const childrenLoadData = (data) => {
     return {type: CHILDREN_LOAD_DATA, payload: data}
@@ -61,6 +62,7 @@ export const postChild = (token, data) => {
             .then(r => r.json())
             .then(data => {
                 dispatch(childrenAddPostData(data))
+                dispatch(flashMessage("child added"))
             })
             .catch(e => console.log(e))
     }
@@ -79,6 +81,7 @@ export const deleteChild = (token, childID) => {
             .then(r => r.json())
             .then(data => {
                 dispatch(childrenDeleteData({id: childID}))
+                dispatch(flashMessage("child deleted"))
             })
             .catch(e => console.log(e))
     }

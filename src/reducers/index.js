@@ -3,6 +3,8 @@ import authReducer from './authentication'
 import dataReducer from './data/index'
 import settingsReducer from './settings'
 
+import {reducer as flashReducer} from 'redux-flash'
+
 export var stateTree = {
     app : {
         version: "0.00"
@@ -55,6 +57,7 @@ export var stateTree = {
 }
  
 var reducer = combineReducers({
+    flash: flashReducer,
     authentication: authReducer,
     settings: settingsReducer,    
     entities: dataReducer
