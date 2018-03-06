@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { getLatestMessage, removeMessage } from 'redux-flash/lib/reducer'
+import { getLatestMessage, removeMessage } from 'redux-flash'
 import {bindActionCreators} from 'redux'
-import {Alert,Button} from 'react-bootstrap'
+import {Alert} from 'react-bootstrap'
 
 const mapStateToProps = (state) => {
     return {
@@ -28,20 +28,18 @@ const mapDispatchToProps = (dispatch) => {
     }
 
     handleDismiss = () => {
-    // console.log(this.state.flash.id)
         this.props.removeMessage(this.props.flash.id)
-        console.log(this.props)
     }
 
     render() {
         if(this.props.flash !== undefined) {
             return (
-                <div className="alerts">
-                    <Alert bsStyle={this.props.flash.props.style}>
-                        { this.props.flash.message }
-                        <p></p>
-                        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-                    </Alert>
+                <div className="col-md-offset-6 col-md-6">
+                    <div className="alerts">
+                        <Alert bsStyle={this.props.flash.props.style} onDismiss={this.handleDismiss}>
+                            { this.props.flash.message }
+                        </Alert>
+                    </div>
                 </div>
             )
         } 
