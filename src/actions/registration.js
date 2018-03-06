@@ -6,6 +6,7 @@ import {
 
 import {getUrl} from '../utils/index'
 import {loginNow} from './authentication'
+import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
 
 export const registrationSubmitted = (data) => {
     return {type: REGISTRATION_SUBMITTED, payload: data}
@@ -34,10 +35,12 @@ export const submitRegistration = (data) => {
             .then(r =>  r.json())
             .then(data => {
                 dispatch(registrationSuccessful())
+                dispatch(flashSuccessMessage("registration successful"))
                 loginNow(data.email, data.password1)
             })
             .catch(e => {
                 dispatch(registrationError(e))
+                flashErrorMessage("registration failed to save")
                 console.log(e)
             })
     }

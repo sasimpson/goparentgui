@@ -11,6 +11,7 @@ import {getChildren} from './children'
 import {getFeedings} from './feeding'
 import {getDiaper} from './diaper'
 import {getSleep} from './sleep'
+import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
 
 //pure functions
 export const loginInProgress = () => {
@@ -38,6 +39,7 @@ export const loginNow = (username, password) => {
         return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
+                dispatch(flashSuccessMessage("login successful!"))
                 dispatch(loginUser(data))
                 getChildren(data.token)
                 getFeedings(data.token)
@@ -46,6 +48,7 @@ export const loginNow = (username, password) => {
             })
             .catch(e => {
                 dispatch(loginFailed())
+                dispatch(flashErrorMessage("login failed, please check email and password"))
                 console.log(e)
             })
     }
