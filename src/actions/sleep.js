@@ -4,6 +4,7 @@ import {
 } from './index'
 
 import {getUrl} from '../utils/index'
+import { flashSuccessMessage } from 'redux-flash/lib/actions';
 
 //action creators
 const sleepFetchingData = () => {
@@ -54,6 +55,7 @@ export const postSleep = (token, data) => {
             .then(r => r.json())
             .then(data =>{ 
                 dispatch(getSleep(token))
+                dispatch(flashSuccessMessage("sleep data added!"))
             })
             .catch(e => console.log(e))
     }

@@ -8,6 +8,7 @@ import {
     PENDING_INVITE_ACCEPTED
 } from './index'
 import {getUrl} from '../utils/index'
+import {flashSuccessMessage} from 'redux-flash'
 
 
 const updateSentInvites = (data) => {
@@ -76,7 +77,10 @@ export const postInvite = (token, email) => {
             },
             body: data
         })
-            .then(r => dispatch(getInvites(token)))
+            .then(r => {
+                dispatch(getInvites(token))
+                dispatch(flashSuccessMessage("sent invite!"))
+            })
             .catch(e => console.log(e))
     }
 }
@@ -90,7 +94,10 @@ export const deleteInvite = (token, id) => {
                 'Authorization': "Bearer " + token
             }
         })
-            .then(r => dispatch(sentInviteDidDelete(id)))
+            .then(r => {
+                dispatch(sentInviteDidDelete(id))
+                dispatch(flashSuccessMessage("removed sent invite"))
+            })
             .catch(e => console.log(e))
     }
 }
@@ -104,7 +111,10 @@ export const acceptInvite = (token, id) => {
                 'Authorization': "Bearer " + token
             }
         })
-            .then(r => dispatch(pendingInviteAccepted(id)))
+            .then(r => {
+                dispatch(pendingInviteAccepted(id))
+                dispatch(flashSuccessMessage("invite accepted!"))
+            })
             .catch(e => console.log(e))
     }
 }

@@ -106,7 +106,10 @@ export const editChild = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => getChildren(token))  //should probably just send api command and update redux instead
+            .then(data => {
+                getChildren(token)
+                dispatch(flashMessage("child saved"))
+            })  //TODO: should probably just send api command and update redux instead
             .catch(e => console.log(e))
     }
 }

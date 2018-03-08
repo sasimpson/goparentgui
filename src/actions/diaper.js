@@ -1,5 +1,6 @@
 import {DIAPER_LOAD_DATA} from './index'
 import {getUrl} from '../utils/index'
+import {flashSuccessMessage} from 'redux-flash'
 
 export const getDiaper = (token) => {
     return (dispatch) => {
@@ -35,7 +36,10 @@ export const postDiaper = (token, data) => {
             })
         })
             .then(r => r.json())
-            .then(data => dispatch(getDiaper(token, data.childID)))
+            .then(data => {
+                dispatch(getDiaper(token, data.childID))
+                dispatch(flashSuccessMessage("diaper record added"))
+            })
             .catch(e => console.log(e))
     }
 }

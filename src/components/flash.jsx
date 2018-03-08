@@ -1,53 +1,50 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { getLatestMessage, removeMessage } from 'redux-flash/lib/reducer'
+import { getLatestMessage, removeMessage } from 'redux-flash'
 import {bindActionCreators} from 'redux'
-import {Alert,Button} from 'react-bootstrap'
+import {Alert} from 'react-bootstrap'
+
+const mapStateToProps = (state) => {
+    return {
+        flash: getLatestMessage(state)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+       removeMessage: removeMessage
+    }, dispatch)
+}
 
  class FlashMessage extends React.Component {
-     constructor(props){
+    constructor(props){
         super(props)
 
         this.state = {
             show:true,
-            flash: this.props.flash
         }
 
         this.handleDismiss = this.handleDismiss.bind(this)
-     }
+    }
 
-     handleDismiss = () => {
-        // console.log(this.state.flash.id)
-        // this.props.removeMessage(this.state.flash.id)
-        console.log(this.props)
-      }
+    handleDismiss = () => {
+        this.props.removeMessage(this.props.flash.id)
+    }
 
-     render() {
-        if(this.state.flash !== undefined) {
+    render() {
+        if(this.props.flash !== undefined) {
             return (
-                <div className="alerts">
-                    <Alert bsStyle={this.state.flash.props.style}>
-                        { this.state.flash.message }
-                        <p></p>
-                        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-                    </Alert>
+                <div className="col-md-offset-6 col-md-6">
+                    <div className="alerts">
+                        <Alert bsStyle={this.props.flash.isError ? "danger" : "success"} onDismiss={this.handleDismiss}>
+                            { this.props.flash.message }
+                        </Alert>
+                    </div>
                 </div>
             )
-         } 
-         return <div></div>
+        } 
+        return <div></div>
      }  
- }
-
- const mapStateToProps = (state) => {
-     return {
-         flash: getLatestMessage(state)
-     }
- }
-
- const mapDispatchToProps = (dispatch) => {
-     return bindActionCreators({
-        removeMessage: removeMessage
-     }, dispatch)
  }
 
  export default connect(mapStateToProps, mapDispatchToProps)(FlashMessage)
