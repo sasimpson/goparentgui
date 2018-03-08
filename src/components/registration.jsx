@@ -8,7 +8,7 @@ import {submitRegistration} from '../actions/registration'
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated
+        isAuthenticated: state.authentication.isAuthenticated,
     }
 }
 
@@ -20,7 +20,8 @@ class Registration extends React.Component {
             password1: "",
             password2: "",
             email: "",
-            name: ""
+            name: "",
+            redirectRegistration: this.props.isAuthenticated
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,8 +36,14 @@ class Registration extends React.Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.dispatch(submitRegistration(this.state))
+        try {
+            e.preventDefault()
+            this.props.dispatch(submitRegistration(this.state))
+            // this.setState({redirectRegistration: true})
+        } catch (error) {
+            // flashErrorMessage("there was an error with your registration")
+            console.log("login error", error)
+        }
     }
 
     getPasswordValidation = () => {
@@ -50,7 +57,7 @@ class Registration extends React.Component {
     }
 
     render() {
-        if (this.props.isAuthenticated) {
+        if (this.props.isAuthenticated || this.state.redirectRegistration) {
             return (
                 <div>
                     <Redirect to="/"/>

@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch) => {
             return (
                 <div className="col-md-offset-6 col-md-6">
                     <div className="alerts">
-                        <Alert bsStyle={this.props.flash.props.style} onDismiss={this.handleDismiss}>
+                        <Alert bsStyle={this.props.flash.isError ? "danger" : "success"} onDismiss={this.handleDismiss}>
                             { this.props.flash.message }
                         </Alert>
                     </div>
