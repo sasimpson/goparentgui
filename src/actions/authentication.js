@@ -7,7 +7,7 @@ import {
 
 import {getUrl} from '../utils/index'
 
-import {getChildren} from './children'
+// import {getChildren} from './children'
 import {getFeedings} from './feeding'
 import {getDiaper} from './diaper'
 import {getSleep} from './sleep'
@@ -41,7 +41,7 @@ export const loginNow = (username, password) => {
             .then(data => {
                 dispatch(flashSuccessMessage("login successful!"))
                 dispatch(loginUser(data))
-                getChildren(data.token)
+                // getChildren(data.token)
                 getFeedings(data.token)
                 getDiaper(data.token)
                 getSleep(data.token)

@@ -1,0 +1,34 @@
+{
+    "user1": {
+        "children": [
+            {
+                "birthday": "2018-02-01T08:00:00Z",
+                "familyID": "1",
+                "id": "1",
+                "name": "Emmie",
+                "parentID": "1"
+            },
+            {
+                "birthday": "2017-11-01T07:00:00Z",
+                "familyID": "1",
+                "id": "2",
+                "name": "Billy",
+                "parentID": "1"
+            },
+            {
+                "birthday": "2017-07-01T07:00:00Z",
+                "familyID": "1",
+                "id": "3",
+                "name": "Johnny",
+                "parentID": "1"
+            },
+            {
+                "birthday": "2017-03-01T08:00:00Z",
+                "familyID": "1",
+                "id": "4",
+                "name": "Tommy Jones",
+                "parentID": "1"
+            }
+        ]
+    }
+}

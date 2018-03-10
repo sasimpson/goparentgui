@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
 const ChildrenList = (props) => {
     return (
         <div className="col-md-6">
-            <table className="table table-condensed striped">
+            <table className="table table-condensed striped" id="childrenTable">
                 <thead>
                     <tr>
                         <th>Name</th>
