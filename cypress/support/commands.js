@@ -41,7 +41,6 @@ Cypress.Commands.add("login", (email, password) => {
 
         cy.get('input[id=email]').type('test@test.com')
         cy.get('input[id=password]').type("testsuccess{enter}")
-        // cy.wait('@postLogin')
     })
 })
 

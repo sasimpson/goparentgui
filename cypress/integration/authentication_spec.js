@@ -47,4 +47,20 @@ describe("Login Page functionality", () => {
             cy.get('div.alert.alert-success').should('be.visible')
         })
     })
+    context("redirects", () => {
+        ['children','sleep','diaper','feeding','profile'].forEach( (route) => {
+            it(route, () => {
+                cy.visit('/' + route)
+                cy.location('pathname').should('eq', '/login')
+            })
+        })
+    })
+    it("logout", () => {
+        cy.login()
+        cy.location('pathname').should('eq','/')
+        cy.get('.navbar-right > :nth-child(2) > a').click()
+        cy.location('pathname').should('eq','/')
+
+
+    })
 })
