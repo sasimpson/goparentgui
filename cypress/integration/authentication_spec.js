@@ -1,4 +1,4 @@
-describe("Login Page functionality", () => {
+describe("Authentication", () => {
     beforeEach(() => {
         cy.fixture('authentication.json').as('auth')
         cy.visit('/login')
@@ -59,8 +59,6 @@ describe("Login Page functionality", () => {
         cy.login()
         cy.location('pathname').should('eq','/')
         cy.get('.navbar-right > :nth-child(2) > a').click()
-        cy.location('pathname').should('eq','/')
-
-
+        cy.location('pathname').should('eq','/login')
     })
 })

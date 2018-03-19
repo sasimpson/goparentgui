@@ -1,64 +1,67 @@
-describe("Children", () => {
+describe("Waste", () => {
     beforeEach(function(){
-        cy.fixture('children.json').as('children')
+        cy.fixture('waste.json').as('waste')
         cy.login()
     })
 
-    it("loads no data", () => {
+    it.only("loads no data", () => {
         cy.server()
         cy.options()
         cy.route({
             method: "GET",
-            url: "/api/children",
+            url: "/api/waste",
             status: 200,
             response: {
-                "children": null
+                "wasteData": null
             }
-        }).as("getChildrenEmpty")
-        cy.visit('/children')
+        }).as("getWasteEmpty")
+        cy.get('#children-drop').click()
+        cy.get('.dropdown-menu > :nth-child(2) > a').click()
+        cy.visit('/waste')
+        
     })
 
     it("loads data", () => {
-        cy.get('@children').then((children) => {
-            const user1Children = children['user1']
+        cy.get('@waste').then((waste) => {
+            const user1Waste = waste['user1']
             cy.server()
             cy.options()
             cy.route({
                 method: "GET",
-                url: "/api/children",
+                url: "/api/waste",
                 status: 200,
-                response: user1Children
-            }).as("getChildren")
-            cy.visit('/children')
-            cy.get('table[id=childrenTable]>tbody>tr').should('have.length', 4)
+                response: user1Waste
+            }).as("getWaste")
+            cy.visit('/waste')
+            cy.get('table[id=wasteTable]>tbody>tr').should('have.length', 4)
         })
     })
 
     it("add item", () => {
-        cy.get('@children').then((children) => {
-            const user1Children = children['user1']
+        cy.get('@waste').then((waste) => {
+            const user1Waste = waste['user1']
             cy.server()
             cy.options()
             cy.route({
                 method: "GET",
-                url: "/api/children",
+                url: "/api/waste",
                 status: 200,
-                response: user1Children
-            }).as("getChildren")
+                response: user1Waste
+            }).as("getWaste")
             cy.route({
                 method: "POST",
-                url: "/api/children",
+                url: "/api/waste",
                 status: 202,
                 response: {
                             "birthday": "2018-03-01T08:00:00Z",
                             "familyID": "1",
                             "id": "5",
-                            "name": "Test Child",
+                            "name": "Test Waste",
                             "parentID": "1"
                         }                
-            }).as("deleteChild")
-            cy.visit('/children')
-            cy.get('table[id=childrenTable]>tbody>tr').as('table')
+            }).as("deleteWaste")
+            cy.visit('/waste')
+            cy.get('table[id=wasteTable]>tbody>tr').as('table')
             cy.get("#childForm").as("childForm")
             cy.get('@table').should('have.length', 4)
             cy.get('#name').type('test child')
@@ -73,24 +76,24 @@ describe("Children", () => {
     })
 
     it("remove item", () => {
-        cy.get('@children').then((children) => {
-            const user1Children = children['user1']
+        cy.get('@waste').then((waste) => {
+            const user1Waste = waste['user1']
             cy.server()
             cy.options()
             cy.route({
                 method: "GET",
-                url: "/api/children",
+                url: "/api/waste",
                 status: 200,
-                response: user1Children
-            }).as("getChildren")
+                response: user1Waste
+            }).as("getWaste")
             cy.route({
                 method: "DELETE",
-                url: "/api/children/*",
+                url: "/api/waste/*",
                 status: 202,
                 response: {"deleted": 1}
-            }).as("deleteChild")
-            cy.visit('/children')
-            cy.get('table[id=childrenTable]>tbody>tr').as('table')
+            }).as("deleteWaste")
+            cy.visit('/waste')
+            cy.get('table[id=wasteTable]>tbody>tr').as('table')
             cy.get('@table').should('have.length', 4)
             cy.get('@table').within(($table) => {
                 cy.get('button[class*=btn-danger]').first().click()

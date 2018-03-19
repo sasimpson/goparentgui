@@ -1,0 +1,61 @@
+{
+    "user1": 
+    {
+        "wasteData": [
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "ee99dc3e-4acc-4e0f-95da-6be3c7d5488c",
+                "notes": "",
+                "timestamp": "2018-02-27T11:22:31-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 2
+            },
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "9cd372d0-0271-460d-a6a9-ed60aa7b02fb",
+                "notes": "",
+                "timestamp": "2018-02-27T10:46:43-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 2
+            },
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "dba37dd1-d240-4c7d-990b-599f5790b19b",
+                "notes": "",
+                "timestamp": "2018-02-27T06:47:12-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 1
+            },
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "3386b17b-17ee-430f-b3e0-b4ca1529ee57",
+                "notes": "",
+                "timestamp": "2018-02-27T06:05:36-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 2
+            },
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "a689bb68-6cd9-4882-b946-5bb8198744c5",
+                "notes": "",
+                "timestamp": "2018-02-27T05:48:08-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 1
+            },
+            {
+                "childid": "766a832b-16e1-4748-a5d1-5c53d672c021",
+                "familyid": "145dedb3-022b-47c8-91c9-995673bcbffe",
+                "id": "908d9032-a2eb-4d82-a117-3d26c0bab22a",
+                "notes": "",
+                "timestamp": "2018-02-27T00:12:48-08:00",
+                "userid": "0cd3261f-13b1-480d-9098-022b59272f5f",
+                "wasteType": 2
+            }
+        ]
+    }
+}

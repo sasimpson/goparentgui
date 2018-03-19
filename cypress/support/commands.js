@@ -12,7 +12,7 @@
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
 //
-Cypress.Commands.add("login", (email, password) => {
+Cypress.Commands.add("login", () => {
     cy.fixture('authentication.json').as('auth')
     cy.get('@auth').then((auth) => {
         const validAuth = auth['valid_login']
@@ -35,8 +35,16 @@ Cypress.Commands.add("login", (email, password) => {
             url: "/api/children",
             status: 200,
             response: {
-                "children": null
-            }
+                        "children": [
+                            {
+                                "birthday": "2018-02-01T08:00:00Z",
+                                "familyID": "1",
+                                "id": "1",
+                                "name": "Emmie",
+                                "parentID": "1"
+                            }
+                        ]
+                    }
         }).as("getChildrenAfterLogin")
 
         cy.get('input[id=email]').type('test@test.com')
