@@ -65,6 +65,10 @@ Cypress.Commands.add("options", () => {
     })
 })
 
+Cypress.Commands.add("logout", () => {
+    cy.visit("/logout")
+})
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

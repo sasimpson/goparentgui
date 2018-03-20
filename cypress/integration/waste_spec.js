@@ -1,10 +1,11 @@
 describe("Waste", () => {
     beforeEach(function(){
+        cy.logout()
         cy.fixture('waste.json').as('waste')
         cy.login()
     })
 
-    it.only("loads no data", () => {
+    it("loads no data", () => {
         cy.server()
         cy.options()
         cy.route({
@@ -17,7 +18,7 @@ describe("Waste", () => {
         }).as("getWasteEmpty")
         cy.get('#children-drop').click()
         cy.get('.dropdown-menu > :nth-child(2) > a').click()
-        cy.visit('/waste')
+        cy.visit('/diaper')
         
     })
 
@@ -32,8 +33,9 @@ describe("Waste", () => {
                 status: 200,
                 response: user1Waste
             }).as("getWaste")
-            cy.visit('/waste')
-            cy.get('table[id=wasteTable]>tbody>tr').should('have.length', 4)
+            cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
+            cy.visit('/diaper')
+            cy.get('table[id=diaperTable]>tbody>tr').should('have.length', 6)
         })
     })
 
@@ -53,55 +55,27 @@ describe("Waste", () => {
                 url: "/api/waste",
                 status: 202,
                 response: {
-                            "birthday": "2018-03-01T08:00:00Z",
-                            "familyID": "1",
-                            "id": "5",
-                            "name": "Test Waste",
-                            "parentID": "1"
-                        }                
-            }).as("deleteWaste")
-            cy.visit('/waste')
-            cy.get('table[id=wasteTable]>tbody>tr').as('table')
-            cy.get("#childForm").as("childForm")
-            cy.get('@table').should('have.length', 4)
-            cy.get('#name').type('test child')
-            cy.get('.rdt > .form-control').type('03/01/2018 12:00 AM')
-            cy.get('h3').click()
+                    "childid": "1",
+                    "familyid": "1",
+                    "id": "12312312132312312",
+                    "notes": "",
+                    "timestamp": "2018-02-27T11:22:31-08:00",
+                    "userid": "1",
+                    "wasteType": 3
+                }               
+            }).as("addWaste")
+            cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
+            cy.visit('/diaper')
+            cy.get('table[id=diaperTable]>tbody>tr').as('table')
+            cy.get("#diaperForm").as("diaperForm")
+            cy.get('@table').should('have.length', 6)
+            // cy.get('.form-control').type('03/01/2018 12:00 AM')
+            cy.get("#both").click()
             cy.get("#submitButton").click()
             cy.get('div.alert.alert-success')
                 .should('be.visible')
-                .and('contain','child added')
-            cy.get('@table').should('have.length', 5)
-        })
-    })
-
-    it("remove item", () => {
-        cy.get('@waste').then((waste) => {
-            const user1Waste = waste['user1']
-            cy.server()
-            cy.options()
-            cy.route({
-                method: "GET",
-                url: "/api/waste",
-                status: 200,
-                response: user1Waste
-            }).as("getWaste")
-            cy.route({
-                method: "DELETE",
-                url: "/api/waste/*",
-                status: 202,
-                response: {"deleted": 1}
-            }).as("deleteWaste")
-            cy.visit('/waste')
-            cy.get('table[id=wasteTable]>tbody>tr').as('table')
-            cy.get('@table').should('have.length', 4)
-            cy.get('@table').within(($table) => {
-                cy.get('button[class*=btn-danger]').first().click()
-            })
-            cy.get('div.alert.alert-success')
-                .should('be.visible')
-                .and('contain','child deleted')
-            cy.get('@table').should('have.length', 3)
+                .and('contain','diaper record added')
+            cy.get('@table').should('have.length', 7)
         })
     })
 })

@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
 const DiaperList = (props) => {
     return (
         <div className="col-md-6">
-            <table id="wasteTable" className="table table-condensed table-striped">
+            <table id="diaperTable" className="table table-condensed table-striped">
                 <thead>
                 <tr>
                     <th>Date/Time</th>

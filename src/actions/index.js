@@ -29,6 +29,7 @@ export const SLEEP_LOAD_DATA = 'SLEEP_LOAD_DATA'
 
 //diaper
 export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
+export const DIAPER_ADD_DATA = 'DIAPER_ADD_DATA'
 
 //statistics
 export const STATISTICS_LOAD = 'STATISTICS_LOAD'
