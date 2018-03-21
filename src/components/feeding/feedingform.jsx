@@ -76,7 +76,7 @@ class FeedingForm extends React.Component {
     render() {
         return (
             <div className="col-md-6">
-                <form onSubmit={this.handleSubmit}>
+                <form id="feedingForm" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="timestamp">Date/Time</label>                            
                         <Datetime onChange={this.handleDateChange} defaultValue={new Date()} />
@@ -104,7 +104,7 @@ class FeedingForm extends React.Component {
                             handleAmountChange={this.handleAmountChange}
                             />
                         : null }
-                    <Button type="submit" bsStyle="primary">Submit</Button>
+                    <Button id="submitButton" type="submit" bsStyle="primary">Submit</Button>
                 </form>
             </div>
         );

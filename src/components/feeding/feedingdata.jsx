@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 const FeedingsList = (props) => {
     return (
         <div className="col-md-6">
-            <table className="table table-condensed table-striped">
+            <table id="feedingTable" className="table table-condensed table-striped">
                 <thead>
                 <tr>
                     <th>Date/Time</th>
