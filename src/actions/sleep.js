@@ -1,6 +1,7 @@
 import {
     SLEEP_LOAD_DATA,
-    SLEEP_FETCH_DATA
+    SLEEP_FETCH_DATA,
+    SLEEP_ADD_DATA
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -15,6 +16,10 @@ const sleepFetchingData = () => {
 const sleepLoadData = (data) => {
     console.log("sleepLoadData", data)
     return {type: SLEEP_LOAD_DATA, payload: data}
+}
+
+const sleepAddPostData = (data) => {
+    return {type: SLEEP_ADD_DATA, payload: data}
 }
 
 export const getSleep = (token) => {
@@ -54,7 +59,7 @@ export const postSleep = (token, data) => {
         })
             .then(r => r.json())
             .then(data =>{ 
-                dispatch(getSleep(token))
+                dispatch(sleepAddPostData(data.sleepData))
                 dispatch(flashSuccessMessage("sleep data added!"))
             })
             .catch(e => console.log(e))

@@ -55,13 +55,15 @@ describe("Waste", () => {
                 url: "/api/waste",
                 status: 202,
                 response: {
-                    "childid": "1",
-                    "familyid": "1",
-                    "id": "12312312132312312",
-                    "notes": "",
-                    "timestamp": "2018-02-27T11:22:31-08:00",
-                    "userid": "1",
-                    "wasteType": 3
+                    "wasteData": {
+                        "childid": "1",
+                        "familyid": "1",
+                        "id": "12312312132312312",
+                        "notes": "",
+                        "timestamp": "2018-02-27T11:22:31-08:00",
+                        "userid": "1",
+                        "wasteType": 3
+                    }
                 }               
             }).as("addWaste")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()

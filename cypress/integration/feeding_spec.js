@@ -55,14 +55,16 @@ describe("Feeding", () => {
                 url: "/api/feeding",
                 status: 202,
                 response:  {
-                    "id": "1231231231212312",
-                    "feedingType": "bottle",
-                    "feedingAmount": 4,
-                    "feedingSide": "",
-                    "userid": "1",
-                    "familyid": "1",
-                    "timestamp": "2018-03-06T05:47:54.529Z",
-                    "childID": "1"
+                    "feedingData": {
+                        "id": "1231231231212312",
+                        "feedingType": "bottle",
+                        "feedingAmount": 4,
+                        "feedingSide": "",
+                        "userid": "1",
+                        "familyid": "1",
+                        "timestamp": "2018-03-06T05:47:54.529Z",
+                        "childID": "1"
+                    }
                 }              
             }).as("addFeeding")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()

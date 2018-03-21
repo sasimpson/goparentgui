@@ -74,7 +74,7 @@ export const postFeeding = (token, data) => {
         })
             .then(r => r.json())
             .then(data => {
-                dispatch(feedingAddPostData(data))
+                dispatch(feedingAddPostData(data.feedingData))
                 dispatch(flashSuccessMessage("feeding record added"))
             })
             .catch(e => console.log(e))

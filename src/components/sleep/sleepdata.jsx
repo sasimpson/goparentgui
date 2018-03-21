@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 const SleepList = (props) => {
     return (
         <div className="col-md-6">
-            <table className="table table-condensed table-striped">
+            <table id="sleepTable" className="table table-condensed table-striped">
             <thead>
                 <tr>
                     <th>Start</th>
