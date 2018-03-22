@@ -60,7 +60,7 @@ export const postSleep = (token, data) => {
             .then(r => r.json())
             .then(data =>{ 
                 dispatch(sleepAddPostData(data.sleepData))
-                dispatch(flashSuccessMessage("sleep data added!"))
+                dispatch(flashSuccessMessage("sleep data added!", {timeout: 500}))
             })
             .catch(e => console.log(e))
     }

@@ -79,7 +79,7 @@ export const postInvite = (token, email) => {
         })
             .then(r => {
                 dispatch(getInvites(token))
-                dispatch(flashSuccessMessage("sent invite!"))
+                dispatch(flashSuccessMessage("sent invite!", {timeout: 500}))
             })
             .catch(e => console.log(e))
     }
@@ -96,7 +96,7 @@ export const deleteInvite = (token, id) => {
         })
             .then(r => {
                 dispatch(sentInviteDidDelete(id))
-                dispatch(flashSuccessMessage("removed sent invite"))
+                dispatch(flashSuccessMessage("removed sent invite", {timeout: 500}))
             })
             .catch(e => console.log(e))
     }
@@ -113,7 +113,7 @@ export const acceptInvite = (token, id) => {
         })
             .then(r => {
                 dispatch(pendingInviteAccepted(id))
-                dispatch(flashSuccessMessage("invite accepted!"))
+                dispatch(flashSuccessMessage("invite accepted!", {timeout: 500}))
             })
             .catch(e => console.log(e))
     }

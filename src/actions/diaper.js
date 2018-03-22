@@ -43,7 +43,7 @@ export const postDiaper = (token, data) => {
             .then(r => r.json())
             .then(data => {
                 dispatch(diaperAddPostData(data.wasteData))
-                dispatch(flashSuccessMessage("diaper record added"))
+                dispatch(flashSuccessMessage("diaper record added", {timeout: 500}))
             })
             .catch(e => console.log(e))
     }

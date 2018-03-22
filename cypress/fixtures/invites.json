@@ -1,0 +1,44 @@
+{
+    "user1": {
+        "sentInviteData": [{
+            "id": "f282a7cd-48c9-4ddc-b696-36ba38f95a50",
+            "userID": "1",
+            "inviteEmail": "test.tester@test.com",
+            "timestamp": "2018-03-21T22:32:54.707Z"
+        }, {
+            "id": "9882a78a-6f75-452c-8552-02a5315d87de",
+            "userID": "1",
+            "inviteEmail": "mrs.test.tester@test.com",
+            "timestamp": "2018-03-21T22:32:46.401Z"
+        }],
+        "pendingInviteData": null
+    },
+    "user2": {
+        "sentInviteData": null,
+        "pendingInviteData": [{
+            "id": "8ffb568d-19d2-4dde-b32b-4051a2ac72b8",
+            "userID": "1",
+            "inviteEmail": "mr.jdoe@test.com",
+            "timestamp": "2018-03-21T22:47:12.156Z"
+        }]
+    },
+    "user3": {
+        "sentInviteData": [{
+            "id": "f282a7cd-48c9-4ddc-b696-36ba38f95a50",
+            "userID": "1",
+            "inviteEmail": "test.tester@test.com",
+            "timestamp": "2018-03-21T22:32:54.707Z"
+        }, {
+            "id": "9882a78a-6f75-452c-8552-02a5315d87de",
+            "userID": "1",
+            "inviteEmail": "mrs.test.tester@test.com",
+            "timestamp": "2018-03-21T22:32:46.401Z"
+        }],
+        "pendingInviteData": [{
+            "id": "8ffb568d-19d2-4dde-b32b-4051a2ac72b8",
+            "userID": "1",
+            "inviteEmail": "mr.jdoe@test.com",
+            "timestamp": "2018-03-21T22:47:12.156Z"
+        }]
+    }
+}

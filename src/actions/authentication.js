@@ -39,7 +39,7 @@ export const loginNow = (username, password) => {
         return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
-                dispatch(flashSuccessMessage("login successful!"))
+                dispatch(flashSuccessMessage("login successful!", {timeout: 500}))
                 dispatch(loginUser(data))
                 // getChildren(data.token)
                 getFeedings(data.token)
