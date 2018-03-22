@@ -35,7 +35,7 @@ export const submitRegistration = (data) => {
             .then(handleErrors)
             .then(data => {
                 dispatch(registrationSuccessful())
-                dispatch(flashSuccessMessage("registration successful"))
+                dispatch(flashSuccessMessage("registration successful", {timeout: 500}))
                 loginNow(data.email, data.password1)
             })
             .catch(e => {

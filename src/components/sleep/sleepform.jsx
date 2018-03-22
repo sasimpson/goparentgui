@@ -58,14 +58,14 @@ class SleepForm extends React.Component {
         return (
             <div className="col-md-6">
                 <h4>Enter a time:</h4>
-                <form onSubmit={this.handleSubmit}>
+                <form id="sleepForm" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <Datetime onChange={this.handleStartChange} id="start" name="start"/>
                     </div>
                     <div className="form-group">
                         <Datetime onChange={this.handleEndChange} id="end" name="end"/>
                     </div>
-                    <Button type="submit" bsStyle="primary">Submit</Button>
+                    <Button id="submitButton" type="submit" bsStyle="primary">Submit</Button>
                 </form>
             </div>
         );

@@ -7,7 +7,7 @@ import {
 
 import {getUrl} from '../utils/index'
 
-import {getChildren} from './children'
+// import {getChildren} from './children'
 import {getFeedings} from './feeding'
 import {getDiaper} from './diaper'
 import {getSleep} from './sleep'
@@ -39,9 +39,9 @@ export const loginNow = (username, password) => {
         return fetch(urlToRequest, {method: "POST", body: data})
             .then(r => r.json())
             .then(data => {
-                dispatch(flashSuccessMessage("login successful!"))
+                dispatch(flashSuccessMessage("login successful!", {timeout: 500}))
                 dispatch(loginUser(data))
-                getChildren(data.token)
+                // getChildren(data.token)
                 getFeedings(data.token)
                 getDiaper(data.token)
                 getSleep(data.token)

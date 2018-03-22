@@ -52,17 +52,17 @@ class ChildrenForm extends React.Component {
     render() {
         return (
             <div className="col-md-6">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} id="childForm">
                     <FormGroup>
                         <ControlLabel htmlFor="name">Name</ControlLabel>
                         <FormControl type="text" id="name" onChange={this.handleNameChange} value={this.state.name}/>
                     </FormGroup>
+                    <FormGroup>
+                        <ControlLabel htmlFor="birthday">Date/Time</ControlLabel>
+                        <Datetime onChange={this.handleDateChange} id="birthday"/>
+                    </FormGroup>
                     <div className="form-group">
-                        <label htmlFor="birthday">Date/Time</label>  
-                        <Datetime onChange={this.handleDateChange}/>
-                    </div>
-                    <div className="form-group">
-                        <Button type="submit" bsStyle="primary">Submit</Button> <Button type="button" bsStyle="danger" onClick={this.handleClear}>Clear</Button>
+                        <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button> <Button type="button" bsStyle="danger" onClick={this.handleClear}>Clear</Button>
                     </div>
                 </form>
             </div>

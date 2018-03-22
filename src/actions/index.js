@@ -26,9 +26,11 @@ export const FEEDING_WILL_POST = 'FEEDING_WILL_POST'
 //sleep
 export const SLEEP_FETCH_DATA = 'SLEEP_FETCH_DATA'
 export const SLEEP_LOAD_DATA = 'SLEEP_LOAD_DATA'
+export const SLEEP_ADD_DATA = 'SLEEP_ADD_DATA'
 
 //diaper
 export const DIAPER_LOAD_DATA = 'DIAPER_LOAD_DATA'
+export const DIAPER_ADD_DATA = 'DIAPER_ADD_DATA'
 
 //statistics
 export const STATISTICS_LOAD = 'STATISTICS_LOAD'

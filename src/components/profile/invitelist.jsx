@@ -25,7 +25,7 @@ var mapDispatchToProps = (dispatch) => {
 
 const InviteList = (props) => {
     return (
-        <table className="table table-condensed table-striped">
+        <table id={props.name + "Table"} className="table table-condensed table-striped">
             <thead>
                 <tr>
                     <th>Email</th>
@@ -103,10 +103,10 @@ class InviteData extends React.Component {
         return(
             <div className="col-md-6">
                 <h4>Sent Invites:</h4>
-                <InviteList rows={sentRowComponents}/>
+                <InviteList name="sent" rows={sentRowComponents}/>
                 <p/>
                 <h4>Pending Invites:</h4>
-                <InviteList rows={pendingRowComponents}/>
+                <InviteList name="pending" rows={pendingRowComponents}/>
             </div>
         )
     }

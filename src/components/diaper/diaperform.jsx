@@ -57,22 +57,22 @@ class DiaperForm extends React.Component {
         }
         return (
                 <div className="col-md-6">    
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} id="diaperForm">
                         <FormGroup>
-                            <Datetime defaultValue={new Date()} onChange={this.handleDateChange}/>
+                            <Datetime id="diaperDatetime" defaultValue={new Date()} onChange={this.handleDateChange}/>
                         </FormGroup>
                         <ButtonGroup justified>
                             <ButtonGroup>
-                                <Button bsStyle="primary" value="1" active={this.state.wasteType === 1} onClick={this.handleOptionChange}>&#8470; 1</Button>
+                                <Button id="no1" bsStyle="primary" value="1" active={this.state.wasteType === 1} onClick={this.handleOptionChange}>&#8470; 1</Button>
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button bsStyle="primary" value="2" active={this.state.wasteType === 2} onClick={this.handleOptionChange}>&#8470; 2</Button>
+                                <Button id="no2" bsStyle="primary" value="2" active={this.state.wasteType === 2} onClick={this.handleOptionChange}>&#8470; 2</Button>
                             </ButtonGroup>
                             <ButtonGroup>
-                                <Button bsStyle="primary" value="3" active={this.state.wasteType === 3} onClick={this.handleOptionChange}>Both</Button>
+                                <Button id="both" bsStyle="primary" value="3" active={this.state.wasteType === 3} onClick={this.handleOptionChange}>Both</Button>
                             </ButtonGroup>
                         </ButtonGroup>
-                        <Button type="submit" bsStyle="primary">Submit</Button>
+                        <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>
                     </form>
                 </div>
         )

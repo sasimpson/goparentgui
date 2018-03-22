@@ -1,0 +1,12 @@
+{
+    "valid_login": {
+        "token": "sample token",
+        "userData": {
+            "currentFamily": "1",
+            "email": "test@test.com",
+            "id": "1",
+            "name": "Test Tester",
+            "username": "test@test.com"
+        }
+    }
+}

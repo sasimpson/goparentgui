@@ -5,8 +5,6 @@ import {
     CLEAR_DATA,
 } from '../../actions/index'
 
-import {addItemToStateEntity} from '../../utils/'
-
 var initialState = {byID:{}, allIDs: []}
 
 var feedingReducer = function(state = initialState, action) {
@@ -22,7 +20,11 @@ var feedingReducer = function(state = initialState, action) {
             })
             return {...state, byID: byID, allIDs: allIDs}
         case FEEDING_ADD_DATA:
-            return addItemToStateEntity(state, action.payload)
+            return {
+                ...state, 
+                byID:  {...state.byID, [action.payload.id]: action.payload}, 
+                allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
+            }
         case CLEAR_DATA:
             return initialState
         default:
