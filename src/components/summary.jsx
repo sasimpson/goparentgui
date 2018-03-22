@@ -106,7 +106,7 @@ const WasteSummary = (props) => {
 const ChildSummary = (props) => {
     return (
         <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
 
                 <h4>{props.name}</h4>
                 <FeedingSummary stats={props.stats["feeding"]}/>
@@ -147,7 +147,7 @@ class Summary extends React.Component {
             })
             return (
 
-                <div className="col-md-12">
+                <div className="col-md-6">
                     <h5>Summary</h5>
                     {childSummaryRows}
                 </div>
