@@ -12,6 +12,7 @@ import ResetStates from './reset'
 import Registration from './registration'
 import Profile from './profile/home'
 import FlashMessage from './flash'
+import Debug from './debug'
 
 class Content extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class Content extends React.Component {
           <Route path="/reset" component={ResetStates}/>
           <Route path="/register" component={Registration}/>
           <Route path="/profile" component={Profile}/>
+          <Debug/>
         </div>
       </Router>
     );

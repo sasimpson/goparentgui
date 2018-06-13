@@ -1,0 +1,5 @@
+FROM cypress/base
+WORKDIR /goparentgui
+COPY . .
+RUN npm install
+RUN ./node_modules/.bin/cypress run

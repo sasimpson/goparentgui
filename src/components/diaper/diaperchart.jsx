@@ -13,19 +13,43 @@ class DiaperChart extends React.Component {
     constructor(props) {
         super(props)
         this.state = { 
-            data: {}
+            data: {
+                counts: {
+                    "no1": 0,
+                    "no2": 0,
+                    "both": 0
+                }
+            }
         }
 
         this.massageData = this.massageData.bind(this)
     }
 
     massageData = () => {
-        var foo = this.props.diaper.allIDs.filter((id) => {
+        var counts = {
+            "no1": 0,
+            "no2": 0,
+            "both": 0
+        }
+        this.props.diaper.allIDs.forEach((id) => {
             if (this.props.diaper.byID[id].childid === this.props.currentChild) {
-                return this.props.diaper.byID[id].wasteType
+                switch (this.props.diaper.byID[id].wasteType) {
+                    case 1:
+                        counts["no1"]++
+                        break;
+                    case 2:
+                        counts["no2"]++
+                        break;
+                    case 3:
+                        counts["both"]++
+                        break;
+                    default:
+                        break;
+                }
             }
         })
-        console.log(foo)
+
+        console.log(counts)
     }
 
     componentDidMount() {
