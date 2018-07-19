@@ -5,6 +5,8 @@ import {
     CLEAR_DATA
 } from '../../actions/index'
 
+import {uniq} from 'lodash'
+
 var initialState = {byID:{}, allIDs: [], graphData: []}
 
 var diaperReducer = function(state = initialState, action) {
@@ -24,9 +26,19 @@ var diaperReducer = function(state = initialState, action) {
                 allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
             }
         case DIAPER_GRAPH_DATA:
-            action.payload.forEach(e => {
-                console.log(e)
-            });
+            console.log(action.payload)
+            var labels = []
+            
+            action.payload.dataset.forEach(e => {
+                var recordDate = new Date(e.date)
+                labels.push(recordDate.valueOf())
+            })
+            labels = uniq(labels)
+            labels = labels.filter(date => date > 0)
+            labels = labels.map(x => {
+                return new Date(x)
+            })
+            console.log(labels)
             return {
                 ...state
             }
