@@ -22,24 +22,7 @@ class DiaperChart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {
-                labels: ['a', "b", "c", "d", "e"],
-                datasets: [{
-                    label: 'no 1', 
-                    data: [1,2,3,4,5],
-                    backgroundColor: 'rgba(233, 224, 92, 0.2)'
-                },
-                {
-                    label: 'no 2',
-                    data: [5,4,3,2,1],
-                    backgroundColor: 'rgba(70, 70, 11, 0.2)'
-                },
-                {
-                    label: 'both',
-                    data: [1,4,1,2,1],
-                    backgroundColor: 'rgba(200, 150, 11, 0.2)'
-                }]
-            },
+            data: this.props.diaper.graphData,
             options: {
                 scales: {
                     xAxes: [{
@@ -60,6 +43,11 @@ class DiaperChart extends React.Component {
         this.getDataFromService = this.getDataFromService.bind(this)
     }
 
+    componentDidCatch = (error, info) => {
+        console.log(error)
+        console.log(info)
+    }
+
     componentDidMount = () => {
         this.getDataFromService()
     }
@@ -69,12 +57,21 @@ class DiaperChart extends React.Component {
     }
 
     render() {
-        return (
-            <div className="col-md-6">
-                <h3>chart</h3>
-                <Bar data={this.state.data} options={this.state.options} />
-            </div>
-        )
+        if (this.state.data !== {}) {
+            return (
+                <div className="col-md-6">
+                    <h3>chart</h3>
+                    <Bar data={this.state.data} options={this.state.options} />
+                </div>
+            )
+        } else {
+            return (
+                <div className="col-md-6">
+                    <h3>No Data Available</h3>
+                </div>
+            )
+        }
+       
     }
 }
 

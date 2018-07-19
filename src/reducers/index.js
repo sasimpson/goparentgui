@@ -33,7 +33,7 @@ export var stateTree = {
         diaper : {
             byID: {},
             allIDs: [],
-            graphData: []
+            graphData: {}
         },
         feeding : {
             inProgress: false,

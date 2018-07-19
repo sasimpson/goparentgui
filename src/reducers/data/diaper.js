@@ -5,9 +5,9 @@ import {
     CLEAR_DATA
 } from '../../actions/index'
 
-import {uniq} from 'lodash'
+import {uniq, forEach} from 'lodash'
 
-var initialState = {byID:{}, allIDs: [], graphData: []}
+var initialState = {byID:{}, allIDs: [], graphData: {}}
 
 var diaperReducer = function(state = initialState, action) {
     switch (action.type) {
@@ -26,21 +26,44 @@ var diaperReducer = function(state = initialState, action) {
                 allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
             }
         case DIAPER_GRAPH_DATA:
-            console.log(action.payload)
+            // console.log(action.payload)
             var labels = []
+            var datasets = {
+                1: {
+                    label: "",
+                    data: []
+                },
+                2: {
+                    label: "",
+                    data: []
+                },
+                3: {
+                    label: "",
+                    data: []
+                },
+            }
             
             action.payload.dataset.forEach(e => {
-                var recordDate = new Date(e.date)
-                labels.push(recordDate.valueOf())
+                if (e.type > 0) {
+                    labels.push(new Date(e.date).valueOf())
+                    datasets[e.type].data.push(e.count)
+                    datasets[e.type].label = "" + e.type
+                }
             })
             labels = uniq(labels)
             labels = labels.filter(date => date > 0)
             labels = labels.map(x => {
                 return new Date(x)
             })
-            console.log(labels)
+            console.log(datasets)
+            datasets = forEach(datasets, x => { return x })
+
+            var data = {
+                labels: labels,
+                datasets: datasets
+            }
             return {
-                ...state
+                ...state, graphData: data
             }
         case CLEAR_DATA:
             return initialState

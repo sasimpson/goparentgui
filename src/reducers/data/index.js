@@ -17,7 +17,7 @@ var dataStateTree = {
     diaper : {
         byID: {},
         allIDs: [],
-        graphData: []
+        graphData: {}
     },
     feeding : {
         inProgress: false,
