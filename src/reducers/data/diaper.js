@@ -1,10 +1,11 @@
 import {
     DIAPER_LOAD_DATA,
     DIAPER_ADD_DATA,
+    DIAPER_GRAPH_DATA,
     CLEAR_DATA
 } from '../../actions/index'
 
-var initialState = {byID:{}, allIDs: []}
+var initialState = {byID:{}, allIDs: [], graphData: []}
 
 var diaperReducer = function(state = initialState, action) {
     switch (action.type) {
@@ -21,6 +22,13 @@ var diaperReducer = function(state = initialState, action) {
                 ...state, 
                 byID:  {...state.byID, [action.payload.id]: action.payload}, 
                 allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
+            }
+        case DIAPER_GRAPH_DATA:
+            action.payload.forEach(e => {
+                console.log(e)
+            });
+            return {
+                ...state
             }
         case CLEAR_DATA:
             return initialState

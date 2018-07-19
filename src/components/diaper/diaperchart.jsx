@@ -1,5 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { getDiaperGraphData } from '../../actions/diaper'
+import { Bar } from 'react-chartjs-2';
 
 const mapStateToProps = (state) => {
     return {
@@ -9,60 +12,70 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getDiaperGraphData: getDiaperGraphData
+    }, dispatch)
+}
+
 class DiaperChart extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             data: {
-                counts: {
-                    "no1": 0,
-                    "no2": 0,
-                    "both": 0
+                labels: ['a', "b", "c", "d", "e"],
+                datasets: [{
+                    label: 'no 1', 
+                    data: [1,2,3,4,5],
+                    backgroundColor: 'rgba(233, 224, 92, 0.2)'
+                },
+                {
+                    label: 'no 2',
+                    data: [5,4,3,2,1],
+                    backgroundColor: 'rgba(70, 70, 11, 0.2)'
+                },
+                {
+                    label: 'both',
+                    data: [1,4,1,2,1],
+                    backgroundColor: 'rgba(200, 150, 11, 0.2)'
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        stacked: true
+                    }]
                 }
             }
         }
-
-        this.massageData = this.massageData.bind(this)
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
 
-    massageData = () => {
-        var counts = {
-            "no1": 0,
-            "no2": 0,
-            "both": 0
-        }
-        this.props.diaper.allIDs.forEach((id) => {
-            if (this.props.diaper.byID[id].childid === this.props.currentChild) {
-                switch (this.props.diaper.byID[id].wasteType) {
-                    case 1:
-                        counts["no1"]++
-                        break;
-                    case 2:
-                        counts["no2"]++
-                        break;
-                    case 3:
-                        counts["both"]++
-                        break;
-                    default:
-                        break;
-                }
-            }
-        })
-
-        console.log(counts)
+    componentDidMount = () => {
+        this.getDataFromService()
     }
 
-    componentDidMount() {
-        this.massageData()
+    getDataFromService = () => {
+        this.props.getDiaperGraphData(this.props.token, this.props.currentChild)
     }
 
     render() {
         return (
             <div className="col-md-6">
                 <h3>chart</h3>
+                <Bar data={this.state.data} options={this.state.options} />
             </div>
         )
     }
 }
 
-export default connect(mapStateToProps)(DiaperChart);
+export default connect(mapStateToProps, mapDispatchToProps)(DiaperChart);

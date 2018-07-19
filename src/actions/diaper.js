@@ -1,10 +1,14 @@
-import {DIAPER_LOAD_DATA, DIAPER_ADD_DATA} from './index'
+import {DIAPER_LOAD_DATA, DIAPER_ADD_DATA, DIAPER_GRAPH_DATA} from './index'
 import {getUrl} from '../utils/index'
 import {flashSuccessMessage} from 'redux-flash'
 
 
 const diaperAddPostData = (data) => {
     return {type: DIAPER_ADD_DATA, payload: data}
+}
+
+const diaperGraphData = (data) => {
+    return {type: DIAPER_GRAPH_DATA, payload: data}
 }
 
 export const getDiaper = (token) => {
@@ -44,6 +48,26 @@ export const postDiaper = (token, data) => {
             .then(data => {
                 dispatch(diaperAddPostData(data.wasteData))
                 dispatch(flashSuccessMessage("diaper record added", {timeout: 500}))
+            })
+            .catch(e => console.log(e))
+    }
+}
+
+export const getDiaperGraphData = (token, id) => {
+    return (dispatch) => {
+        return fetch(
+            getUrl("/api/waste/graph/" + id), {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            }
+        )
+            .then(r => r.json())
+            .then(data => {
+                dispatch(diaperGraphData(data))
             })
             .catch(e => console.log(e))
     }
