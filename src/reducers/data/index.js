@@ -19,7 +19,8 @@ var dataStateTree = {
         allIDs: [],
         graphData: {
             data: [],
-            options: {}
+            options: {},
+            chartReady: false
         }
     },
     feeding : {

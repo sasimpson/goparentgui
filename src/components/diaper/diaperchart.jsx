@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getDiaperGraphData } from '../../actions/diaper'
-import { Bar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
 const mapStateToProps = (state) => {
     return {
@@ -22,25 +22,22 @@ class DiaperChart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {
-                // labels: [],
-                // datasets: []
-            },
+            data: this.props.diaper.graphData,
             options: {
-            //     scales: {
-            //         xAxes: [{
-            //             ticks: {
-            //                 beginAtZero:true
-            //             },
-            //             stacked: true
-            //         }],
-            //         yAxes: [{
-            //             ticks: {
-            //                 beginAtZero:true
-            //             },
-            //             stacked: true
-            //         }]
-            //     }
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        stacked: true
+                    }]
+                }
             }
         }
         this.getDataFromService = this.getDataFromService.bind(this)
@@ -57,20 +54,22 @@ class DiaperChart extends React.Component {
 
     getDataFromService = () => {
         this.props.getDiaperGraphData(this.props.token, this.props.currentChild)
+        console.log(this.props.diaper.graphData)
     }
 
     render() {
-        if (this.state.data !== {}) {
+        if (this.props.diaper.graphData.chartReady === true) {
+            console.log("chart ready, need to render")
             return (
                 <div className="col-md-6">
                     <h3>chart</h3>
-                    <Bar data={this.state.data} options={this.state.options} />
+                    <HorizontalBar data={this.state.data} options={this.state.options} />
                 </div>
             )
         } else {
             return (
                 <div className="col-md-6">
-                    <h3>No Data Available</h3>
+                    <h3>No data available</h3>
                 </div>
             )
         }

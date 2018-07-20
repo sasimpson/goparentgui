@@ -35,7 +35,8 @@ export var stateTree = {
             allIDs: [],
             graphData: {
                 data: [],
-                options: {}
+                options: {},
+                chartReady: false
             }
         },
         feeding : {
