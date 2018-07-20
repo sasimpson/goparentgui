@@ -22,22 +22,25 @@ class DiaperChart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: this.props.diaper.graphData,
+            data: {
+                // labels: [],
+                // datasets: []
+            },
             options: {
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        },
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        },
-                        stacked: true
-                    }]
-                }
+            //     scales: {
+            //         xAxes: [{
+            //             ticks: {
+            //                 beginAtZero:true
+            //             },
+            //             stacked: true
+            //         }],
+            //         yAxes: [{
+            //             ticks: {
+            //                 beginAtZero:true
+            //             },
+            //             stacked: true
+            //         }]
+            //     }
             }
         }
         this.getDataFromService = this.getDataFromService.bind(this)

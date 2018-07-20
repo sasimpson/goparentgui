@@ -7,7 +7,14 @@ import {
 
 import {uniq, forEach} from 'lodash'
 
-var initialState = {byID:{}, allIDs: [], graphData: {}}
+var initialState = {
+    byID:{}, 
+    allIDs: [], 
+    graphData: {
+        data: [],
+        options: {}
+    }
+}
 
 var diaperReducer = function(state = initialState, action) {
     switch (action.type) {
