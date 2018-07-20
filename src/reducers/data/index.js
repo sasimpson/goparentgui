@@ -26,7 +26,12 @@ var dataStateTree = {
     feeding : {
         inProgress: false,
         byID: {},
-        allIDs: []
+        allIDs: [],
+        graphData: {
+            data: [],
+            options: {},
+            chartReady: false
+        }
     },
     statistics: {
         byID: {},

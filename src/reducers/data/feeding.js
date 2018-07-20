@@ -3,9 +3,18 @@ import {
     FEEDING_ADD_DATA,
     FEEDING_WILL_POST,
     CLEAR_DATA,
+    FEEDING_GRAPH_DATA,
 } from '../../actions/index'
 
-var initialState = {byID:{}, allIDs: []}
+var initialState = {
+    byID:{}, 
+    allIDs: [],
+    graphData: {
+        data: [],
+        options: {},
+        chartReady: false
+    }
+}
 
 var feedingReducer = function(state = initialState, action) {
     switch (action.type) {
@@ -25,6 +34,8 @@ var feedingReducer = function(state = initialState, action) {
                 byID:  {...state.byID, [action.payload.id]: action.payload}, 
                 allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
             }
+        case FEEDING_GRAPH_DATA:
+            return {...state}
         case CLEAR_DATA:
             return initialState
         default:
