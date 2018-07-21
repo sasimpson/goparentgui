@@ -89,7 +89,7 @@ export const postFeeding = (token, data) => {
 export const getFeedingGraphData = (token, id) => {
     return (dispatch) => {
         return fetch(
-            getUrl("/api/waste/feeding/" + id), {
+            getUrl("/api/feeding/graph/" + id), {
                 method: "GET",
                 headers: {
                     'Accept': 'application/json',

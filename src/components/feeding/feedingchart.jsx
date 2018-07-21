@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getFeedingGraphData } from '../../actions/feeding'
-import { HorizontalBar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 const mapStateToProps = (state) => {
     return {
@@ -22,8 +22,20 @@ class FeedingChart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: this.props.feeding.graphData,
+            bottle: {
+                labels: this.props.feeding.graphData.labels,
+                datasets: this.props.feeding.graphData.datasets.bottle
+            },
+            breast: {
+                labels: this.props.feeding.graphData.labels,
+                datasets: this.props.feeding.graphData.datasets.breast
+            },
             options: {
+                elements: {
+                    line: {
+                      fill: false
+                    }
+                },
                 scales: {
                     xAxes: [{
                         ticks: {
@@ -31,12 +43,32 @@ class FeedingChart extends React.Component {
                         },
                         stacked: true
                     }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
+                    yAxes: [
+                        {
+                          type: 'linear',
+                          display: true,
+                          position: 'left',
+                          id: 'y-axis-1',
+                          gridLines: {
+                            display: false
+                          },
+                          labels: {
+                            show: true
+                          }
                         },
-                        stacked: true
-                    }]
+                        {
+                          type: 'linear',
+                          display: true,
+                          position: 'right',
+                          id: 'y-axis-2',
+                          gridLines: {
+                            display: false
+                          },
+                          labels: {
+                            show: true
+                          }
+                        }
+                  ]
                 }
             }
         }
@@ -58,12 +90,20 @@ class FeedingChart extends React.Component {
     }
 
     render() {
+        console.log(this.state)
+        console.log(this.props.feeding.graphData)
         if (this.props.feeding.graphData.chartReady === true) {
             console.log("chart ready, need to render")
             return (
                 <div className="col-md-6">
-                    <h3>chart</h3>
-                    <HorizontalBar data={this.state.data} options={this.state.options} />
+                    <div>
+                        <h3>bottle feedings</h3>
+                        <Bar data={this.state.bottle} options={this.state.options} />
+                    </div>
+                    <div>
+                        <h3>breast feedings</h3>
+                        <Bar data={this.state.breast} options={this.state.options} />
+                    </div>
                 </div>
             )
         } else {
