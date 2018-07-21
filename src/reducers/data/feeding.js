@@ -48,14 +48,14 @@ var feedingReducer = function(state = initialState, action) {
                     {
                         label: "bottle fl oz",
                         data: new Array(labels.length).fill(0),
-                        backgroundColor: window.chartColors.blue,
+                        backgroundColor: "rgb(147, 190, 240)",
                         type: "bar",
                         yAxisID: "y-axis-1"
                     },
                     {
                         label: "bottle feedings",
                         data: new Array(labels.length).fill(0),
-                        backgroundColor:  window.chartColors.red,
+                        backgroundColor:  "rgb(240, 150, 147)",
                         type: "line",
                         fill: false,
                         yAxisID: "y-axis-2"

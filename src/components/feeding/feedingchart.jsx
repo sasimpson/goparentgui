@@ -7,7 +7,7 @@ import { Bar } from 'react-chartjs-2';
 const mapStateToProps = (state) => {
     return {
         token: state.authentication.auth.token,
-        feeding: state.entities.feeding,
+        graphData: state.entities.feeding.graphData,
         currentChild: state.settings.currentChild
     }
 }
@@ -23,12 +23,12 @@ class FeedingChart extends React.Component {
         super(props)
         this.state = {
             bottle: {
-                labels: this.props.feeding.graphData.labels,
-                datasets: this.props.feeding.graphData.datasets.bottle
+                // labels: this.props.feeding.graphData.labels,
+                // datasets: this.props.feeding.graphData.datasets.bottle
             },
             breast: {
-                labels: this.props.feeding.graphData.labels,
-                datasets: this.props.feeding.graphData.datasets.breast
+                // labels: this.props.feeding.graphData.labels,
+                // datasets: this.props.feeding.graphData.datasets.breast
             },
             options: {
                 elements: {
@@ -86,13 +86,23 @@ class FeedingChart extends React.Component {
 
     getDataFromService = () => {
         this.props.getFeedingGraphData(this.props.token, this.props.currentChild)
-        console.log(this.props.feeding.graphData)
+        console.log(this.props.graphData)
+        if (this.props.graphData.chartReady === true){
+            this.setState({bottle: {
+                labels: this.props.graphData.labels,
+                datasets: this.props.graphData.datasets.bottle
+            },
+            breast: {
+                labels: this.props.graphData.labels,
+                datasets: this.props.graphData.datasets.breast
+            }})
+        }
     }
 
     render() {
         console.log(this.state)
-        console.log(this.props.feeding.graphData)
-        if (this.props.feeding.graphData.chartReady === true) {
+        console.log(this.props.graphData)
+        if (this.props.graphData.chartReady === true) {
             console.log("chart ready, need to render")
             return (
                 <div className="col-md-6">
