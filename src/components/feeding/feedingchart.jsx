@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getFeedingGraphData } from '../../actions/feeding'
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch)
 }
 
-class FeedingChart extends React.Component {
+class FeedingChart extends Component {
     constructor(props) {
         super(props)
         this.state = {

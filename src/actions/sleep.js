@@ -1,7 +1,8 @@
 import {
     SLEEP_LOAD_DATA,
     SLEEP_FETCH_DATA,
-    SLEEP_ADD_DATA
+    SLEEP_ADD_DATA,
+    SLEEP_GRAPH_DATA
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -20,6 +21,10 @@ const sleepLoadData = (data) => {
 
 const sleepAddPostData = (data) => {
     return {type: SLEEP_ADD_DATA, payload: data}
+}
+
+const sleepGraphData = (data) => {
+    return {type: SLEEP_GRAPH_DATA, payload: data}
 }
 
 export const getSleep = (token) => {
@@ -82,4 +87,24 @@ export const getSleepStatus = (token) => {
             }
         })
         .catch(e => console.log(e))
+}
+
+export const getSleepGraphData = (token, id) => {
+    return (dispatch) => {
+        return fetch(
+            getUrl("/api/sleep/graph/" + id), {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            }
+        )
+            .then(r => r.json())
+            .then(data => {
+                dispatch(sleepGraphData(data))
+            })
+            .catch(e => console.log(e))
+    }
 }

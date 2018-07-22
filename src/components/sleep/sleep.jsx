@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom'
 
 import SleepForm from './sleepform'
 import SleepData from './sleepdata'
+import SleepChart from './sleepchart'
 // import SleepToggle from './sleeptoggle'
 
 const mapStateToProps = (state) => {
@@ -60,6 +61,7 @@ class Sleep extends React.Component {
                         </div>
                         <div className="row">
                             <SleepData/>
+                            <SleepChart/>
                         </div>
                     </div>
                 )
