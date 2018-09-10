@@ -24,9 +24,9 @@ class SleepChart extends Component {
         this.state = { 
             data: {
                 labels: [
-                    'Red',
-                    'Green',
-                    'Yellow'
+                    '< 1 hr',
+                    '1-3 hrs',
+                    '3+ hrs'
                 ],
                 datasets: [{
                     data: [300, 50, 100],
