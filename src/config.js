@@ -7,7 +7,7 @@ const config = {
     default: {
         protocol: "http",
         host: "localhost", 
-        port: 8000
+        port: 8080
     },
     // development: {
     //     protocol: "http",
@@ -19,7 +19,7 @@ const config = {
     development: {
         protocol: "http",
         host: "localhost", 
-        port: 8000
+        port: 8080
     },
 }
 
