@@ -1,6 +1,19 @@
 
 import config from "../config"
 
+export const colors = [
+    "SteelBlue", 
+    "Olive",
+    "FireBrick",
+    "DarkViolet",
+    "Tomato",
+    "DarkGreen",
+    "DarkTurquoise",
+    "LightSkyBlue",
+    "GoldenRod",
+    "SlateGray"
+]
+
 export const loadState = () => {
     try{
         const serializedState = localStorage.getItem('state')

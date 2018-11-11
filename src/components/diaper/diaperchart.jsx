@@ -54,12 +54,10 @@ class DiaperChart extends React.Component {
 
     getDataFromService = () => {
         this.props.getDiaperGraphData(this.props.token, this.props.currentChild)
-        console.log(this.props.diaper.graphData)
     }
 
     render() {
         if (this.props.diaper.graphData.chartReady === true) {
-            console.log("chart ready, need to render")
             return (
                 <div className="col-md-6">
                     <h3>chart</h3>

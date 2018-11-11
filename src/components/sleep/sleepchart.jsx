@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Doughnut } from 'react-chartjs-2/'
+import { HorizontalBar } from 'react-chartjs-2/'
 import { getSleepGraphData } from '../../actions/sleep'
 
 const mapStateToProps = (state) => {
@@ -20,29 +20,31 @@ const mapDispatchToProps = (dispatch) => {
 
 class SleepChart extends Component {
     constructor(props) {
-        super(props);
-        this.state = { 
-            data: {
-                labels: [
-                    '< 1 hr',
-                    '1-3 hrs',
-                    '3+ hrs'
-                ],
-                datasets: [{
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                    ],
-                    hoverBackgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                    ]
-                }]
+        super(props)
+        this.state = {
+            data: this.props.graphData,
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero:true,
+                        },
+                        stacked: true
+                        
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        stacked: true
+                    }]
+                }
             }
-        };
+        }
+        this.getDataFromService = this.getDataFromService.bind(this)
     }
  
     componentDidMount = () => {
@@ -51,14 +53,13 @@ class SleepChart extends Component {
 
     getDataFromService = () => {
         this.props.getSleepGraphData(this.props.token, this.props.currentChild)
-        console.log(this.props.graphData)
     }
  
     render() {
         return (
             <div className="col-md-6">
                 <h3>total sleep</h3>
-                <Doughnut data={this.state.data}/>
+                <HorizontalBar data={this.state.data} options={this.state.options}/>
             </div>
         )
     }

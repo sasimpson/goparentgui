@@ -86,7 +86,6 @@ class FeedingChart extends Component {
 
     getDataFromService = () => {
         this.props.getFeedingGraphData(this.props.token, this.props.currentChild)
-        console.log(this.props.graphData)
         if (this.props.graphData.chartReady === true){
             this.setState({bottle: {
                 labels: this.props.graphData.labels,
@@ -100,10 +99,7 @@ class FeedingChart extends Component {
     }
 
     render() {
-        console.log(this.state)
-        console.log(this.props.graphData)
         if (this.props.graphData.chartReady === true) {
-            console.log("chart ready, need to render")
             return (
                 <div className="col-md-6">
                     <div>

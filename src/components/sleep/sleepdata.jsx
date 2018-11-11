@@ -47,7 +47,6 @@ class SleepData extends React.Component {
     }
 
     componentWillMount = () => {
-        console.log("componentWillMount")
         this.getDataFromService()
     }
 
@@ -56,14 +55,14 @@ class SleepData extends React.Component {
     }
 
     render() {
-        console.log("item length", this.props.sleep.allIDs.length)
+        // console.log("item length", this.props.sleep.allIDs.length)
         var rowComponents = this.props.sleep.allIDs.filter(id => {
             return this.props.sleep.byID[id].childID === this.props.currentChild
         }).map(id => {
             return <SleepDataRow key={id} data={this.props.sleep.byID[id]} />
         })
         
-        console.log("rowComponents", rowComponents)
+        // console.log("rowComponents", rowComponents)
         if (rowComponents.length > 0) {
             return (<SleepList rows={rowComponents} />)
         } else {
