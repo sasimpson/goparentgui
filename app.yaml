@@ -1,0 +1,18 @@
+runtime: nodejs10
+
+handlers:
+ - url: /static/css
+   static_dir: build/static/css
+
+ - url: /static/js
+   static_dir: build/static/js
+   
+ - url: /*
+   static_files: build/index.html
+   upload: build/index.html
+   
+ - url: /(.*)
+   static_files: build/index.html
+   upload: build/(.*)
+
+

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import FeedingForm from './feedingform'
 import FeedingData from './feedingdata'
+import FeedingChart from './feedingchart'
 
 const mapStateToProps = (state) => {
     return {
@@ -51,6 +52,7 @@ class Feeding extends React.Component {
                         </div>
                         <div className="row">
                             <FeedingData/>
+                            <FeedingChart/>
                         </div>
                     </div>
                 )

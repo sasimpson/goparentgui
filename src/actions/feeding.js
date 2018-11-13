@@ -3,7 +3,8 @@ import {
     FEEDING_LOADING_DATA,
     FEEDING_LOAD_FAILED,
     FEEDING_WILL_POST,
-    FEEDING_ADD_DATA
+    FEEDING_ADD_DATA,
+    FEEDING_GRAPH_DATA
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -28,6 +29,10 @@ const feedingLoadingInProgress = () => {
 
 const feedingLoadDataFailed = () => {
     return {type: FEEDING_LOAD_FAILED}
+}
+
+const feedingGraphData = (data) => {
+    return {type: FEEDING_GRAPH_DATA, payload: data}
 }
 
 export const getFeedings = (token) => {
@@ -76,6 +81,26 @@ export const postFeeding = (token, data) => {
             .then(data => {
                 dispatch(feedingAddPostData(data.feedingData))
                 dispatch(flashSuccessMessage("feeding record added", {timeout: 500}))
+            })
+            .catch(e => console.log(e))
+    }
+}
+
+export const getFeedingGraphData = (token, id) => {
+    return (dispatch) => {
+        return fetch(
+            getUrl("/api/feeding/graph/" + id), {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            }
+        )
+            .then(r => r.json())
+            .then(data => {
+                dispatch(feedingGraphData(data))
             })
             .catch(e => console.log(e))
     }

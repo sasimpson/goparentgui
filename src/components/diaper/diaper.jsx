@@ -2,8 +2,9 @@ import React from 'react';
 import {Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import DiaperForm from './diaperform';
-import DiaperData from './diaperdata';
+import DiaperForm from './diaperform'
+import DiaperData from './diaperdata'
+import DiaperChart from "./diaperchart"
 
 
 const mapStateToProps = (state) => {
@@ -53,6 +54,7 @@ class Diaper extends React.Component {
                         </div>
                         <div className="row">
                             <DiaperData />
+                            <DiaperChart />
                         </div>
                     </div>
                 )

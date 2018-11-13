@@ -1,13 +1,13 @@
 const config = {
     production: {
-        protocol: "http",
-        host: "192.168.99.100",
-        port: 30869
+        protocol: "https",
+        host: "goparent-181120.appspot.com",
+        port: 80
     },
     default: {
         protocol: "http",
         host: "localhost", 
-        port: 8000
+        port: 8080
     },
     // development: {
     //     protocol: "http",
@@ -19,7 +19,7 @@ const config = {
     development: {
         protocol: "http",
         host: "localhost", 
-        port: 8000
+        port: 8080
     },
 }
 

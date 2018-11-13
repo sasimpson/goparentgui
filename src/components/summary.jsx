@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => {
 const FeedingSummary = (props) => {
     var totalFeedings = 0
     var feedingList = []
-    console.log(props.stats.range)
     for (var x in props.stats.range) {
         totalFeedings += props.stats.range[x]
         feedingList.push({"key": x, "value": props.stats.range[x]})
@@ -84,7 +83,7 @@ const WasteSummary = (props) => {
     }
 
     var wasteListRows = wasteList.map(x => {
-        console.log("wastelistrow", x)
+        // console.log("wastelistrow", x)
         return (
             <li className="list-group-item" key={x.key}><span className="badge">{x.value}</span>Total of {x.key}</li>
         )
