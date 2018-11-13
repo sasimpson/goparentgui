@@ -38,7 +38,10 @@ export const saveState = (state) => {
 
 export const getUrl = (path) => {
     if (process.env.NODE_ENV === "production") {
-        return config['production']['protocol'] + "://" + config['production']['host'] + ":" + config['production']['port'] + path
+        if (config['production']['port'] === 80) 
+            return config['production']['protocol'] + "://" + config['production']['host'] + path
+        else
+            return config['production']['protocol'] + "://" + config['production']['host'] + ":" + config['production']['port'] + path
     } else if (process.env.NODE_ENV === "development") {
         return config['development']['protocol'] + "://" + config['development']['host'] + ":" + config['development']['port'] + path
     } else {
