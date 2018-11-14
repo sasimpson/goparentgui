@@ -14,16 +14,15 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run: 
           name: Setup Dependencies
-          command: npm install
+          command: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: 
           name: Build
-          command: npm run build
+          command: yarn build
       - store_artifacts:
           path: ./build

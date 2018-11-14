@@ -42,7 +42,7 @@ var sleepReducer = function(state = initialState, action) {
             })
 
             var datasets = []
-
+            //rotates the matrix 90degrees, need to figure out a better way
             for (var i = 0; i < maxLength; i++) {
                 
                 var foo = days.map(d => {
