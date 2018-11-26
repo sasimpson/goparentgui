@@ -27,7 +27,7 @@ const sleepGraphData = (data) => {
 
 export const getSleep = (token) => {
     return (dispatch) => {
-        dispatch(sleepFetchingData)
+        dispatch(sleepFetchingData())
         return fetch(getUrl("/api/sleep"), {
             method: "GET",
             headers: {

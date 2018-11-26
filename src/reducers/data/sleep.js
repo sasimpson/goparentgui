@@ -1,3 +1,4 @@
+/*jshint loopfunc:true*/
 import {
     SLEEP_LOAD_DATA,
     SLEEP_FETCH_DATA,
@@ -7,7 +8,14 @@ import {
 } from '../../actions/index'
 import {colors} from '../../utils/index'
 
-var initialState = {byID:{}, allIDs: []}
+var initialState = {
+    byID:{}, 
+    allIDs: [], 
+    graphData: {
+        datasets: {},
+        labels: [],
+        chartReady: false
+    }}
 
 var sleepReducer = function(state = initialState, action) {
     switch (action.type) {
@@ -20,7 +28,8 @@ var sleepReducer = function(state = initialState, action) {
                 byID[e.id] = e
                 allIDs.push(e.id)
             })
-            return {...state, byID: byID, allIDs: allIDs}
+            var graphData = {}
+            return {...state, byID: byID, allIDs: allIDs, graphData: graphData}
         case SLEEP_ADD_DATA:
             return {
                 ...state, 
@@ -28,10 +37,11 @@ var sleepReducer = function(state = initialState, action) {
                 allIDs: state.allIDs.includes(action.payload.id) ? [...state.allIDs] : [...state.allIDs, action.payload.id]
             }
         case SLEEP_GRAPH_DATA:
-            console.log("payload", action.payload)
+            console.log("SLEEP_GRAPH_DATA payload", action.payload)
             var days = []
             var maxLength = 0
             var dayStruct = {}
+            //get the day labels and determine max width of matrix
             action.payload.dataset.forEach(e => {
                 var day = new Date(e.date).toDateString()
                 days.push(day)
@@ -41,17 +51,18 @@ var sleepReducer = function(state = initialState, action) {
                 }
             })
 
+            var rotateData = function(d) {
+                if (dayStruct[d].length >= maxLength) {
+                    return dayStruct[d][i]/6e10
+                } else {
+                    return 0
+                }
+            }
+
             var datasets = []
             //rotates the matrix 90degrees, need to figure out a better way
             for (var i = 0; i < maxLength; i++) {
-                
-                var foo = days.map(d => {
-                    if (dayStruct[d].length >= maxLength) {
-                        return dayStruct[d][i]/6e10
-                    } else {
-                        return 0
-                    }
-                })
+                var foo = days.map(rotateData)
                 datasets.push({
                     label: i, 
                     data: foo,
@@ -59,12 +70,11 @@ var sleepReducer = function(state = initialState, action) {
                 })
             }
 
-
             var data = {
                 labels: days,
                 datasets: datasets
             }
-            console.log("dataset", datasets)
+            console.log("SLEEP_GRAPH_DATA dataset", datasets)
             return {
                 ...state, graphData: data
             }
@@ -74,5 +84,6 @@ var sleepReducer = function(state = initialState, action) {
             return state
     }
 }
+
 
 export default sleepReducer

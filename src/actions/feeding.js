@@ -47,9 +47,7 @@ export const getFeedings = (token) => {
             }
         }) 
             .then(r => r.json())
-            .then(data => {
-                dispatch(feedingLoadData(data))
-            })
+            .then(data => dispatch(feedingLoadData(data)))
             .catch(e => {
                 dispatch(feedingLoadDataFailed())
                 console.log(e)

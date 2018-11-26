@@ -24,9 +24,8 @@ this will setup the service and the deployment.  set the number of pods on the s
 
 ## ToDo:
 
-- [x] add multiple children to a user to track
-- [ ] add registration form
-- [x] full convert to redux for state management instead of local state in most cases
+- [ ] Fix login and authorization expiration
+- [ ] Start/End for Sleep
 
 ## Thanks:
 

@@ -11,8 +11,8 @@ var initialState = {
     byID:{}, 
     allIDs: [], 
     graphData: {
-        data: [],
-        options: {},
+        labels: [],
+        datasets: {},
         chartReady: false
     }
 }
