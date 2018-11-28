@@ -4,15 +4,17 @@ import { Button, ButtonGroup } from 'react-bootstrap'
 
 import {getUrl} from '../../utils/index'
 
-const mapStateToProps = (state) => ({...state})
+const mapStateToProps = (state) => {
+    return {...state}
+}
 
 class SleepToggle extends React.Component {
     constructor(props) {
         super(props);
         this.state = { sleepStatus: false };
-        this.handleToggleStatus = this.handleToggleStatus.bind(this)
+        // this.handleToggleStatus = this.handleToggleStatus.bind(this)
     }
-
+    /*
     componentDidMount = () => {
         fetch(getUrl("/api/sleep/status"), {
             method: "GET", 
@@ -73,6 +75,7 @@ class SleepToggle extends React.Component {
         //     sleepStatus: !prevState.sleepStatus
         // }));
     }
+    */
 
     render() {
         return (

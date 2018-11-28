@@ -5,10 +5,14 @@ import {Redirect} from 'react-router-dom'
 import SleepForm from './sleepform'
 import SleepData from './sleepdata'
 import SleepChart from './sleepchart'
-// import SleepToggle from './sleeptoggle'
+import SleepToggle from './sleeptoggle'
 
 const mapStateToProps = (state) => {
-    return {isAuthenticated: state.authentication.isAuthenticated, settings: state.settings, children: state.entities.children}
+    return {
+        isAuthenticated: state.authentication.isAuthenticated, 
+        settings: state.settings, 
+        children: state.entities.children
+    }
 }
 
 class Sleep extends React.Component {
@@ -49,7 +53,7 @@ class Sleep extends React.Component {
                             </div>
                         </div>
                         <div className="row">
-                            {/* <SleepToggle /> */}
+                            <SleepToggle />
                         </div>
                         <div className="row">
                             <div className="col-md-6">
