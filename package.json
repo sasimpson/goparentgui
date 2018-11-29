@@ -26,7 +26,8 @@
     "redux": "^3.6.0",
     "redux-flash": "^1.2.1",
     "redux-thunk": "^2.3.0",
-    "sprintf-js": "^1.1.1"
+    "sprintf-js": "^1.1.1",
+    "yarn": "^1.12.3"
   },
   "devDependencies": {
     "ajv": "^6.5.5",
