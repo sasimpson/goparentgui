@@ -1,11 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
+import { bindActionCreators } from 'redux'
+
+import { getSleepStatus } from '../../actions/sleep'
 
 // import {getUrl} from '../../utils/index'
 
 const mapStateToProps = (state) => {
-    return {...state}
+    return {
+        token: state.authentication.auth.token,
+        currentChild: state.settings.currentChild,
+        currentStatus: state.entities.sleep.sleepStatus
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getSleepStatus: getSleepStatus
+    }, dispatch)
 }
 
 class SleepToggle extends React.Component {
@@ -14,26 +27,15 @@ class SleepToggle extends React.Component {
         this.state = { sleepStatus: false };
         // this.handleToggleStatus = this.handleToggleStatus.bind(this)
     }
-    /*
+    
     componentDidMount = () => {
-        fetch(getUrl("/api/sleep/status"), {
-            method: "GET", 
-            headers: {
-                'Authorization': "Bearer " + this.props.auth.token
-            }
-        })
-            .then( r => r.status )
-            .then( statusCode => {
-                if (statusCode === 200) {
-                    this.setState({ sleepStatus: true })
-                } else {
-                    this.setState({ sleepStatus: false })
-                }
-            })
-            .catch( e => console.log(e))
+        this.props.getSleepStatus(this.props.token, this.props.currentChild)
+
     }
 
     handleToggleStatus = (event) => {
+        console.log("current status:", this.props.currentStatus)
+        /*
         if (this.state.sleepStatus === false) {
             fetch(getUrl("/api/sleep/start"), {
             method: "POST", 
@@ -71,11 +73,12 @@ class SleepToggle extends React.Component {
             .catch( e => console.log(e));
         }
         this.props.updateFunc();
+        */
         // this.setState(prevState => ({
         //     sleepStatus: !prevState.sleepStatus
         // }));
     }
-    */
+    
 
     render() {
         return (
@@ -88,7 +91,7 @@ class SleepToggle extends React.Component {
                             bsStyle="primary" 
                             value="start" 
                             onClick={this.handleToggleStatus}
-                            disabled={this.state.sleepStatus}>
+                            disabled={this.props.currentStatus}>
                             Start
                         </Button>
                     </ButtonGroup>
@@ -98,7 +101,7 @@ class SleepToggle extends React.Component {
                             bsStyle="danger" 
                             value="end" 
                             onClick={this.handleToggleStatus}
-                            disabled={!this.state.sleepStatus}>
+                            disabled={!this.props.currentStatus}>
                             End
                         </Button>
                     </ButtonGroup>
@@ -108,4 +111,4 @@ class SleepToggle extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(SleepToggle)
+export default connect(mapStateToProps, mapDispatchToProps)(SleepToggle)

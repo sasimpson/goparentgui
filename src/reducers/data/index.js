@@ -12,7 +12,13 @@ var dataStateTree = {
     },
     sleep : {
         byID: {},
-        allIDs: []
+        allIDs: [],
+        graphData: {
+            datasets: {},
+            labels: [],
+            chartReady: false
+        },
+        sleepStatus: false
     },
     diaper : {
         byID: {},

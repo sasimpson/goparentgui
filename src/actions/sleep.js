@@ -2,7 +2,8 @@ import {
     SLEEP_LOAD_DATA,
     SLEEP_FETCH_DATA,
     SLEEP_ADD_DATA,
-    SLEEP_GRAPH_DATA
+    SLEEP_GRAPH_DATA,
+    SLEEP_STATUS
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -23,6 +24,10 @@ const sleepAddPostData = (data) => {
 
 const sleepGraphData = (data) => {
     return {type: SLEEP_GRAPH_DATA, payload: data}
+}
+
+const sleepStatus = (data) => {
+    return {type: SLEEP_STATUS, status: data}
 }
 
 export const getSleep = (token) => {
@@ -68,22 +73,24 @@ export const postSleep = (token, data) => {
     }
 }
 
-export const getSleepStatus = (token) => {
-    fetch(getUrl("/api/sleep/status"), {
-        method: "GET", 
-        headers: {
-            'Authorization': "Bearer " + token
-        }
-    })
-        .then( r => r.status )
-        .then( statusCode => {
-            if (statusCode === 200) {
-                this.setState({ sleepStatus: true })
-            } else {
-                this.setState({ sleepStatus: false })
+export const getSleepStatus = (token, childID) => {
+    return (dispatch) =>{
+        fetch(getUrl("/api/sleep/status/" + childID), {
+            method: "GET", 
+            headers: {
+                'Authorization': "Bearer " + token
             }
         })
-        .catch(e => console.log(e))
+            .then( r => r.status )
+            .then( statusCode => {
+                if (statusCode === 200) {
+                    dispatch(sleepStatus(true))
+                } else {
+                    dispatch(sleepStatus(false))
+                }
+            })
+            .catch(e => console.log(e))
+    }
 }
 
 export const getSleepGraphData = (token, id) => {

@@ -1,10 +1,10 @@
-/*jshint loopfunc:true*/
 import {
     SLEEP_LOAD_DATA,
     SLEEP_FETCH_DATA,
     SLEEP_ADD_DATA,
     CLEAR_DATA,
-    SLEEP_GRAPH_DATA
+    SLEEP_GRAPH_DATA,
+    SLEEP_STATUS
 } from '../../actions/index'
 import {colors} from '../../utils/index'
 
@@ -15,7 +15,9 @@ var initialState = {
         datasets: {},
         labels: [],
         chartReady: false
-    }}
+    },
+    sleepStatus: false
+}
 
 var sleepReducer = function(state = initialState, action) {
     switch (action.type) {
@@ -77,6 +79,11 @@ var sleepReducer = function(state = initialState, action) {
             console.log("SLEEP_GRAPH_DATA dataset", datasets)
             return {
                 ...state, graphData: data
+            }
+        case SLEEP_STATUS: 
+            console.log("set Sleep Status", action)
+            return {
+                ...state, sleepStatus: action.payload
             }
         case CLEAR_DATA:
             return initialState
