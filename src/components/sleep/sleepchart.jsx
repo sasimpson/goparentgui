@@ -47,7 +47,7 @@ class SleepChart extends Component {
         this.getDataFromService = this.getDataFromService.bind(this)
     }
  
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.getDataFromService()
     }
 
@@ -59,9 +59,30 @@ class SleepChart extends Component {
         return (
             <div className="col-md-6">
                 <h3>total sleep</h3>
+                <SleepChartError>
                 <HorizontalBar data={this.state.data} options={this.state.options}/>
+                </SleepChartError>
             </div>
         )
+    }
+}
+
+class SleepChartError extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {hasError: false}
+    }
+
+    static getDerivedStateFromError(error) {
+        return {hasError: true}
+    }
+
+    render() {
+        if (this.state.hasError){
+            return <h3>Something went wrong</h3>
+        }
+
+        return this.props.children
     }
 }
 

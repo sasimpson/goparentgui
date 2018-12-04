@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { bindActionCreators } from 'redux'
 
-import { getSleepStatus } from '../../actions/sleep'
-
-// import {getUrl} from '../../utils/index'
+import { getSleep, getSleepStatus, setSleepStatus } from '../../actions/sleep'
 
 const mapStateToProps = (state) => {
     return {
@@ -17,7 +15,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getSleepStatus: getSleepStatus
+        getSleepStatus: getSleepStatus,
+        setSleepStatus: setSleepStatus,
+        getSleep: getSleep
     }, dispatch)
 }
 
@@ -28,55 +28,15 @@ class SleepToggle extends React.Component {
         // this.handleToggleStatus = this.handleToggleStatus.bind(this)
     }
     
-    componentDidMount = () => {
+    componentWillMount = () => {
         this.props.getSleepStatus(this.props.token, this.props.currentChild)
 
     }
 
     handleToggleStatus = (event) => {
         console.log("current status:", this.props.currentStatus)
-        /*
-        if (this.state.sleepStatus === false) {
-            fetch(getUrl("/api/sleep/start"), {
-            method: "POST", 
-            headers: {
-                'Authorization': "Bearer " + this.props.auth.token
-            }
-        })
-            .then( r => r.status )
-            .then( statusCode => {
-                if (statusCode === 200) {
-                    this.setState(prevState =>({
-                        sleepStatus: !prevState.sleepStatus
-                    }));
-                }
-            })
-            .then(() => this.props.updateFunc())
-            .catch( e => console.log(e));
-        }
-        else if (this.state.sleepStatus === true) {
-            fetch(getUrl("/api/sleep/end"), {
-            method: "POST", 
-            headers: {
-                'Authorization': "Bearer " + this.props.auth.token
-            }
-        })
-            .then( r => r.status )
-            .then( statusCode => {
-                if (statusCode === 200) {
-                    this.setState(prevState =>({
-                        sleepStatus: !prevState.sleepStatus
-                    }));
-                }
-            })
-            .then(() => this.props.updateFunc())
-            .catch( e => console.log(e));
-        }
-        this.props.updateFunc();
-        */
-        // this.setState(prevState => ({
-        //     sleepStatus: !prevState.sleepStatus
-        // }));
+        this.props.setSleepStatus(this.props.token, this.props.currentChild, event.target.value)
+        this.props.getSleep(this.props.token)
     }
     
 

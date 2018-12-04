@@ -27,7 +27,7 @@ const sleepGraphData = (data) => {
 }
 
 const sleepStatus = (data) => {
-    return {type: SLEEP_STATUS, status: data}
+    return {type: SLEEP_STATUS, payload: data}
 }
 
 export const getSleep = (token) => {
@@ -78,6 +78,8 @@ export const getSleepStatus = (token, childID) => {
         fetch(getUrl("/api/sleep/status/" + childID), {
             method: "GET", 
             headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
                 'Authorization': "Bearer " + token
             }
         })
@@ -87,6 +89,31 @@ export const getSleepStatus = (token, childID) => {
                     dispatch(sleepStatus(true))
                 } else {
                     dispatch(sleepStatus(false))
+                }
+            })
+            .catch(e => console.log(e))
+    }
+}
+
+export const setSleepStatus = (token, childID, status) => {
+    return (dispatch) => {
+        fetch(getUrl("/api/sleep/" + status + "/" + childID), {
+            method: "POST", 
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                'Authorization': "Bearer " + token
+            }
+        })
+            .then( r => r.status)
+            .then( statusCode => {
+                if (statusCode === 200) {
+                    if (status === "start") {
+                        dispatch(sleepStatus(true))
+                    }
+                    else {
+                        dispatch(sleepStatus(false))
+                    }
                 }
             })
             .catch(e => console.log(e))
