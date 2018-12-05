@@ -46,7 +46,7 @@ class LoginForm extends React.Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email:</label>
-                                    <input type="text" className="form-control" id="email" onChange={this.onChangeInput} value={this.state.email}/>
+                                    <input type="email" className="form-control" id="email" onChange={this.onChangeInput} value={this.state.email}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password:</label>
