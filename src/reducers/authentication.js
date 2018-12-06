@@ -1,5 +1,5 @@
 import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA, VALIDATING_TOKEN} from '../actions/index'
-import KJUR, {b64utoutf8, b64utos, readSafeJSONString} from 'jsrsasign'
+import KJUR from 'jsrsasign'
 import {stateTree} from './index'
 
 var authReducer = function(state = stateTree.authentication, action) {
@@ -12,7 +12,7 @@ var authReducer = function(state = stateTree.authentication, action) {
                 isAuthenticating: true
             })
         case LOGIN_USER:
-            var jwtPayload = KJUR.jws.JWS.readSafeJSONString(b64utos(action.payload.token.split(".")[1]))
+            var jwtPayload = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utos(action.payload.token.split(".")[1]))
             console.log()
             // console.log(KJUR.jws.JWS.readSafeJSONString(b64utoutf8(action.payload.token.split("."))))
             return Object.assign({}, state, {
