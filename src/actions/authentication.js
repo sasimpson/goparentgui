@@ -3,7 +3,6 @@ import {
     LOGOUT_USER, 
     LOGIN_IN_PROGRESS, 
     LOGIN_FAILED,
-    UPDATE_TOKEN,
     CHECK_AUTH
 } from './index'
 
@@ -35,10 +34,6 @@ export const checkAuth = () => {
     return { type: CHECK_AUTH }
 }
 
-export const refreshToken = (data) => {
-    return { type: UPDATE_TOKEN, payload: data} 
-}
-
 export const loginNow = (username, password) => {
     var data = new FormData();
     data.append("username", username)
@@ -66,36 +61,32 @@ export const loginNow = (username, password) => {
 
 export const updateToken = (token) => {
     return (dispatch) => {
+        dispatch(loginInProgress())
         return fetch(getUrl("/api/user/refresh"),{
-            method: "GET",
+            method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             }
         })
-            .then(r => console.log(r))
+            .then(r => r.json())
+            .then(data => dispatch(loginUser(data)))
             .catch(e => console.log(e))
     }
 }
 
 export const checkAuthentication = (auth) => {
     return (dispatch) => {
-        console.log(auth)
         var now = new Date()
         var exp = Date.parse(auth.expires)
-        console.log(now, exp, exp > now)
         if (exp < now) {
-            console.log("auth has expired and should be removed")
+            dispatch(flashErrorMessage("your login has expired, please login again"), {timeout: 1000})
             dispatch(logoutUser())
         } else {
             if ((exp - now)/60000 <= 5.0) {
-                console.log("need to update token")
-                dispatch(refreshToken(auth.token))
-            } else {
-                console.log("auth is fine")
-            }
-           
+                dispatch(updateToken(auth.token))
+            } 
         }
     }
 }

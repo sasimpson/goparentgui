@@ -1,12 +1,9 @@
-import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA, UPDATE_TOKEN} from '../actions/index'
+import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA} from '../actions/index'
 import KJUR from 'jsrsasign'
 import {stateTree} from './index'
 
 var authReducer = function(state = stateTree.authentication, action) {
     switch (action.type){
-        case UPDATE_TOKEN:
-            console.log("Updating Token")
-            return state
         case LOGIN_IN_PROGRESS:
             return Object.assign({}, state, {
                 isAuthenticating: true

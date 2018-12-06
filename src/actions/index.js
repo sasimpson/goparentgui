@@ -3,7 +3,6 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const LOGIN_IN_PROGRESS = 'LOGIN_IN_PROGRESS'
 export const LOGIN_FAILED = 'LOGIN_FAILED'
-export const UPDATE_TOKEN = 'UPDATE_TOKEN'
 export const CHECK_AUTH = 'CHECK_AUTH'
 
 //registration
