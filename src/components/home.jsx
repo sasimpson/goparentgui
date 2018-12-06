@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
         children: state.entities.children,
         isAuthenticated: state.authentication.isAuthenticated,
         user: state.authentication.user,
-        token: state.authentication.auth.token,
+        token: state.authentication.auth.token
     }
 };
 

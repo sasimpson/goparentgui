@@ -3,7 +3,8 @@ import {
     LOGOUT_USER, 
     LOGIN_IN_PROGRESS, 
     LOGIN_FAILED,
-    VALIDATING_TOKEN
+    UPDATE_TOKEN,
+    CHECK_AUTH
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -30,8 +31,12 @@ export const loginUser = (data) => {
     return { type: LOGIN_USER, payload: data}
 }
 
-export const validatingToken = () => {
-    return { type: VALIDATING_TOKEN }
+export const checkAuth = () => {
+    return { type: CHECK_AUTH }
+}
+
+export const refreshToken = (data) => {
+    return { type: UPDATE_TOKEN, payload: data} 
 }
 
 export const loginNow = (username, password) => {
@@ -59,10 +64,9 @@ export const loginNow = (username, password) => {
     }
 }
 
-export const validateToken = (token) => {
+export const updateToken = (token) => {
     return (dispatch) => {
-        dispatch(validatingToken())
-        return fetch(getUrl("/api/user"),{
+        return fetch(getUrl("/api/user/refresh"),{
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -72,5 +76,26 @@ export const validateToken = (token) => {
         })
             .then(r => console.log(r))
             .catch(e => console.log(e))
+    }
+}
+
+export const checkAuthentication = (auth) => {
+    return (dispatch) => {
+        console.log(auth)
+        var now = new Date()
+        var exp = Date.parse(auth.expires)
+        console.log(now, exp, exp > now)
+        if (exp < now) {
+            console.log("auth has expired and should be removed")
+            dispatch(logoutUser())
+        } else {
+            if ((exp - now)/60000 <= 5.0) {
+                console.log("need to update token")
+                dispatch(refreshToken(auth.token))
+            } else {
+                console.log("auth is fine")
+            }
+           
+        }
     }
 }
