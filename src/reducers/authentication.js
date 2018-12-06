@@ -1,19 +1,27 @@
-import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA} from '../actions/index'
+import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA, VALIDATING_TOKEN} from '../actions/index'
+import KJUR, {b64utoutf8, b64utos, readSafeJSONString} from 'jsrsasign'
 import {stateTree} from './index'
 
 var authReducer = function(state = stateTree.authentication, action) {
     switch (action.type){
+        case VALIDATING_TOKEN:
+            console.log("Validating Token")
+            return state
         case LOGIN_IN_PROGRESS:
             return Object.assign({}, state, {
                 isAuthenticating: true
             })
         case LOGIN_USER:
+            var jwtPayload = KJUR.jws.JWS.readSafeJSONString(b64utos(action.payload.token.split(".")[1]))
+            console.log()
+            // console.log(KJUR.jws.JWS.readSafeJSONString(b64utoutf8(action.payload.token.split("."))))
             return Object.assign({}, state, {
                 isAuthenticated: true,
                 isAuthenticating: false,
                 user: action.payload.userData,
                 auth: {
-                    token: action.payload.token
+                    token: action.payload.token,
+                    expires: new Date(jwtPayload.exp * 1000)
                 }
             })
         case LOGIN_FAILED:

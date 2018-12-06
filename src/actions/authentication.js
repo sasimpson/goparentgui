@@ -2,7 +2,8 @@ import {
     LOGIN_USER, 
     LOGOUT_USER, 
     LOGIN_IN_PROGRESS, 
-    LOGIN_FAILED
+    LOGIN_FAILED,
+    VALIDATING_TOKEN
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -29,6 +30,10 @@ export const loginUser = (data) => {
     return { type: LOGIN_USER, payload: data}
 }
 
+export const validatingToken = () => {
+    return { type: VALIDATING_TOKEN }
+}
+
 export const loginNow = (username, password) => {
     var data = new FormData();
     data.append("username", username)
@@ -51,5 +56,21 @@ export const loginNow = (username, password) => {
                 dispatch(flashErrorMessage("login failed, please check email and password"))
                 console.log(e)
             })
+    }
+}
+
+export const validateToken = (token) => {
+    return (dispatch) => {
+        dispatch(validatingToken())
+        return fetch(getUrl("/api/user"),{
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(r => console.log(r))
+            .catch(e => console.log(e))
     }
 }
