@@ -25,7 +25,7 @@ class SleepToggle extends React.Component {
     constructor(props) {
         super(props);
         this.state = { sleepStatus: false };
-        // this.handleToggleStatus = this.handleToggleStatus.bind(this)
+        this.handleToggleStatus = this.handleToggleStatus.bind(this)
     }
     
     componentWillMount = () => {
