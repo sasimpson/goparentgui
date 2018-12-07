@@ -1,6 +1,8 @@
 import {DIAPER_LOAD_DATA, DIAPER_ADD_DATA, DIAPER_GRAPH_DATA} from './index'
 import {getUrl} from '../utils/index'
 import {flashSuccessMessage} from 'redux-flash'
+import 'whatwg-fetch'
+
 
 
 const diaperAddPostData = (data) => {

@@ -7,6 +7,8 @@ import {
 import {getUrl} from '../utils/index'
 import {loginNow} from './authentication'
 import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
+import 'whatwg-fetch'
+
 
 export const registrationSubmitted = (data) => {
     return {type: REGISTRATION_SUBMITTED, payload: data}

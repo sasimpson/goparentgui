@@ -17,9 +17,9 @@ Cypress.Commands.add("login", () => {
     cy.get('@auth').then((auth) => {
         const validAuth = auth['valid_login']
         cy.visit("/", {
-            onBeforeLoad: (win) => {
-                win.fetch = null
-            }
+            // onBeforeLoad: (win) => {
+            //     win.fetch = null
+            // }
         })
         cy.server()
         cy.route({
@@ -68,6 +68,7 @@ Cypress.Commands.add("options", () => {
 Cypress.Commands.add("logout", () => {
     cy.visit("/logout")
 })
+
 
 //
 // -- This is a child command --

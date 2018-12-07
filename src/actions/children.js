@@ -7,6 +7,8 @@ import {
 
 import {getUrl} from '../utils/index'
 import { flashMessage } from 'redux-flash/lib/actions';
+import 'whatwg-fetch'
+
 
 const childrenLoadData = (data) => {
     return {type: CHILDREN_LOAD_DATA, payload: data}

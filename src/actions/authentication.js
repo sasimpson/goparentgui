@@ -13,6 +13,7 @@ import {getFeedings} from './feeding'
 import {getDiaper} from './diaper'
 import {getSleep} from './sleep'
 import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
+import 'whatwg-fetch'
 
 //pure functions
 export const loginInProgress = () => {
