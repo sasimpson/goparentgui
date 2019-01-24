@@ -91,3 +91,13 @@ export const checkAuthentication = (auth) => {
         }
     }
 }
+export const resetPasswordRequest = (email) => {
+    return (dispatch) => {
+        return fetch(getUrl("/api/user/resetpassword"), {
+            method: "POST"
+        })
+            .then(r => r.status())
+            .then(s => console.log(s))
+            .catch(e => console.log(e))
+    }
+}
