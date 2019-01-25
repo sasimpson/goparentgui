@@ -12,7 +12,8 @@ import ResetStates from './reset'
 import Registration from './registration'
 import Profile from './profile/home'
 import FlashMessage from './flash'
-import PasswordReset from './authentication/passwordreset';
+import PasswordReset from './authentication/passwordreset'
+import ResetPassword from './authentication/resetpassword'
 import Debug from './debug'
 
 class Content extends React.Component {
@@ -38,7 +39,7 @@ class Content extends React.Component {
           <Route path="/register" component={Registration}/>
           <Route path="/profile" component={Profile}/>
           <Route path="/passwordreset" component={PasswordReset} />
-          <Route path="/resetpassword/:code" component={PasswordReset} />
+          <Route path="/resetpassword/:code" component={ResetPassword} />
           <Debug/>
         </div>
       </Router>

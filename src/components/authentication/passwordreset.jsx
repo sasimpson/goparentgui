@@ -13,15 +13,7 @@ class PasswordReset extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            code: ""
-        }
         this.handleResetSubmit = this.handleResetSubmit.bind(this)
-    }
-
-    componentDidMount = () => {
-        console.log(this.props.match.params.code)
-        this.setState({code: this.props.match.params.code})
     }
 
     handleResetSubmit = (event) => {
@@ -32,30 +24,6 @@ class PasswordReset extends React.Component {
     }
 
     render() {
-        if (this.state.code !== undefined) {
-            return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <h2>Reset Password</h2>
-                            <form id="passwordreset-form">
-                            <FormGroup>
-                                <ControlLabel htmlFor="pass1">Password</ControlLabel>
-                                <FormControl type="text"></FormControl>
-                            </FormGroup>
-                            <FormGroup>
-                                <ControlLabel htmlFor="pass2">Confirm Password</ControlLabel>
-                                <FormControl type="text"></FormControl>
-                            </FormGroup>
-                            <div className="form-group">
-                                <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>
-                            </div>
-                        </form>
-                        </div>
-                    </div>               
-                </div>
-            );    
-        }
         return (
             <div className="container">
                 <div className="row">
