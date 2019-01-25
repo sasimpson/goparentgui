@@ -61,6 +61,8 @@ class ResetPassword extends React.Component {
         //do bit to submit to /api/user/resetpassword
     }
 
+    
+
     render() {
         if (this.state.code !== undefined) {
             return (
@@ -69,12 +71,12 @@ class ResetPassword extends React.Component {
                         <div className="col-md-6">
                             <h2>Reset Password</h2>
                             <form id="passwordreset-form" onSubmit={this.handleResetSubmit}>
-                            <FormGroup>
+                            <FormGroup validationState={this.getPasswordValidation()}>
                                 <ControlLabel htmlFor="pass1">Password</ControlLabel>
                                 <FormControl type="text" onChange={this.updatePass1}></FormControl>
                                 <HelpBlock>Enter a password that is longer than 10 characters</HelpBlock>
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup validationState={this.getPasswordValidation()}>
                                 <ControlLabel htmlFor="pass2">Confirm Password</ControlLabel>
                                 <FormControl type="text" onChange={this.updatePass2}></FormControl>
                             </FormGroup>

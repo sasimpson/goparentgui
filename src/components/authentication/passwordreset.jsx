@@ -28,7 +28,12 @@ class PasswordReset extends React.Component {
     handleResetSubmit = (event) => {
         event.preventDefault()
         console.log(this.state)
-        this.props.resetPasswordRequest(this.state.email)
+        try {
+            this.props.resetPasswordRequest(this.state.email)
+        } catch ( err ) {
+            console.log("handleResetSubmit error", err)
+        }
+        
         // this.requestResetPassword(event)
         //do bit to submit to /api/user/resetpassword
     }
