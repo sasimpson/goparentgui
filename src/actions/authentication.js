@@ -36,7 +36,7 @@ export const checkAuth = () => {
 }
 
 export const loginNow = (username, password) => {
-    var data = new FormData();
+    var data = new FormData()
     data.append("username", username)
     data.append("password", password)
     return (dispatch) => {
@@ -92,12 +92,12 @@ export const checkAuthentication = (auth) => {
     }
 }
 export const resetPasswordRequest = (email) => {
+    console.log("resetpasswordrequest: ", email)
+    var data = new FormData()
+    data.append("email", email)
     return (dispatch) => {
-        return fetch(getUrl("/api/user/resetpassword"), {
-            method: "POST"
-        })
-            .then(r => r.status())
-            .then(s => console.log(s))
+        return fetch(getUrl("/api/user/resetpassword"), {method: "POST", body: data})
+            .then(r => console.log(r))
             .catch(e => console.log(e))
     }
 }

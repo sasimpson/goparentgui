@@ -2,6 +2,7 @@ import React from 'react'
 import {FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap'
 import { bindActionCreators } from 'redux';
 import { resetPasswordRequest } from '../../actions/authentication'
+import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
@@ -13,12 +14,21 @@ class PasswordReset extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            email: ""
+        }
         this.handleResetSubmit = this.handleResetSubmit.bind(this)
+        this.updateEmail = this.updateEmail.bind(this)
+    }
+
+    updateEmail = (e) => {
+        this.setState({email: e.target.value})
     }
 
     handleResetSubmit = (event) => {
         event.preventDefault()
-        console.log(event)
+        console.log(this.state)
+        this.props.resetPasswordRequest(this.state.email)
         // this.requestResetPassword(event)
         //do bit to submit to /api/user/resetpassword
     }
@@ -33,7 +43,7 @@ class PasswordReset extends React.Component {
                         <form id="passwordreset-form" onSubmit={this.handleResetSubmit}>
                             <FormGroup>
                                 <ControlLabel htmlFor="email">Email</ControlLabel>
-                                <FormControl type="text"></FormControl>
+                                <FormControl type="text" onChange={this.updateEmail}></FormControl>
                             </FormGroup>
                             <div className="form-group">
                                 <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button> <Button type="button" bsStyle="danger" onClick={this.handleClear}>Clear</Button>
@@ -46,4 +56,4 @@ class PasswordReset extends React.Component {
     }
 }
 
-export default PasswordReset
+export default connect("", mapDispatchToProps)(PasswordReset)
