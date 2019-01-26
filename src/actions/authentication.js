@@ -3,8 +3,7 @@ import {
     LOGOUT_USER, 
     LOGIN_IN_PROGRESS, 
     LOGIN_FAILED,
-    CHECK_AUTH,
-    PASSWORD_RESET
+    CHECK_AUTH
 } from './index'
 
 import {getUrl} from '../utils/index'
@@ -34,10 +33,6 @@ export const loginUser = (data) => {
 
 export const checkAuth = () => {
     return { type: CHECK_AUTH }
-}
-
-export const passwordReset = (status) => {
-    return { type: PASSWORD_RESET, status: status}
 }
 
 export const loginNow = (username, password) => {
@@ -102,12 +97,6 @@ export const resetPasswordRequest = (email) => {
     data.append("email", email)
     return (dispatch) => {
         return fetch(getUrl("/api/user/resetpassword"), {method: "POST", body: data})
-            .then(r => {
-                if (r.status === 202) {
-                    dispatch(resetPasswordRequest("ok"))
-                } else {
-                    dispatch(resetPasswordRequest(r.statusText))
-                }
-            })
+            .then(r => r.status)
     }
 }

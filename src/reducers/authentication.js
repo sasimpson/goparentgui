@@ -1,4 +1,4 @@
-import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA, PASSWORD_RESET} from '../actions/index'
+import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA} from '../actions/index'
 import KJUR from 'jsrsasign'
 import {stateTree} from './index'
 
@@ -21,18 +21,6 @@ var authReducer = function(state = stateTree.authentication, action) {
                     expires: new Date(jwtPayload.exp * 1000)
                 }
             })
-        case PASSWORD_RESET:
-            if (action.status === "ok") {
-                return Object.assign({}, state, {
-                    resetPassword: true,
-                    status: action.status
-                })
-            } else {
-                return Object.assign({}, state, {
-                    resetPassword: false,
-                    status: action.status
-                })
-            }
             
         case LOGIN_FAILED:
         case CLEAR_DATA:
