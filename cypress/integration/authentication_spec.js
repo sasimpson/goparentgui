@@ -1,3 +1,5 @@
+import KJUR from 'jsrsasign'
+
 describe("Authentication", () => {
     beforeEach(() => {
         cy.fixture('authentication.json').as('auth')
@@ -7,25 +9,38 @@ describe("Authentication", () => {
             }
           })
     })
-    // it("display error on failed login", () => {
-    //     cy.server()
-    //     cy.route({
-    //         method: 'POST',
-    //         url: '/api/user/login', 
-    //         status: 401,
-    //         response: 'no result for that username password combo'
-    //     }).as("postLogin")
+    it("display error on failed login", () => {
+        cy.server()
+        cy.route({
+            method: 'POST',
+            url: '/api/user/login', 
+            status: 401,
+            response: 'no result for that username password combo'
+        }).as("postLogin")
 
-    //     cy.get('input[id=email]').type('test@test.com')
-    //     cy.get('input[id=password]').type("testfail123{enter}")
-    //     // cy.wait('@postLogin')
-    //     cy.get('div.alert.alert-danger')
-    //         .should('be.visible')
-    //         .and('contain','login failed, please check email and password')
-    // })
+        cy.get('input[id=email]').type('test@test.com')
+        cy.get('input[id=password]').type("testfail123{enter}")
+        // cy.wait('@postLogin')
+        cy.get('div.alert.alert-danger')
+            .should('be.visible')
+            .and('contain','login failed, please check email and password')
+    })
     it("login successful", () => {
         cy.get('@auth').then((auth) => {
             const validAuth = auth['valid_login']
+
+            var oHeader = {alg: 'HS256', typ: 'JWT'};
+            // Payload
+            var oPayload = {};
+            var tNow = KJUR.jws.IntDate.get('now');
+            var tEnd = KJUR.jws.IntDate.get('now + 1day');
+            oPayload.nbf = tNow;
+            oPayload.iat = tNow;
+            oPayload.exp = tEnd;
+            var sHeader = JSON.stringify(oHeader);
+            var sPayload = JSON.stringify(oPayload);
+            var sJWT = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "616161");
+            validAuth.token = sJWT;
             cy.server()
             cy.route({
                 method: "POST",

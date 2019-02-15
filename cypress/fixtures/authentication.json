@@ -1,6 +1,6 @@
 {
     "valid_login": {
-        "token": "sample token",
+        "token": "",
         "userData": {
             "currentFamily": "1",
             "email": "test@test.com",
