@@ -56,14 +56,24 @@ class SleepChart extends Component {
     }
  
     render() {
-        return (
-            <div className="col-md-6">
-                <h3>total sleep</h3>
-                <SleepChartError>
-                <HorizontalBar data={this.state.data} options={this.state.options}/>
-                </SleepChartError>
-            </div>
-        )
+        console.log("datasets", this.state.data.datasets)
+        if (Object.keys(this.state.data).length > 0 && Object.keys(this.state.data.datasets).length > 0) {
+            return (
+                <div className="col-md-6">
+                    <h3>total sleep</h3>
+                    <SleepChartError>
+                    <HorizontalBar data={this.state.data} options={this.state.options}/>
+                    </SleepChartError>
+                </div>
+            )
+        } else {
+            return (
+                <div className="col-md-6">
+                <h4>No Data Available</h4>
+                </div>
+            )
+        }
+       
     }
 }
 
