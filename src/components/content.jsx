@@ -40,7 +40,7 @@ class Content extends React.Component {
           <Route path="/profile" component={Profile}/>
           <Route path="/passwordreset" component={PasswordReset} />
           <Route path="/resetpassword/:code" component={ResetPassword} />
-          { /* <Debug/> */}
+          <Debug/>
         </div>
       </Router>
     );
