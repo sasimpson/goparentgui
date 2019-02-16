@@ -13,6 +13,7 @@ import {getFeedings} from './feeding'
 import {getDiaper} from './diaper'
 import {getSleep} from './sleep'
 import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
+import 'whatwg-fetch'
 
 //pure functions
 export const loginInProgress = () => {
@@ -35,7 +36,7 @@ export const checkAuth = () => {
 }
 
 export const loginNow = (username, password) => {
-    var data = new FormData();
+    var data = new FormData()
     data.append("username", username)
     data.append("password", password)
     return (dispatch) => {
@@ -88,5 +89,23 @@ export const checkAuthentication = (auth) => {
                 dispatch(updateToken(auth.token))
             } 
         }
+    }
+}
+export const resetPasswordRequest = (email) => {
+    console.log("resetpasswordrequest: ", email)
+    var data = new FormData()
+    data.append("email", email)
+    return (dispatch) => {
+        return fetch(getUrl("/api/user/resetpassword"), {method: "POST", body: data})
+            .then(r => r.status)
+    }
+}
+
+export const resetPassword = (code, password) => {
+    var data = new FormData()
+    data.append("password", password)
+    return (dispatch) => {
+        return fetch(getUrl("/api/user/resetpassword/" + code), {method: "POST", body: data})
+            .then(r => r.status)
     }
 }

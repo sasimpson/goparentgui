@@ -75,5 +75,6 @@
                 "childID": "1"
             }
         ]
-    }
+    },
+    "graph1": {"start":"2019-02-09T17:56:06.579541Z","end":"2019-02-16T17:56:06.579541Z","dataset":[{"date":"0001-01-01T00:00:00Z","type":"","count":0,"sum":0},{"date":"2019-02-13T00:00:00Z","type":"bottle","count":7,"sum":21},{"date":"2019-02-12T00:00:00Z","type":"bottle","count":9,"sum":45},{"date":"2019-02-11T00:00:00Z","type":"breast","count":7,"sum":142},{"date":"2019-02-10T00:00:00Z","type":"breast","count":13,"sum":202}]}
 }

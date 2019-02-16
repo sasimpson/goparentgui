@@ -12,14 +12,29 @@
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
 //
+import KJUR from 'jsrsasign'
+
 Cypress.Commands.add("login", () => {
     cy.fixture('authentication.json').as('auth')
     cy.get('@auth').then((auth) => {
         const validAuth = auth['valid_login']
+        //our login bits parse out the expiration out of the token so simulate this.
+        var oHeader = {alg: 'HS256', typ: 'JWT'};
+        // Payload
+        var oPayload = {};
+        var tNow = KJUR.jws.IntDate.get('now');
+        var tEnd = KJUR.jws.IntDate.get('now + 1day');
+        oPayload.nbf = tNow;
+        oPayload.iat = tNow;
+        oPayload.exp = tEnd;
+        var sHeader = JSON.stringify(oHeader);
+        var sPayload = JSON.stringify(oPayload);
+        var sJWT = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "616161");
+        validAuth.token = sJWT;
         cy.visit("/", {
-            onBeforeLoad: (win) => {
-                win.fetch = null
-            }
+            // onBeforeLoad: (win) => {
+            //     win.fetch = null
+            // }
         })
         cy.server()
         cy.route({
@@ -55,7 +70,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add("options", () => {
     cy.route({
         method: "OPTIONS",
-        url: "/api/*",
+        url: "/api/**",
         status: 200,
         headers: {
             'Access-Control-Allow-Headers':  'Authorization,Content-Type',
@@ -68,6 +83,7 @@ Cypress.Commands.add("options", () => {
 Cypress.Commands.add("logout", () => {
     cy.visit("/logout")
 })
+
 
 //
 // -- This is a child command --

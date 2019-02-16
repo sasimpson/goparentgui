@@ -8,6 +8,8 @@ import {
 
 import {getUrl} from '../utils/index'
 import { flashSuccessMessage } from 'redux-flash/lib/actions';
+import 'whatwg-fetch'
+
 
 //action creators
 const sleepFetchingData = () => {

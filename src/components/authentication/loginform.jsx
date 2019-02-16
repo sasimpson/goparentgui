@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { loginNow } from '../../actions/authentication'
@@ -43,6 +43,7 @@ class LoginForm extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
+                        <h2>Login</h2>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email:</label>
@@ -54,6 +55,16 @@ class LoginForm extends React.Component {
                                 </div>
                                 <Button type="submit">Submit</Button>
                             </form>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <hr/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <Link to="/passwordreset">I forgot my password</Link>
                         </div>
                     </div>
                 </div>

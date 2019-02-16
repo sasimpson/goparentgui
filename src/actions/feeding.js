@@ -9,6 +9,8 @@ import {
 
 import {getUrl} from '../utils/index'
 import {flashSuccessMessage} from 'redux-flash'
+import 'whatwg-fetch'
+
 
 
 const feedingWillPostData = () => {

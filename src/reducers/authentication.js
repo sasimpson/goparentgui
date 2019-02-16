@@ -21,6 +21,7 @@ var authReducer = function(state = stateTree.authentication, action) {
                     expires: new Date(jwtPayload.exp * 1000)
                 }
             })
+            
         case LOGIN_FAILED:
         case CLEAR_DATA:
         case LOGOUT_USER:

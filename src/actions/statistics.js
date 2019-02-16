@@ -1,6 +1,8 @@
 import { STATISTICS_LOAD } from "./index";
 
 import {getUrl} from '../utils/index'
+import 'whatwg-fetch'
+
 
 
 const childrenUpdateStats = (data) => {

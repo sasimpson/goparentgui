@@ -9,6 +9,8 @@ import {
 } from './index'
 import {getUrl} from '../utils/index'
 import {flashSuccessMessage} from 'redux-flash'
+import 'whatwg-fetch'
+
 
 
 const updateSentInvites = (data) => {
