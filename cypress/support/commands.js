@@ -70,7 +70,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add("options", () => {
     cy.route({
         method: "OPTIONS",
-        url: "/api/*",
+        url: "/api/**",
         status: 200,
         headers: {
             'Access-Control-Allow-Headers':  'Authorization,Content-Type',

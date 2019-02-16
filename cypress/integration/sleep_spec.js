@@ -5,7 +5,7 @@ describe("Sleep", () => {
         cy.login()
     })
 
-    it.skip("loads no data", () => {
+    it("loads no data", () => {
         cy.server()
         cy.options()
         cy.route({
@@ -17,7 +17,7 @@ describe("Sleep", () => {
             }
         }).as("getSleepEmpty")
         cy.route({
-            methods: "GET",
+            method: "GET",
             url: "/api/sleep/graph/*",
             status: 200,
             response: {
@@ -27,7 +27,7 @@ describe("Sleep", () => {
             }
         })
         cy.route({
-            methods: "GET",
+            method: "GET",
             url: "/api/sleep/status/*",
             status: 404,
             response: ""
@@ -38,7 +38,7 @@ describe("Sleep", () => {
         
     })
 
-    it.skip("loads data", () => {
+    it("loads data", () => {
         cy.get('@sleep').then((sleep) => {
             const user1Sleep = sleep['user1']
             const sleepGraph = sleep['graph1']
@@ -68,7 +68,7 @@ describe("Sleep", () => {
         })
     })
 
-    it.skip("add item", () => {
+    it("add item", () => {
         cy.get('@sleep').then((sleep) => {
             const user1Sleep = sleep['user1']
             const sleepGraph = sleep['graph1']
@@ -122,59 +122,63 @@ describe("Sleep", () => {
         })
     })
 
-    it("toggles start", () => {
+    it("toggles", () => {
         cy.get('@sleep').then((sleep) => {
             const user1Sleep = sleep['user1']
             const sleepGraph = sleep['graph1']
             cy.server()
-            cy.route({
-                method: "OPTIONS",
-                url: "/api/sleep/start/*",
-                status: 200,
-                headers: {
-                    'Access-Control-Allow-Headers':  'Authorization,Content-Type',
-                    'Access-Control-Allow-Origin':   '*'
-                },
-                response: ""
-            })
+            cy.options()
+            
             cy.route({
                 method: "GET",
                 url: "/api/sleep",
                 status: 200,
                 response: user1Sleep
             }).as("getSleep")
+
             cy.route({
-                methods: "GET",
+                method: "GET",
                 url: "/api/sleep/graph/*",
                 status: 200,
                 response: sleepGraph
             }).as("sleepGraph")
+
             cy.route({
-                methods: "GET",
+                method: "GET",
                 url: "/api/sleep/status/*",
                 status: 404,
                 response: ""
             }).as("sleepStatusFalse")
+
             cy.route({
-                method: "OPTIONS",
-                url: "/api/sleep/start/*",
-                status: 200,
-                headers: {
-                    'Access-Control-Allow-Headers':  'Authorization,Content-Type',
-                    'Access-Control-Allow-Origin':   '*'
-                },
-                response: ""
-            })
-            cy.route({
-                methods: "POST",
+                method: "POST",
                 url: "/api/sleep/start/*",
                 status: 200,
                 response: "started Sleep"
-            }).as("sleepStatusTrue")
-            cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
+            }).as("sleepStart")
+
+            cy.route({
+                method: "POST",
+                url: "/api/sleep/end/*",
+                status: 200,
+                response: "ended Sleep"
+            }).as("sleepEnd")
+
             cy.visit('/sleep')
-            cy.get(':nth-child(1) > .btn').click()
-            //cy.get('.btn-group-justified > :nth-child(2) > .btn')
+            cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
+            cy.wait('@getSleep')
+            cy.wait('@sleepGraph')
+            cy.wait('@sleepStatusFalse') 
+            //click start sleep
+            cy.get(':nth-child(1) > .btn').should("be.enabled")
+            cy.get(':nth-child(1) > .btn').click()  
+            cy.wait("@sleepStart")
+            cy.get(':nth-child(1) > .btn').should("be.disabled")
+            cy.get('.btn-group-justified > :nth-child(2) > .btn').should("be.enabled")
+            //click end sleep
+            cy.get('.btn-group-justified > :nth-child(2) > .btn').click()
+            cy.wait("@sleepEnd")
+            cy.get('.btn-group-justified > :nth-child(2) > .btn').should("be.disabled")
         })
     })
 })

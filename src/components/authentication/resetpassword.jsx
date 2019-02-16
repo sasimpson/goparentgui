@@ -73,12 +73,12 @@ class ResetPassword extends React.Component {
                             <form id="passwordreset-form" onSubmit={this.handleResetSubmit}>
                             <FormGroup validationState={this.getPasswordValidation()}>
                                 <ControlLabel htmlFor="pass1">Password</ControlLabel>
-                                <FormControl type="text" onChange={this.updatePass1}></FormControl>
+                                <FormControl id="pass1" type="password" onChange={this.updatePass1}></FormControl>
                                 <HelpBlock>Enter a password that is longer than 10 characters</HelpBlock>
                             </FormGroup>
                             <FormGroup validationState={this.getPasswordValidation()}>
                                 <ControlLabel htmlFor="pass2">Confirm Password</ControlLabel>
-                                <FormControl type="text" onChange={this.updatePass2}></FormControl>
+                                <FormControl id="pass2" type="password" onChange={this.updatePass2}></FormControl>
                             </FormGroup>
                             <div className="form-group">
                                 <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>

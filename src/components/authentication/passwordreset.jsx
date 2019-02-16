@@ -54,7 +54,7 @@ const RequestForm = (props) => {
             <form id="passwordreset-form" onSubmit={props.submit}>
                 <FormGroup>
                     <ControlLabel htmlFor="email">Email</ControlLabel>
-                    <FormControl type="text" onChange={props.update}></FormControl>
+                    <FormControl id="email" type="text" onChange={props.update}></FormControl>
                 </FormGroup>
                 <div className="form-group">
                     <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>

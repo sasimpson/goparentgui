@@ -66,18 +66,40 @@ describe("Authentication", () => {
             cy.get('.alert').should('be.visible')
         })
     })
-    // context("redirects", () => {
-    //     ['children','sleep','diaper','feeding','profile'].forEach( (route) => {
-    //         it(route, () => {
-    //             cy.visit('/' + route)
-    //             cy.location('pathname').should('eq', '/login')
-    //         })
-    //     })
-    // })
-    // it("logout", () => {
-    //     cy.login()
-    //     cy.location('pathname').should('eq','/')
-    //     cy.get('.navbar-right > :nth-child(2) > a').click()
-    //     cy.location('pathname').should('eq','/login')
-    // })
+    context("not authorized redirects", () => {
+        ['children','sleep','diaper','feeding','profile'].forEach( (route) => {
+            it(route, () => {
+                cy.visit('/' + route)
+                cy.location('pathname').should('eq', '/login')
+            })
+        })
+    })
+    it("logout", () => {
+        cy.login()
+        cy.location('pathname').should('eq','/')
+        cy.get('.navbar-right > :nth-child(2) > a').click()
+        cy.location('pathname').should('eq','/login')
+    })
+})
+
+describe("Password Reset", () => {
+    it("password reset", () => {
+        cy.server()
+        cy.visit("/passwordreset")
+        cy.route({
+            method: "POST",
+            url: "/api/user/resetpassword",
+            response: 202
+        })
+        cy.get('input[id=email]').type('test@test.com')
+        cy.get('#submitButton').click()
+    })
+    it("reset password", () => {
+        cy.server()
+        cy.visit("/resetpassword/123")
+        cy.get('#pass1').type("foobarbazquu123")
+        cy.get('#pass2').type("foobarbazquu123")
+        cy.get("#submitButton").click()
+
+    })
 })
