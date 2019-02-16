@@ -43,6 +43,7 @@ class LoginForm extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
+                        <h2>Login</h2>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email:</label>

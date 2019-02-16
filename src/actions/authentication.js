@@ -100,3 +100,12 @@ export const resetPasswordRequest = (email) => {
             .then(r => r.status)
     }
 }
+
+export const resetPassword = (code, password) => {
+    var data = new FormData()
+    data.append("password", password)
+    return (dispatch) => {
+        return fetch(getUrl("/api/user/resetpassword/" + code), {method: "POST", body: data})
+            .then(r => r.status)
+    }
+}

@@ -1,14 +1,15 @@
 import React from 'react'
 import {FormGroup, FormControl, Button, ControlLabel, HelpBlock} from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { resetPasswordRequest } from '../../actions/authentication'
+import { resetPassword } from '../../actions/authentication'
 import { connect } from 'react-redux'
-import { flashErrorMessage } from 'redux-flash/lib/actions';
+import { flashErrorMessage, flashSuccessMessage } from 'redux-flash/lib/actions';
 
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        resetPasswordRequest: resetPasswordRequest
+        resetPassword: resetPassword
     }, dispatch)
 }
 
@@ -20,6 +21,7 @@ class ResetPassword extends React.Component {
             code: "",
             password1: "",
             password2: "",
+            success: false
         }
         this.handleResetSubmit = this.handleResetSubmit.bind(this)
         this.updatePass1 = this.updatePass1.bind(this)
@@ -57,37 +59,43 @@ class ResetPassword extends React.Component {
         if (result !== "success") {
             flashErrorMessage("there is an issue with your password")
         }
-        // this.requestResetPassword(event)
+        flashSuccessMessage("Your password has been reset, please login")
+        this.props.resetPassword(this.state.code, this.state.password1)
         //do bit to submit to /api/user/resetpassword
+        this.setState({success: true})
     }
-
-    
 
     render() {
         if (this.state.code !== undefined) {
-            return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <h2>Reset Password</h2>
-                            <form id="passwordreset-form" onSubmit={this.handleResetSubmit}>
-                            <FormGroup validationState={this.getPasswordValidation()}>
-                                <ControlLabel htmlFor="pass1">Password</ControlLabel>
-                                <FormControl id="pass1" type="password" onChange={this.updatePass1}></FormControl>
-                                <HelpBlock>Enter a password that is longer than 10 characters</HelpBlock>
-                            </FormGroup>
-                            <FormGroup validationState={this.getPasswordValidation()}>
-                                <ControlLabel htmlFor="pass2">Confirm Password</ControlLabel>
-                                <FormControl id="pass2" type="password" onChange={this.updatePass2}></FormControl>
-                            </FormGroup>
-                            <div className="form-group">
-                                <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>
+            if (this.state.success === true) {
+                return (
+                    <Redirect to="/login"/>
+                ) 
+            } else {
+                return (
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <h2>Reset Password</h2>
+                                <form id="passwordreset-form" onSubmit={this.handleResetSubmit}>
+                                <FormGroup validationState={this.getPasswordValidation()}>
+                                    <ControlLabel htmlFor="pass1">Password</ControlLabel>
+                                    <FormControl id="pass1" type="password" onChange={this.updatePass1}></FormControl>
+                                    <HelpBlock>Enter a password that is longer than 10 characters</HelpBlock>
+                                </FormGroup>
+                                <FormGroup validationState={this.getPasswordValidation()}>
+                                    <ControlLabel htmlFor="pass2">Confirm Password</ControlLabel>
+                                    <FormControl id="pass2" type="password" onChange={this.updatePass2}></FormControl>
+                                </FormGroup>
+                                <div className="form-group">
+                                    <Button type="submit" bsStyle="primary" id="submitButton">Submit</Button>
+                                </div>
+                            </form>
                             </div>
-                        </form>
-                        </div>
-                    </div>               
-                </div>
-            );    
+                        </div>               
+                    </div>
+                );    
+            }
         } else {
         //throw error
             return (

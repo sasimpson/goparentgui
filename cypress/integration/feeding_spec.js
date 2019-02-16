@@ -16,6 +16,16 @@ describe("Feeding", () => {
                 "feedingData": null
             }
         }).as("getFeedingEmpty")
+        cy.route({
+            method: "GET",
+            url: "/api/feeding/graph/*",
+            status: 200,
+            response: {
+                "dataset": [],
+                "start": Date.now(),
+                "end": Date.now()
+            }
+        }).as("feedingGraphEmpty")
         cy.get('#children-drop').click()
         cy.get('.dropdown-menu > :nth-child(2) > a').click()
         cy.visit('/feeding')
@@ -25,6 +35,7 @@ describe("Feeding", () => {
     it("loads data", () => {
         cy.get('@feeding').then((feeding) => {
             const user1Feeding = feeding['user1']
+            const feedingGraph = feeding['graph1']
             cy.server()
             cy.options()
             cy.route({
@@ -33,6 +44,12 @@ describe("Feeding", () => {
                 status: 200,
                 response: user1Feeding
             }).as("getFeeding")
+            cy.route({
+                method: "GET",
+                url: "/api/feeding/graph/*",
+                status: 200,
+                response: feedingGraph
+            }).as("feedingGraph")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/feeding')
             cy.get('table[id=feedingTable]>tbody>tr').should('have.length', 8)
