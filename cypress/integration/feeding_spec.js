@@ -29,6 +29,8 @@ describe("Feeding", () => {
         cy.get('#children-drop').click()
         cy.get('.dropdown-menu > :nth-child(2) > a').click()
         cy.visit('/feeding')
+        cy.wait('@getFeedingEmpty')
+        cy.location('pathname').should('eq', '/feeding')
         
     })
 
@@ -59,6 +61,7 @@ describe("Feeding", () => {
     it("add item", () => {
         cy.get('@feeding').then((feeding) => {
             const user1Feeding = feeding['user1']
+            const feedingGraph = feeding['graph1']
             cy.server()
             cy.options()
             cy.route({
@@ -92,16 +95,15 @@ describe("Feeding", () => {
             }).as("feedingGraph")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/feeding')
-            cy.get('table[id=feedingTable]>tbody>tr').as('table')
             cy.get("#feedingForm").as("feedingForm")
-            cy.get('@table').should('have.length', 8)
+            cy.get('table[id=feedingTable]>tbody>tr').should('have.length', 8)
             cy.get('#bottle').click()
             cy.get('.input-range').click()
             cy.get("#submitButton").click()
             cy.get('div.alert.alert-success')
                 .should('be.visible')
                 .and('contain','feeding record added')
-            cy.get('@table').should('have.length', 9)
+            cy.get('table[id=feedingTable]>tbody>tr').should('have.length', 9)
         })
     })
 })
