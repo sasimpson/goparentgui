@@ -35,6 +35,8 @@ describe("Sleep", () => {
         cy.get('#children-drop').click()
         cy.get('.dropdown-menu > :nth-child(2) > a').click()
         cy.visit('/sleep')
+        cy.wait('@getSleepEmpty')
+        cy.location('pathname').should('eq', '/sleep')
         
     })
 
@@ -107,9 +109,8 @@ describe("Sleep", () => {
             }).as("sleepStatusTrue")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/sleep')
-            cy.get('table[id=sleepTable]>tbody>tr').as('table')
             cy.get("#sleepForm").as("sleepForm")
-            cy.get('@table').should('have.length', 3)
+            cy.get('table[id=sleepTable]>tbody>tr').should('have.length', 3)
             cy.get(':nth-child(1) > .rdt > .form-control').type('03/01/2018 04:00 AM')
             cy.get('h3').click()
             cy.get(':nth-child(2) > .rdt > .form-control').type('03/01/2018 05:30 AM')
@@ -118,7 +119,7 @@ describe("Sleep", () => {
             cy.get('div.alert.alert-success')
                 .should('be.visible')
                 .and('contain','sleep data added')
-            cy.get('@table').should('have.length', 4)
+            cy.get('table[id=sleepTable]>tbody>tr').should('have.length', 4)
         })
     })
 
