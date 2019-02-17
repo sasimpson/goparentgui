@@ -84,6 +84,12 @@ describe("Feeding", () => {
                     }
                 }              
             }).as("addFeeding")
+            cy.route({
+                method: "GET",
+                url: "/api/feeding/graph/*",
+                status: 200,
+                response: feedingGraph
+            }).as("feedingGraph")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/feeding')
             cy.get('table[id=feedingTable]>tbody>tr').as('table')

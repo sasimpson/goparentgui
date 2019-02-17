@@ -90,16 +90,24 @@ describe("Password Reset", () => {
             method: "POST",
             url: "/api/user/resetpassword",
             response: 202
-        })
-        cy.get('input[id=email]').type('test@test.com')
+        }).as("requestReset")
+        cy.get('#email').type('test@test.com')
         cy.get('#submitButton').click()
+        cy.wait("@requestReset")
+        cy.get('#email').should('not.exist')
     })
     it("reset password", () => {
         cy.server()
+        cy.route({
+            method: "POST", 
+            url: "/api/user/resetpassword/*",
+            response: 202
+        }).as("resetRequest")
         cy.visit("/resetpassword/123")
         cy.get('#pass1').type("foobarbazquu123")
         cy.get('#pass2').type("foobarbazquu123")
         cy.get("#submitButton").click()
-
+        cy.wait("@resetRequest")
+        cy.location('pathname').should('eq', '/login')
     })
 })
