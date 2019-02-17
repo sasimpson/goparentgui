@@ -1,7 +1,7 @@
 describe("Children", () => {
     beforeEach(function(){
         cy.fixture('children.json').as('children')
-        cy.login()
+        cy.login(false)
     })
 
     it("loads no data", () => {
@@ -16,6 +16,8 @@ describe("Children", () => {
             }
         }).as("getChildrenEmpty")
         cy.visit('/children')
+        cy.get('table[id=childrenTable]>tbody>tr').should('have.length', 0)
+
     })
 
     it("loads data", () => {
@@ -60,7 +62,7 @@ describe("Children", () => {
             cy.visit('/children')
             cy.get('table[id=childrenTable]>tbody>tr').as('table')
             cy.get("#childForm").as("childForm")
-            cy.get('@table').should('have.length', 4)
+            cy.get('table[id=childrenTable]>tbody>tr').should('have.length', 4)
             cy.get('#name').type('test child')
             cy.get('.rdt > .form-control').type('03/01/2018 12:00 AM')
             cy.get('h3').click()
@@ -68,7 +70,7 @@ describe("Children", () => {
             cy.get('div.alert.alert-success')
                 .should('be.visible')
                 .and('contain','child added')
-            cy.get('@table').should('have.length', 5)
+            cy.get('table[id=childrenTable]>tbody>tr').should('have.length', 5)
         })
     })
 

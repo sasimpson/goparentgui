@@ -14,10 +14,11 @@
 //
 import KJUR from 'jsrsasign'
 
-Cypress.Commands.add("login", () => {
+Cypress.Commands.add("login", (withChildren=true) => {
     cy.fixture('authentication.json').as('auth')
     cy.get('@auth').then((auth) => {
         const validAuth = auth['valid_login']
+        const defaultChildren = withChildren ? auth['defaultChildren'] : {}
         //our login bits parse out the expiration out of the token so simulate this.
         var oHeader = {alg: 'HS256', typ: 'JWT'};
         // Payload
@@ -49,17 +50,7 @@ Cypress.Commands.add("login", () => {
             method: "GET",
             url: "/api/children",
             status: 200,
-            response: {
-                        "children": [
-                            {
-                                "birthday": "2018-02-01T08:00:00Z",
-                                "familyID": "1",
-                                "id": "1",
-                                "name": "Emmie",
-                                "parentID": "1"
-                            }
-                        ]
-                    }
+            response: defaultChildren
         }).as("getChildrenAfterLogin")
 
         cy.get('input[id=email]').type('test@test.com')

@@ -8,5 +8,16 @@
             "name": "Test Tester",
             "username": "test@test.com"
         }
+    },
+    "defaultChildren":{
+        "children": [
+            {
+                "birthday": "2018-02-01T08:00:00Z",
+                "familyID": "1",
+                "id": "1",
+                "name": "Emmie",
+                "parentID": "1"
+            }
+        ]
     }
 }
