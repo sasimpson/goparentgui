@@ -16,6 +16,16 @@ describe("Waste", () => {
                 "wasteData": null
             }
         }).as("getWasteEmpty")
+        cy.route({
+            method: "GET",
+            url: "/api/waste/graph/*",
+            status: 200,
+            response: {
+                "dataset": [],
+                "start": Date.now(),
+                "end": Date.now()
+            }
+        }).as("getWasteGraphEmpty")
         cy.get('#children-drop').click()
         cy.get('.dropdown-menu > :nth-child(2) > a').click()
         cy.visit('/diaper')
@@ -25,6 +35,7 @@ describe("Waste", () => {
     it("loads data", () => {
         cy.get('@waste').then((waste) => {
             const user1Waste = waste['user1']
+            const wasteGraph = waste['graph1']
             cy.server()
             cy.options()
             cy.route({
@@ -33,15 +44,25 @@ describe("Waste", () => {
                 status: 200,
                 response: user1Waste
             }).as("getWaste")
+            cy.route({
+                method: "GET",
+                url: "/api/waste/graph/*",
+                status: 200,
+                response: wasteGraph
+            }).as("getWasteGraph")
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/diaper')
-            cy.get('table[id=diaperTable]>tbody>tr').should('have.length', 6)
+            cy.wait("@getWaste")
+            cy.location("pathname").should("eq", "/diaper")
+            cy.get('#diaperTable > tbody > tr').should('have.length', 6)
         })
     })
 
     it("add item", () => {
         cy.get('@waste').then((waste) => {
             const user1Waste = waste['user1']
+            const wasteGraph = waste['graph1']
+
             cy.server()
             cy.options()
             cy.route({
@@ -50,6 +71,12 @@ describe("Waste", () => {
                 status: 200,
                 response: user1Waste
             }).as("getWaste")
+            cy.route({
+                method: "GET",
+                url: "/api/waste/graph/*",
+                status: 200,
+                response: wasteGraph
+            }).as("getWasteGraph")
             cy.route({
                 method: "POST",
                 url: "/api/waste",
@@ -66,18 +93,18 @@ describe("Waste", () => {
                     }
                 }               
             }).as("addWaste")
+            
             cy.get('#children-drop').click().get('.dropdown-menu > :nth-child(2) > a').click()
             cy.visit('/diaper')
-            cy.get('table[id=diaperTable]>tbody>tr').as('table')
             cy.get("#diaperForm").as("diaperForm")
-            cy.get('@table').should('have.length', 6)
+            cy.get('#diaperTable > tbody > tr').should('have.length', 6)
             // cy.get('.form-control').type('03/01/2018 12:00 AM')
             cy.get("#both").click()
             cy.get("#submitButton").click()
             cy.get('div.alert.alert-success')
                 .should('be.visible')
                 .and('contain','diaper record added')
-            cy.get('@table').should('have.length', 7)
+            cy.get('#diaperTable > tbody > tr').should('have.length', 7)
         })
     })
 })

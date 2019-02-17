@@ -57,11 +57,13 @@ class DiaperChart extends React.Component {
     }
 
     render() {
-        if (this.props.diaper.graphData.chartReady === true) {
+        if (Object.keys(this.state.data).length > 0 && Object.keys(this.state.data.datasets).length > 0) {
             return (
                 <div className="col-md-6">
                     <h3>chart</h3>
-                    <HorizontalBar data={this.state.data} options={this.state.options} />
+                    <WasteChartError>
+                        <HorizontalBar data={this.state.data} options={this.state.options} />
+                    </WasteChartError>
                 </div>
             )
         } else {
@@ -72,6 +74,24 @@ class DiaperChart extends React.Component {
             )
         }
        
+    }
+}
+
+class WasteChartError extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {hasError: false}
+    }
+
+    static getDerivedStateFromError(error) {
+        return {hasError: true}
+    }
+
+    render() {
+        if (this.state.hasError){
+            return <h3>Something went wrong</h3>
+        }
+        return this.props.children
     }
 }
 
