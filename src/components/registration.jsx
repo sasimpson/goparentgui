@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom'
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button} from 'react-bootstrap'
 
 import {submitRegistration} from '../actions/registration'
-import { flashErrorMessage } from 'redux-flash';
 import { bindActionCreators } from 'redux';
 
 

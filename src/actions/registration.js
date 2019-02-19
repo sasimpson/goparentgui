@@ -5,7 +5,6 @@ import {
 } from './index'
 
 import {getUrl} from '../utils/index'
-import {loginNow} from './authentication'
 import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions';
 import 'whatwg-fetch'
 
