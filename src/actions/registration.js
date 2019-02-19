@@ -10,8 +10,8 @@ import { flashSuccessMessage, flashErrorMessage } from 'redux-flash/lib/actions'
 import 'whatwg-fetch'
 
 
-export const registrationSubmitted = (data) => {
-    return {type: REGISTRATION_SUBMITTED, payload: data}
+export const registrationSubmitted = () => {
+    return {type: REGISTRATION_SUBMITTED}
 }
 
 export const registrationError = (error) => {
@@ -36,9 +36,9 @@ export const submitRegistration = (data) => {
         return fetch(getUrl("/api/user/"), {method: "POST", body: newUserData})
             .then(handleErrors)
             .then(data => {
+                console.log("success")
                 dispatch(registrationSuccessful())
-                dispatch(flashSuccessMessage("registration successful", {timeout: 500}))
-                loginNow(data.email, data.password1)
+                dispatch(flashSuccessMessage("registration successful"))
             })
             .catch(e => {
                 dispatch(flashErrorMessage("registration failed to save"))

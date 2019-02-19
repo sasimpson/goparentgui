@@ -17,6 +17,8 @@ export var stateTree = {
         user : {},
         isAuthenticated : false,
         isAuthenticating : false,
+        isRegistering: false,
+        registrationError: false
     },
     settings : {
         currentChild : null

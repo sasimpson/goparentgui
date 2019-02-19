@@ -1,4 +1,4 @@
-import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA} from '../actions/index'
+import {LOGIN_IN_PROGRESS, LOGIN_USER, LOGOUT_USER, LOGIN_FAILED, CLEAR_DATA, REGISTRATION_ERROR, REGISTRATION_SUBMITTED, REGISTRATION_SUCCESSFUL} from '../actions/index'
 import KJUR from 'jsrsasign'
 import {stateTree} from './index'
 
@@ -21,7 +21,24 @@ var authReducer = function(state = stateTree.authentication, action) {
                     expires: new Date(jwtPayload.exp * 1000)
                 }
             })
-            
+        case REGISTRATION_SUBMITTED:
+            return Object.assign({}, state, {
+                isRegistering: true,
+                registrationError: false,
+                isRegistered: false
+            })
+        case REGISTRATION_ERROR:
+            return Object.assign({}, state, {
+                isRegistering: false,
+                registrationError: true,
+                isRegistered: false
+            })
+        case REGISTRATION_SUCCESSFUL:
+            return Object.assign({}, state, {
+                isRegistering: false,
+                registrationError: false,
+                isRegistered: true
+            })
         case LOGIN_FAILED:
         case CLEAR_DATA:
         case LOGOUT_USER:
