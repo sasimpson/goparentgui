@@ -2,6 +2,8 @@ import React from 'react'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Home from './home'
+import About from './about'
+import Contact from './contact'
 import Sleep from './sleep/sleep'
 import Diaper from './diaper/diaper'
 import Feeding from './feeding/feeding'
@@ -29,6 +31,8 @@ class Content extends React.Component {
             </div>
           </div>
           <Route exact path="/" component={Home}/>
+          <Route path="/about" component={About}/>
+          <Route path="/contact" component={Contact}/>
           <Route path="/sleep" component={Sleep}/>
           <Route path="/diaper" component={Diaper}/>
           <Route path="/feeding" component={Feeding}/>
