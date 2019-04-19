@@ -17,7 +17,9 @@ const NavigationCollapse = (props) => {
                 </Nav>
                 <Nav pullRight>
                     <NavItem eventKey={1} href="/profile">Profile</NavItem>
-                    <NavItem eventKey={2} href="/logout">Logout</NavItem>
+                    <NavItem eventKey={2} href="/contact">Contact</NavItem>
+                    <NavItem eventKey={3} href="/about">About</NavItem>
+                    <NavItem eventKey={4} href="/logout">Logout</NavItem>
                 </Nav>
             </Navbar.Collapse>
         )
@@ -25,8 +27,10 @@ const NavigationCollapse = (props) => {
         return (
             <Navbar.Collapse>
                 <Nav pullRight>
-                    <NavItem eventKey={1} id="registerLink" href="/register">Register</NavItem>
-                    <NavItem eventKey={2} id="loginLink" href="/login">Login</NavItem>
+                    <NavItem eventKey={1} href="/contact">Contact</NavItem>
+                    <NavItem eventKey={2} href="/about">About</NavItem>
+                    <NavItem eventKey={3} href="/register">Register</NavItem>
+                    <NavItem eventKey={4} href="/login">Login</NavItem>
                 </Nav>
             </Navbar.Collapse>
         )
